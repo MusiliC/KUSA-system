@@ -1,0 +1,51 @@
+
+
+#home-bg {
+    background-image: url("/public/pictures/bg.jpg");
+    height: 100vh;
+   background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#title {
+    font-weight: 700;
+}
+
+#subtitle {
+    font-weight: 600;
+}
+
+#eventful{
+    
+    margin-bottom: 100px;
+}
+
+#footer{
+    background-color: #e3f2fd;
+}
+
+#footer-links{
+    text-decoration: none;
+    color: white;
+}
+
+
+@media (max-width: 1000px) {
+    #home-bg{
+    background-image: url("/public/pictures/bg.jpg");
+        height: 65vh;
+        background-position: left;
+        background-repeat: no-repeat;
+        background-size: cover;
+
+    }
+
+        #subtitle {
+            font-weight: 700;
+        }
+
+
+}
+
+

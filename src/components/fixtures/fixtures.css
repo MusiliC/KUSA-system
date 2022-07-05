@@ -1,0 +1,11 @@
+#fixture-bg {
+    background-image: url("/public/pictures/fix.jpg");
+    height: 120vh;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+#fix-heading{
+    font-weight: 500;
+}

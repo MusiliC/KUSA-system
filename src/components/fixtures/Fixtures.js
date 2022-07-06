@@ -21,11 +21,14 @@ export default function Fixtures() {
                     </div>
                     <div className="col-md-4 ms-2">
                       <div className="card-text ">
-                        Karatina <b className="mx-2"> Vs </b> Kimathi
+                        <h6>
+                          {" "}
+                          Karatina <b className="mx-2"> Vs </b> Kimathi
+                        </h6>
                       </div>
                     </div>
                     <div className="col-md-6 align-items-center ">
-                      <div className="card-text my-3">
+                      <div className="card-text my-2">
                         <i className="bi bi-geo-alt-fill mx-2"></i>Chuka
                         University
                       </div>
@@ -43,11 +46,13 @@ export default function Fixtures() {
                     </div>
                     <div className="col-md-4 ms-2">
                       <div className="card-text ">
-                        Karatina <b className="mx-2"> Vs </b> Kimathi
+                        <h6>
+                          Karatina <b className="mx-2"> Vs </b> Kimathi{" "}
+                        </h6>
                       </div>
                     </div>
                     <div className="col-md-6 align-items-center ">
-                      <div className="card-text my-3">
+                      <div className="card-text my-2">
                         <i className="bi bi-geo-alt-fill mx-2"></i>Chuka
                         University
                       </div>

@@ -23,7 +23,7 @@ export default function Navigation() {
                 Home
               </Nav.Link>
               <Nav.Link as={Link} to="/teams" className="me-3">
-                Teams
+               Events & Teams
               </Nav.Link>
               <Nav.Link as={Link} to="/fixtures" className="me-3">
                 Fixtures

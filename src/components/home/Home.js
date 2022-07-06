@@ -28,21 +28,22 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="about">
-        <div className="container-lg">
-          <div className="text-center">
-            <img
+      <section id="rest-bg">
+        <section id="about">
+          <div className="container-lg">
+            <div className="text-center">
+              {/* <img
               src="/pictures/Screenshot_20220703-190052_3.png"
               alt=""
               className="img-fluid"
-            />
-            <h3 className="mb-4 lead">
-              <b> Get started....</b>
-            </h3>
+            /> */}
+              <h3 className="mb-1 display-6">
+                <b> Get started....</b>
+              </h3>
+            </div>
           </div>
-        </div>
-      </section>
-      {/* <div className="row justify-content-center">
+        </section>
+        {/* <div className="row justify-content-center">
             <div className="col-lg-8">
               <div className="text-center">
                 <p>
@@ -55,102 +56,103 @@ export default function Home() {
               </div>
             </div>
           </div> */}
-      <section id="eventful" className="bg-light py-5">
-        <div className="container-lg">
-          <div className="row align-items-center justify-content-around">
-            <div className="col-10 col-lg-4 col-xl-3">
-              <div className="card my-2">
-                <img
-                  src="/pictures/teams.jpg"
-                  alt=""
-                  className="card-img-top"
-                />
-                <div className="card-body">
-                  <div className="card-title">
-                    <h5>Teams</h5>
-                  </div>
-                  <div className="card-text">
-                    Teams that are going to participate and registered for the
-                    coming scheduled KUSA games
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="col-10 col-lg-4 col-xl-3">
-              <div className="card my-2">
-                <img
-                  src="/pictures/cups-4278774_1920.jpg"
-                  alt=""
-                  className="card-img-top"
-                />
-                <div className="card-body">
-                  <div className="card-title">
-                    <h5>Upcoming Events</h5>
-                  </div>
-                  <div className="card-text">
-                    Events will begin at playoffs in various regions and later
-                    to national levels, either tournaments or leagues.
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="col-10 col-lg-4 col-xl-3">
-              <div className="card my-2">
-                <img
-                  src="/pictures/fixtures.jpg"
-                  alt=""
-                  className="card-img-top"
-                />
-                <div className="card-body">
-                  <div className="card-title">
-                    <h5>Fixtures</h5>
-                  </div>
-                  <div className="card-text">
-                    Fixtures of the participating institutions and when they
-                    will be played, alongside the venue of participation.
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section id="contact" className="mb-5">
-        <div className="container-lg p-4">
-          <div className="text-center">
-            <p className="display-6">Get in Touch..</p>
-            <p className="lead">You can contact us ..</p>
-          </div>
-          <div className="row justify-content-center">
-            <div className="col-lg-6">
-              <form action="">
-                <label htmlFor="email" className="form-label">
-                  Email Address:
-                </label>
-                <div className="mb-4 input-group">
-                  <span className="input-group-text">
-                    <i className="bi bi-person-fill"></i>
-                  </span>
-                  <input
-                    type="email"
-                    className="form-control"
-                    id="email"
-                    placeholder="email@gmail.com"
+        <section id="eventful" className=" pt-5">
+          <div className="container-lg">
+            <div className="row align-items-center justify-content-around">
+              <div className="col-10 col-lg-4 col-xl-3">
+                <div className="card mt-2">
+                  <img
+                    src="/pictures/teams.jpg"
+                    alt=""
+                    className="card-img-top"
                   />
+                  <div className="card-body">
+                    <div className="card-title">
+                      <h5>Teams</h5>
+                    </div>
+                    <div className="card-text">
+                      Teams that are going to participate and registered for the
+                      coming scheduled KUSA games
+                    </div>
+                  </div>
                 </div>
-                <div className="form-floating mb-4 mt-3">
-                  <textarea id="query" className="form-control"></textarea>
-
-                  <label for="query">Your query... </label>
+              </div>
+              <div className="col-10 col-lg-4 col-xl-3">
+                <div className="card mt-1">
+                  <img
+                    src="/pictures/cups-4278774_1920.jpg"
+                    alt=""
+                    className="card-img-top"
+                  />
+                  <div className="card-body">
+                    <div className="card-title">
+                      <h5>Upcoming Events</h5>
+                    </div>
+                    <div className="card-text">
+                      Events will begin at playoffs in various regions and later
+                      to national levels, either tournaments or leagues.
+                    </div>
+                  </div>
                 </div>
-                <div className="mb-4 text-center">
-                  <button className="btn btn-secondary">submit</button>
+              </div>
+              <div className="col-10 col-lg-4 col-xl-3">
+                <div className="card mt-2">
+                  <img
+                    src="/pictures/fixtures.jpg"
+                    alt=""
+                    className="card-img-top"
+                  />
+                  <div className="card-body">
+                    <div className="card-title">
+                      <h5>Fixtures</h5>
+                    </div>
+                    <div className="card-text">
+                      Fixtures of the participating institutions and when they
+                      will be played, alongside the venue of participation.
+                    </div>
+                  </div>
                 </div>
-              </form>
+              </div>
             </div>
           </div>
-        </div>
+        </section>
+
+        <section id="contact" className="pb-5">
+          <div className="container-lg p-4">
+            <div className="text-center">
+              <p className="display-6"> <b> Get in Touch..</b> </p>
+              <p className="lead">You can contact us ..</p>
+            </div>
+            <div className="row justify-content-center">
+              <div className="col-lg-6">
+                <form action="">
+                  <label htmlFor="email" className="form-label">
+                    Email Address:
+                  </label>
+                  <div className="mb-4 input-group">
+                    <span className="input-group-text">
+                      <i className="bi bi-person-fill"></i>
+                    </span>
+                    <input
+                      type="email"
+                      className="form-control"
+                      id="email"
+                      placeholder="email@gmail.com"
+                    />
+                  </div>
+                  <div className="form-floating mb-2 mt-3">
+                    <textarea id="query" className="form-control"></textarea>
+
+                    <label for="query">Your query... </label>
+                  </div>
+                  <div className="mb-4 text-center">
+                    <button className="btn btn-secondary">submit</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </section>
       </section>
 
       <section id="footer" className="bg-dark">

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import "./auth.css"
 
 export default function Login() {
 
@@ -19,9 +20,13 @@ export default function Login() {
   return (
     <div>
       <div className="container-lg ">
-        <div className="text-center mt-4 display-6">Sign in</div>
-        <div className="row justify-content-center p-3">
+        
+        <div className="row justify-content-center p-3 mt-5">
           <div className="col-lg-4 border border-dark rounded p-3 ">
+            <div className="text-center">
+              <i className="bi bi-person-circle" id="signin"></i>
+            </div>
+            <div className="text-center lead"> Sign in</div>
             <form action="">
               <label htmlFor="email" className="form-label">
                 Email:

@@ -4,10 +4,17 @@ const { validateUser } = require("../helpers/userValidator");
 const { validUser } = require("../helpers/signValidator");
 const { User } = require("../models/userModel");
 
-// async function getUsers(req, res) {
-//   try {
-//   } catch (error) {}
-// }
+//getUsers
+
+async function getUsers(req, res) {
+  try {
+    const users = await User.find({});
+    res.status(200).send(users);
+  } catch (error) {
+    res.status(500).send(error.message);
+    console.log(error);
+  }
+}
 
 //register user
 
@@ -40,7 +47,12 @@ async function createUser(req, res) {
     const secretKey = process.env.SECRET_KEY;
 
     const token = jwt.sign(
-      { _id: user._id, name: user.name, email: user.email },
+      {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        isAdmin: user.isAdmin,
+      },
       secretKey
     );
 
@@ -81,7 +93,12 @@ async function signUser(req, res) {
     const secretKey = process.env.SECRET_KEY;
 
     const token = jwt.sign(
-      { _id: user._id, name: user.name, email: user.email },
+      {
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        isAdmin: user.isAdmin,
+      },
       secretKey
     );
 
@@ -99,7 +116,25 @@ async function signUser(req, res) {
   }
 }
 
+//delete user
+
+async function deleteUser(req, res) {
+  try {
+    const user = await User.findById(req.params.id);
+    if (!user) return res.status(404).send("User not found..");
+    const deleteAUser = await User.findByIdAndDelete(req.params.id);
+    res.status(200).send({
+      message: "User deleted...",
+    });
+  } catch (error) {
+    res.status(500).send(error.message);
+    console.log(error);
+  }
+}
+
 module.exports = {
   createUser,
   signUser,
+  getUsers,
+  deleteUser,
 };

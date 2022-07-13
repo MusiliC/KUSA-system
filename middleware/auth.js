@@ -14,4 +14,17 @@ function auth(req, res, next) {
   }
 }
 
-module.exports = auth;
+const authAdmin = (req, res, next) => {
+  auth(req, res, () => {
+    if (req.user.isAdmin) {
+      next();
+    } else {
+      res.status(403).json("You are not authorized as the admin...");
+    }
+  });
+};
+
+module.exports = {
+  auth,
+  authAdmin,
+};

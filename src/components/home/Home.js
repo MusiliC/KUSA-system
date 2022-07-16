@@ -1,11 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
+
+
 import "./home.css";
 
 export default function Home() {
   return (
     <>
       <section id="home">
+      
         <div className="bg" id="home-bg">
           <div className="container-lg py-5 ">
             <div className="row justify-content-between">
@@ -120,7 +123,9 @@ export default function Home() {
         <section id="contact" className="pb-5">
           <div className="container-lg p-4">
             <div className="text-center">
-              <p className="display-6"> <b> Get in Touch..</b> </p>
+              <p className="display-6">
+                <b> Get in Touch..</b>{" "}
+              </p>
               <p className="lead">You can contact us ..</p>
             </div>
             <div className="row justify-content-center">
@@ -143,7 +148,7 @@ export default function Home() {
                   <div className="form-floating mb-2 mt-3">
                     <textarea id="query" className="form-control"></textarea>
 
-                    <label for="query">Your query... </label>
+                    <label htmlFor="query">Your query... </label>
                   </div>
                   <div className="mb-4 text-center">
                     <button className="btn btn-secondary">submit</button>
@@ -197,15 +202,6 @@ export default function Home() {
           </div>
         </footer>
       </section>
-
-      {/* <section id="cards" className="bg-light">
-        <div className="container-lg">
-          <div className="text-center">
-            <h2>About KUSA</h2>
-            <p class="lead text-muted">Get started..</p>
-          </div>
-        </div>
-      </section> */}
     </>
   );
 }

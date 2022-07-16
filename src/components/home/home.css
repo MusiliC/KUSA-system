@@ -65,3 +65,26 @@ background-color: #EAFFF2;
 }
 
 
+
+:root{
+    --offcanvas-width:270px;
+    --topNavbarHide: 56px;
+}
+
+.sidebar-nav{
+    width: var(--offcanvas-width);
+}
+
+@media (min-width: 992px) {
+
+    .offCanvas-backdrop::before{
+        display: none;
+    }
+
+    .sidebar-nav{
+        transform: none;
+        visibility: visible;
+        top:var(--topNavbarHide);
+        height: calc(100% - var(--topNavbarHide))
+    }
+}

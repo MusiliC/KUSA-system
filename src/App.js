@@ -7,6 +7,8 @@ import Home from "./components/home/Home";
 import Navigation from './components/navigation/Navigation';
 import Results from './components/results/Results';
 import Teams from './components/teams/Teams';
+import Sidebar from "./dashboard/admin-menu/Sidebar";
+
 
 function App() {
   return (
@@ -14,6 +16,7 @@ function App() {
       <div className="App">
         <Router>
           <Navigation />
+
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/results" element={<Results />} />
@@ -21,6 +24,7 @@ function App() {
             <Route path="/teams" element={<Teams />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/admin" element={<Sidebar/>} />
           </Routes>
         </Router>
       </div>

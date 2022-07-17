@@ -9,7 +9,7 @@ export default function CreateEvent() {
           <div className="lead">Create KUSA Event</div>
         </div>
         <div className="row justify-content-around">
-          <div className="col-9 col-lg-4 mt-3">
+          <div className="col-10 col-lg-5 mt-3">
             <form action="">
               <div className="mb-3">
                 <label htmlFor="host" className="form-label">

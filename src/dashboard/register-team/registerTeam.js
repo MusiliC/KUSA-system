@@ -31,7 +31,7 @@ export default function RegisterTeam() {
                 <input type="text" className="form-control" />
               </div>
             </form>
-            <div className="d-flex justify-content-center mb-3">
+            <div className="d-flex justify-content-center my-3">
               <Button variant="primary">Register Team</Button>
             </div>
           </div>

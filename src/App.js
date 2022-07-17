@@ -24,7 +24,7 @@ function App() {
             <Route path="/teams" element={<Teams />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/admin" element={<Sidebar/>} />
+            <Route path="/admin/:id/*" element={<Sidebar/>} />
           </Routes>
         </Router>
       </div>

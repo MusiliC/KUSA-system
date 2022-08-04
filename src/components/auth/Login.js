@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import "./auth.css"
+import "./auth.css";
 
 export default function Login() {
-
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -15,12 +14,10 @@ export default function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(user);
   };
   return (
     <div>
       <div className="container-lg ">
-        
         <div className="row justify-content-center p-3 mt-5">
           <div className="col-lg-4 border border-dark rounded p-3 ">
             <div className="text-center">

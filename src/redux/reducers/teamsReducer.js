@@ -8,7 +8,8 @@ const teamsReducer = (state = initialState, action) => {
       return [...state, action.payload];
 
     case actionTypes.ALL_TEAMS:
-      return [action.payload];
+     
+      return action.payload;
 
     case actionTypes.DELETE_TEAM:
       return state.filter((team) => team._id !== action.payload);

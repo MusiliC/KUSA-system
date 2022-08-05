@@ -1,7 +1,16 @@
-import React from 'react'
+import React, { useEffect } from "react";
 import Table from "react-bootstrap/Table";
+import { useDispatch, useSelector } from "react-redux";
+import { getTeams } from "../../redux/actions/teamsAction";
 
 export default function Teams() {
+  const dispatch = useDispatch();
+  const registeredTeams = useSelector((state) => state.teamsReducer);
+  
+
+  useEffect(() => {
+    dispatch(getTeams());
+  }, [dispatch]);
   return (
     <div>
       <section id="teams-page">
@@ -64,13 +73,22 @@ export default function Teams() {
               <Table striped bordered hover>
                 <thead>
                   <tr>
-                    <th>#</th>
+                    
                     <th>University Name</th>
                     <th>Location</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
+                  {registeredTeams &&
+                    registeredTeams.map((team) => (
+                      <tr key={team._id}>
+                        <td>{team.team}</td>
+                        <td>
+                          {team.county},  {team.town}
+                        </td>
+                      </tr>
+                    ))}
+                  {/* <tr>
                     <td>1</td>
                     <td>Karatina Universiity</td>
                     <td>Karatina, Nyeri</td>
@@ -84,7 +102,7 @@ export default function Teams() {
                     <td>3</td>
                     <td>Chuka Universiity</td>
                     <td>Chuka, Meru</td>
-                  </tr>
+                  </tr> */}
                 </tbody>
               </Table>
             </div>

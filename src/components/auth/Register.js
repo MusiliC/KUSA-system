@@ -1,6 +1,12 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { registerUser } from "../../redux/actions/authAction";
 
 export default function Register() {
+  // const navigate = useNavigate();
+  const dispatch = useDispatch();
+ 
 
   const [user, setUser] = useState({
     name: "",
@@ -15,7 +21,8 @@ export default function Register() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(user);
+    dispatch(registerUser(user));
+    console.log("account created successfully");
   };
   return (
     <div>

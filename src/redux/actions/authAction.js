@@ -51,6 +51,7 @@ export const deleteUser = (id) => async (dispatch) => {
   } catch (error) {
     console.log(error);
   }
+  dispatch(getUsers())
 };
 
 export const signOut = () => {

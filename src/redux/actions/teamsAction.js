@@ -19,9 +19,10 @@ export const getTeams = () => async (dispatch) => {
     const response = await api.getTeams();
 
     dispatch({
-      type: actionTypes.ALL_EVENTS,
+      type: actionTypes.ALL_TEAMS,
       payload: response.data,
     });
+   
   } catch (error) {
     console.log(error);
   }
@@ -51,4 +52,5 @@ export const deleteTeam = (id) => async (dispatch) => {
   } catch (error) {
     console.log(error);
   }
+  dispatch(getTeams())
 };

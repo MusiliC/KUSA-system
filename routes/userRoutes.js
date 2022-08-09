@@ -5,7 +5,7 @@ const { authAdmin } = require("../middleware/auth");
 
 router.post("/register", userController.createUser);
 router.post("/sign", userController.signUser);
-router.get("/", authAdmin, userController.getUsers);
-router.delete("/:id", authAdmin, userController.deleteUser);
+router.get("/",  userController.getUsers);
+router.delete("/:id",  userController.deleteUser);
 
 module.exports = router;

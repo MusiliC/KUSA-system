@@ -1,5 +1,6 @@
 const { validEvent } = require("../helpers/eventValidator");
 const { Event } = require("../models/eventsModel");
+var multer = require("multer");
 
 //Get events
 
@@ -15,6 +16,18 @@ async function allEvents(req, res) {
 
 //register events
 
+// // SET STORAGE
+// const Storage = multer.diskStorage({
+//   destination: (req,file, cb) => {
+//     cb(null, 'uploads')
+//   }, 
+//   filename: (req,file,cb) => {
+//     cb(null, file.originalname)
+//   }
+// })
+
+// const upload = multer({storage: Storage})
+
 async function registerEvent(req, res) {
   const { error } = validEvent(req.body);
   if (error) return res.status(400).send(error.details[0].message);
@@ -26,9 +39,10 @@ async function registerEvent(req, res) {
     if (registeredEvent)
       res.status(400).send("This event is already registered..");
     else {
-      const { name, date, host } = req.body;
+      const { name, date, host } = req.body
 
       registeredEvent = new Event({
+       
         name,
         date,
         host,

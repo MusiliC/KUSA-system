@@ -3,7 +3,11 @@ import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
 import { useDispatch, useSelector } from "react-redux";
 
-import { deleteTeam, getTeams, registerTeam } from "../../redux/actions/teamsAction";
+import {
+  deleteTeam,
+  getTeams,
+  registerTeam,
+} from "../../redux/actions/teamsAction";
 
 export default function RegisterTeam() {
   const dispatch = useDispatch();
@@ -26,8 +30,8 @@ export default function RegisterTeam() {
   };
 
   const handleDelete = (id) => {
-    dispatch(deleteTeam(id))
-  }
+    dispatch(deleteTeam(id));
+  };
 
   useEffect(() => {
     dispatch(getTeams());
@@ -36,10 +40,10 @@ export default function RegisterTeam() {
   return (
     <div className="container-lg">
       <div className="text-center">
-        <p className="display-6">Register Team</p>
+        <p className="display-6 mt-3">Register Team</p>
       </div>
       <div className="row justify-content-around ">
-        <div className="col-lg-4 mt-3">
+        <div className="col-lg-4 mt-5 ">
           <form action="">
             <div className="mb-2">
               <label htmlFor="" className="form-label">

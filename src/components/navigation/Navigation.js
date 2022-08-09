@@ -43,6 +43,11 @@ export default function Navigation() {
                     <b> Sign in</b>
                   </Button>
                 </Nav.Link>
+                  <Nav.Link as={Link} to="/login">
+                  <Button variant="outline-light" className="btn-sm ms-5">
+                    <b> Sign Out</b>
+                  </Button>
+                </Nav.Link>
               </div>
             </Nav>
           </Navbar.Collapse>

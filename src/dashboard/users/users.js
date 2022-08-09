@@ -24,8 +24,8 @@ function Users() {
             <b> Registered Users</b>
           </div>
           <div className="row justify-content-between">
-            <div className="col-12 col-lg-9 my-4">
-              <Table striped bordered hover>
+            <div className="col-12 col-lg-9 my-4 ms-4">
+              <Table striped bordered hover >
                 <thead>
                   <tr>
                     <th>Username</th>

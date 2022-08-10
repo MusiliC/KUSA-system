@@ -12,6 +12,8 @@ require("dotenv").config();
 app.use("/user", require("./routes/userRoutes"));
 app.use("/teams", require("./routes/teamRoutes"));
 app.use("/events", require("./routes/eventRoutes"));
+app.use("/scorer", require("./routes/scoresRoutes"));
+app.use("/results", require("./routes/resultsRoutes"));
 
 const connection_string = process.env.CONNECTION_STRING;
 const port = process.env.PORT || 5000;

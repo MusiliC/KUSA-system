@@ -6,6 +6,7 @@ const { authAdmin } = require("../middleware/auth");
 
 router.post("/register", teamController.registerTeam);
 router.get("/", teamController.allTeams);
+router.get("/:id", teamController.getTeam);
 router.delete("/:id", teamController.deleteTeam);
 router.patch("/:id", teamController.updateTeam);
 

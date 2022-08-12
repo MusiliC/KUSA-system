@@ -6,6 +6,7 @@ const { authAdmin } = require("../middleware/auth");
 
 router.post("/post", scoresController.postScores);
 router.get("/", scoresController.allScores);
+router.get("/:id", scoresController.oneScore);
 router.delete("/:id", scoresController.deleteScores);
 router.patch("/:id", scoresController.updateScores);
 

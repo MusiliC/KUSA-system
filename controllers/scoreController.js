@@ -13,6 +13,18 @@ async function allScores(req, res) {
   }
 }
 
+//get one score
+
+async function oneScore(req, res) {
+  try {
+    const scores = await Score.findById(req.params.id);
+    res.status(200).send(scores);
+  } catch (error) {
+    res.status(500).send(error.message);
+    console.log(error);
+  }
+}
+
 //post scores
 
 async function postScores(req, res) {
@@ -95,6 +107,7 @@ async function updateScores(req, res) {
 module.exports = {
   updateScores,
   allScores,
+  oneScore,
   deleteScores,
   postScores,
 };

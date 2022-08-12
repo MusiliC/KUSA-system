@@ -13,6 +13,18 @@ async function allSResults(req, res) {
   }
 }
 
+//one result
+
+async function oneResult(req, res) {
+  try {
+    const results = await Result.findById(req.params.id);
+    res.status(200).send(results);
+  } catch (error) {
+    res.status(500).send(error.message);
+    console.log(error);
+  }
+}
+
 //post results
 
 async function postResults(req, res) {
@@ -104,6 +116,7 @@ async function updateResults(req, res) {
 module.exports = {
   updateResults,
   allSResults,
+  oneResult,
   deleteResults,
   postResults,
 };

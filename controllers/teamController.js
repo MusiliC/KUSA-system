@@ -13,6 +13,18 @@ async function allTeams(req, res) {
   }
 }
 
+//Get one Team
+
+async function getTeam(req, res) {
+  try {
+    const team = await Team.findById(req.params.id);
+    res.status(200).send(team);
+  } catch (error) {
+    res.status(500).send(error.message);
+    console.log(error);
+  }
+}
+
 //register team
 
 async function registerTeam(req, res) {
@@ -89,6 +101,7 @@ async function updateTeam(req, res) {
 module.exports = {
   registerTeam,
   allTeams,
+  getTeam,
   deleteTeam,
   updateTeam,
 };

@@ -14,6 +14,18 @@ async function allEvents(req, res) {
   }
 }
 
+//get one event
+
+async function oneEvent(req, res) {
+  try {
+    const events = await Event.findById(req.params.id);
+    res.status(200).send(events);
+  } catch (error) {
+    res.status(500).send(error.message);
+    console.log(error);
+  }
+}
+
 //register events
 
 // // SET STORAGE
@@ -105,6 +117,7 @@ async function updateEvent(req, res) {
 module.exports = {
   registerEvent,
   allEvents,
+  oneEvent,
   deleteEvent,
   updateEvent,
 };

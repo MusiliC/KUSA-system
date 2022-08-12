@@ -6,6 +6,8 @@ export const createTeam = (team) => axios.post(`${url}/register`, team);
 
 export const getTeams = () => axios.get(`${url}`);
 
+export const oneTeam = (id) => axios.get(`${url}/${id}`);
+
 export const editTeam = (id, updatedTeam) =>
   axios.patch(`${url}/${id}`, updatedTeam);
 

@@ -1,7 +1,15 @@
-import React,{useState} from 'react'
+import React, { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getOneResult, updatedResults } from "../../redux/actions/resultsActions";
 
 function AdminUpdate() {
+  const results = useSelector((state) => state.resultsReducer.result);
 
+  const dispatch = useDispatch();
+  const navigate = useNavigate()
+
+  let { id } = useParams();
 
   const [newResults, setNewResults] = useState({
     winningTeam: "",
@@ -10,19 +18,33 @@ function AdminUpdate() {
     looserGoals: "",
   });
 
-  
+  const { winningTeam, loosingTeam, winnerGoals, looserGoals } = newResults;
+
   const handleInputChange = (e) => {
     setNewResults((v) => ({ ...v, [e.target.name]: e.target.value }));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-   
+    dispatch(updatedResults(id, newResults))
+    navigate("/admin/resultsUpdate")
   };
+
+  useEffect(() => {
+    if (results) {
+      setNewResults({ ...results });
+
+    }
+  }, [results]);
+
+  useEffect(() => {
+    dispatch(getOneResult(id));
+  }, [id]);
 
   return (
     <div className="container-lg">
       <div className="row">
+        <div className="text-center display-6 my-3">Results Update</div>
         <div className="col-lg-6">
           <form action="">
             <div className="mb-2">
@@ -32,6 +54,7 @@ function AdminUpdate() {
               <input
                 type="text"
                 name="winningTeam"
+                value={winningTeam}
                 onChange={handleInputChange}
                 className="form-control"
               />
@@ -43,6 +66,7 @@ function AdminUpdate() {
               <input
                 type="text"
                 name="loosingTeam"
+                value={loosingTeam}
                 onChange={handleInputChange}
                 className="form-control"
               />
@@ -54,6 +78,7 @@ function AdminUpdate() {
               <input
                 type="number"
                 name="winnerGoals"
+                value={winnerGoals}
                 onChange={handleInputChange}
                 className="form-control"
               />
@@ -65,6 +90,7 @@ function AdminUpdate() {
               <input
                 type="number"
                 name="looserGoals"
+                value={looserGoals}
                 onChange={handleInputChange}
                 className="form-control mb-2"
               />
@@ -81,4 +107,4 @@ function AdminUpdate() {
   );
 }
 
-export default AdminUpdate
+export default AdminUpdate;

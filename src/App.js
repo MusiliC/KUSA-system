@@ -10,6 +10,8 @@ import Teams from './components/teams/Teams';
 import Sidebar from "./dashboard/admin-menu/Sidebar";
 
 
+
+
 function App() {
   return (
     <>
@@ -24,7 +26,8 @@ function App() {
             <Route path="/teams" element={<Teams />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/admin/:id/*" element={<Sidebar/>} />
+         
+            <Route path="/admin/*" element={<Sidebar />} />
           </Routes>
         </Router>
       </div>

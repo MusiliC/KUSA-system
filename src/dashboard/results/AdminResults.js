@@ -7,12 +7,13 @@ import { useNavigate } from "react-router-dom";
 
 export default function AdminResults() {
   const dispatch = useDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  
 
   //handling Results
 
-  const results = useSelector((state) => state.resultsReducer);
-  console.log(results);
+  const results = useSelector((state) => state.resultsReducer.results);
+
 
   const handleResultDelete = (id) => {
     dispatch(deleteResult(id));
@@ -20,13 +21,13 @@ export default function AdminResults() {
 
   //handling top scorer
 
-  const topScorer = useSelector((state) => state.playerReducer);
+  const topScorer = useSelector((state) => state.playerReducer.players);
+ 
 
   const handlePlayerDelete = (id) => {
     dispatch(deleteScorer(id));
   };
 
-  
   useEffect(() => {
     dispatch(getResults());
     dispatch(getScorers());
@@ -45,7 +46,10 @@ export default function AdminResults() {
                 <li className="list-group-item">
                   {` ${teams.winningTeam} ${teams.winnerGoals} vs ${teams.loosingTeam} ${teams.looserGoals}`}
 
-                  <i className="bi bi-pencil-square mx-3"></i>
+                  <i
+                    className="bi bi-pencil-square mx-3"
+                    onClick={() => navigate(`result/${teams._id}`)}
+                  ></i>
                   <i
                     className="bi bi-trash-fill mx-2"
                     onClick={() => handleResultDelete(teams._id)}
@@ -81,7 +85,7 @@ export default function AdminResults() {
                           <i
                             className="bi bi-pencil-square"
                             onClick={() =>
-                              navigate(`/admin/results}`)
+                              navigate(`player/${player._id}`)
                             }
                           ></i>
                           <i

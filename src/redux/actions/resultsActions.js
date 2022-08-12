@@ -9,6 +9,7 @@ export const postResults = (result) => async (dispatch) => {
       type: actionTypes.POST_RESULT,
       payload: response.data,
     });
+    dispatch(getResults())
   } catch (error) {
     console.log(error);
   }
@@ -20,6 +21,20 @@ export const getResults = () => async (dispatch) => {
 
     dispatch({
       type: actionTypes.ALL_RESULTS,
+      payload: response.data,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+
+export const getOneResult = (id) => async (dispatch) => {
+  try {
+    const response = await api.oneResult(id);
+
+    dispatch({
+      type: actionTypes.ONE_RESULT,
       payload: response.data,
     });
   } catch (error) {

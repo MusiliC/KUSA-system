@@ -1,22 +1,35 @@
 import { actionTypes } from "../actions/actionTypes";
 
-const initialState = [];
+const initialState = {
+  events: [],
+  event: {},
+};
 
 const eventsReducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.CREATE_EVENT:
-      return [...state, action.payload];
+      return {
+        ...state,
+        event: action.payload,
+      };
 
     case actionTypes.ALL_EVENTS:
-      return action.payload;
+      return { events: action.payload };
+
+    case actionTypes.ONE_EVENT:
+      return { event: action.payload };
 
     case actionTypes.DELETE_EVENT:
-      return state.filter((event) => event._id !== action.payload);
+      return {
+        events: state.filter((event) => event._id !== action.payload),
+      };
 
     case actionTypes.UPDATE_EVENT:
-      return state.map((event) =>
-        event._id === action.payload.id ? action.payload : event
-      );
+      return {
+        events: state.map((event) =>
+          event._id === action.payload.id ? action.payload : event
+        ),
+      };
 
     default:
       return state;

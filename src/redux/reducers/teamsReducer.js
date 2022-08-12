@@ -1,22 +1,39 @@
 import { actionTypes } from "../actions/actionTypes";
 
-const initialState = [];
+const initialState = {
+  teams: [],
+  team: {},
+};
 
 const teamsReducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.REGISTER_TEAM:
-      return [...state, action.payload];
+      return {
+        ...state,
+        team: action.payload,
+      };
 
     case actionTypes.ALL_TEAMS:
-      return action.payload;
+      return {
+        teams: action.payload,
+      };
+
+    case actionTypes.ONE_TEAM:
+      return {
+        team: action.payload,
+      };
 
     case actionTypes.DELETE_TEAM:
-      return state.filter((team) => team._id !== action.payload);
+      return {
+        teams: state.filter((team) => team._id !== action.payload),
+      };
 
     case actionTypes.UPDATE_TEAM:
-      return state.map((team) =>
-        team._id === action.payload.id ? action.payload : team
-      );
+      return {
+        teams: state.map((team) =>
+          team._id === action.payload.id ? action.payload : team
+        ),
+      };
 
     default:
       return state;

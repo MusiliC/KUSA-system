@@ -9,6 +9,7 @@ export const postScorer = (player) => async (dispatch) => {
       type: actionTypes.POST_PLAYER,
       payload: response.data,
     });
+    dispatch(getScorers())
   } catch (error) {
     console.log(error);
   }
@@ -27,6 +28,19 @@ export const getScorers = () => async (dispatch) => {
   }
 };
 
+export const getOneScore = (id) => async (dispatch) => {
+  try {
+    const response = await api.onePlayer(id);
+
+    dispatch({
+      type: actionTypes.ONE_PLAYER,
+      payload: response.data,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const updateScorers = (id, updatedPlayers) => async (dispatch) => {
   try {
     const response = await api.editPlayer(id, updatedPlayers);
@@ -35,6 +49,7 @@ export const updateScorers = (id, updatedPlayers) => async (dispatch) => {
       type: actionTypes.UPDATE_PLAYER,
       payload: response.data,
     });
+    dispatch(getScorers())
   } catch (error) {
     console.log(error);
   }

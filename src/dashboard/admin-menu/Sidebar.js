@@ -7,17 +7,19 @@ import Navbar from "react-bootstrap/Navbar";
 import RegisterTeam from "../register-team/registerTeam";
 import CreateEvent from "../create event/createEvent";
 import AdminEvents from "../admin events/adminEvents";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, Route, Routes,  } from "react-router-dom";
 import UpdateResults from "../update results/updateResults";
 import GenerateFixtures from "../generate fixtures/generateFixtures";
 import Users from "../users/users";
 import AdminResults from "../results/AdminResults";
+import AdminUpdate from "../results/AdminUpdate";
+import AdminScore from "../results/AdminScore";
+import UpdateTeam from "../register-team/UpdateTeam";
 // import AdminScore from "../results/AdminScore";
 
 export default function Sidebar() {
-  const navigate = useNavigate();
-  const { pathname } = useLocation();
-  console.log(pathname);
+
+ 
 
   return (
     <>
@@ -70,25 +72,21 @@ export default function Sidebar() {
         </div>
         <div className="col-lg-9">
           <div className="admin">
-            {/* <RegisterTeam/> */}
-
-            {pathname === "/admin/event" ? (
-              <AdminEvents />
-            ) : pathname === "/admin/register" ? (
-              <RegisterTeam />
-            ) : pathname === "/admin/create" ? (
-              <CreateEvent />
-            ) : pathname === "/admin/results" ? (
-              <UpdateResults />
-            ) : pathname === "/admin/resultsUpdate" ? (
-              <AdminResults />
-            ) : pathname === "/admin/fixtures" ? (
-              <GenerateFixtures />
-            ) : pathname === "/admin/users" ? (
-              <Users />
-            ) : (
-              navigate("/")
-            )}
+            <Routes>
+              <Route path="/resultsUpdate" element={<AdminResults />} />
+              <Route path="/create" element={<CreateEvent />} />
+              <Route path="/register" element={<RegisterTeam />} />
+              <Route path="/register/team/:id" element={<UpdateTeam />} />
+              <Route path="/users" element={<Users />} />
+              <Route
+                path="resultsUpdate/result/:id"
+                element={<AdminUpdate />}
+              />
+              <Route path="/resultsUpdate/player/:id" element={<AdminScore />} />
+              <Route path="/fixtures" element={<GenerateFixtures />} />
+              <Route path="/results" element={<UpdateResults />} />
+              <Route path="/event" element={<AdminEvents />} />
+            </Routes>
           </div>
         </div>
       </div>

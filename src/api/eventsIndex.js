@@ -6,6 +6,8 @@ export const createEvent = (event) => axios.post(`${url}/register`, event);
 
 export const getEvent = () => axios.get(`${url}`);
 
+export const getOneEvent = (id) => axios.get(`${url}/${id}`);
+
 export const editEvent = (id, updatedEvent) =>
   axios.patch(`${url}/${id}`, updatedEvent);
 

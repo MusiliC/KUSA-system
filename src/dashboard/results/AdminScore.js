@@ -1,9 +1,14 @@
-import React, { useState, useParams } from "react";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { getOneScore, updateScorers } from "../../redux/actions/playerActions";
 
 function AdminScore() {
+  let { id } = useParams();
+  const dispatch = useDispatch();
+  const navigate = useNavigate()
 
-//  let { id } = useParams();
-//  console.log(id);
+  const onePlayer = useSelector((state) => state.playerReducer.player);
 
   const [player, setPlayer] = useState({
     scorer: "",
@@ -11,12 +16,26 @@ function AdminScore() {
     scorerGoals: "",
   });
 
-  const handleInput = (e) => {
-    setPlayer((v) => ({ ...v, [e.target.name]: e.target.value }));
-  };
+  const { scorer, scorerTeam, scorerGoals } = player;
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    dispatch(updateScorers(id, player))
+    navigate("/admin/resultsUpdate")
+  };
+
+  useEffect(() => {
+    dispatch(getOneScore(id));
+  }, [id]);
+
+  useEffect(() => {
+    if (onePlayer) {
+      setPlayer({ ...onePlayer });
+    }
+  }, [onePlayer]);
+
+  const handleInput = (e) => {
+    setPlayer((v) => ({ ...v, [e.target.name]: e.target.value }));
   };
 
   return (
@@ -32,6 +51,7 @@ function AdminScore() {
               <input
                 type="text"
                 name="scorer"
+                value={scorer}
                 onChange={handleInput}
                 className="form-control"
               />
@@ -43,6 +63,7 @@ function AdminScore() {
               <input
                 type="text"
                 name="scorerTeam"
+                value={scorerTeam}
                 onChange={handleInput}
                 className="form-control"
               />
@@ -54,6 +75,7 @@ function AdminScore() {
               <input
                 type="number"
                 name="scorerGoals"
+                value={scorerGoals}
                 onChange={handleInput}
                 className="form-control"
               />

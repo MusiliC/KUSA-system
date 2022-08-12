@@ -1,22 +1,39 @@
 import { actionTypes } from "../actions/actionTypes";
 
-const initialState = [];
+const initialState = {
+  results: [],
+  result: {},
+};
 
 const resultsReducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.POST_RESULT:
-      return [...state, action.payload];
+      return {
+        ...state,
+        result: action.payload,
+      };
 
     case actionTypes.ALL_RESULTS:
-      return action.payload;
+      return {
+        results: action.payload,
+      };
+
+    case actionTypes.ONE_RESULT:
+      return {
+        result: action.payload,
+      };
 
     case actionTypes.DELETE_RESULT:
-      return state.filter((result) => result._id !== action.payload);
+      return {
+        results: state.filter((result) => result._id !== action.payload),
+      };
 
     case actionTypes.UPDATE_RESULT:
-      return state.map((event) =>
-        event._id === action.payload.id ? action.payload : event
-      );
+      return {
+        results: state.map((event) =>
+          event._id === action.payload.id ? action.payload : event
+        ),
+      };
 
     default:
       return state;

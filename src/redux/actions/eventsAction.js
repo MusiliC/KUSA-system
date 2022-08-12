@@ -27,6 +27,19 @@ export const getEvents = () => async (dispatch) => {
   }
 };
 
+export const getOneEvent = (id) => async (dispatch) => {
+  try {
+    const response = await api.getOneEvent(id);
+
+    dispatch({
+      type: actionTypes.ONE_EVENT,
+      payload: response.data,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const updatedEvent = (id, newEvent) => async (dispatch) => {
   try {
     const response = await api.editEvent(id, newEvent);

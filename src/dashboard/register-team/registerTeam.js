@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import Table from "react-bootstrap/Table";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import {
   deleteTeam,
@@ -11,7 +12,8 @@ import {
 
 export default function RegisterTeam() {
   const dispatch = useDispatch();
-  const registeredTeams = useSelector((state) => state.teamsReducer);
+  const navigate = useNavigate();
+  const registeredTeams = useSelector((state) => state.teamsReducer.teams);
   // console.log(registeredTeams);
 
   const [institution, setInstitution] = useState({
@@ -33,9 +35,7 @@ export default function RegisterTeam() {
     dispatch(deleteTeam(id));
   };
 
-  const handleUpdate = () => {
-    
-  }
+ 
 
   useEffect(() => {
     dispatch(getTeams());
@@ -109,7 +109,10 @@ export default function RegisterTeam() {
                     </td>
                     <td>
                       <div className="d-flex justify-content-around align-items-center">
-                        <i className="bi bi-pencil-square" onClick={handleUpdate}></i>
+                        <i
+                          className="bi bi-pencil-square"
+                          onClick={() => navigate(`team/${team._id}`)}
+                        ></i>
                         <i
                           className="bi bi-trash-fill"
                           onClick={() => handleDelete(team._id)}

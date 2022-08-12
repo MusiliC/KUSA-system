@@ -9,6 +9,7 @@ export const registerTeam = (team) => async (dispatch) => {
       type: actionTypes.REGISTER_TEAM,
       payload: response.data,
     });
+    dispatch(getTeams());
   } catch (error) {
     console.log(error);
   }
@@ -20,6 +21,19 @@ export const getTeams = () => async (dispatch) => {
 
     dispatch({
       type: actionTypes.ALL_TEAMS,
+      payload: response.data,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const getOneTeam = (id) => async (dispatch) => {
+  try {
+    const response = await api.oneTeam(id);
+
+    dispatch({
+      type: actionTypes.ONE_TEAM,
       payload: response.data,
     });
   } catch (error) {

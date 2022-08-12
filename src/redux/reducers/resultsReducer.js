@@ -2,18 +2,18 @@ import { actionTypes } from "../actions/actionTypes";
 
 const initialState = [];
 
-const eventsReducer = (state = initialState, action) => {
+const resultsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.CREATE_EVENT:
+    case actionTypes.POST_RESULT:
       return [...state, action.payload];
 
-    case actionTypes.ALL_EVENTS:
+    case actionTypes.ALL_RESULTS:
       return action.payload;
 
-    case actionTypes.DELETE_EVENT:
-      return state.filter((event) => event._id !== action.payload);
+    case actionTypes.DELETE_RESULT:
+      return state.filter((result) => result._id !== action.payload);
 
-    case actionTypes.UPDATE_EVENT:
+    case actionTypes.UPDATE_RESULT:
       return state.map((event) =>
         event._id === action.payload.id ? action.payload : event
       );
@@ -23,4 +23,4 @@ const eventsReducer = (state = initialState, action) => {
   }
 };
 
-export default eventsReducer;
+export default resultsReducer;

@@ -8,7 +8,6 @@ const teamsReducer = (state = initialState, action) => {
       return [...state, action.payload];
 
     case actionTypes.ALL_TEAMS:
-     
       return action.payload;
 
     case actionTypes.DELETE_TEAM:

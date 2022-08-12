@@ -1,0 +1,73 @@
+import React, { useState, useParams } from "react";
+
+function AdminScore() {
+
+//  let { id } = useParams();
+//  console.log(id);
+
+  const [player, setPlayer] = useState({
+    scorer: "",
+    scorerTeam: "",
+    scorerGoals: "",
+  });
+
+  const handleInput = (e) => {
+    setPlayer((v) => ({ ...v, [e.target.name]: e.target.value }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+  };
+
+  return (
+    <div className="container-lg">
+      <div className="display-6 text-center my-4">Update</div>
+      <div className="row justify-content-center">
+        <div className="col-lg-5">
+          <form action="">
+            <div className="mb-2">
+              <label htmlFor="" className="form-label">
+                Enter goal scorer's name:
+              </label>
+              <input
+                type="text"
+                name="scorer"
+                onChange={handleInput}
+                className="form-control"
+              />
+            </div>
+            <div className="mb-2">
+              <label htmlFor="" className="form-label">
+                Enter goal scorer's team:
+              </label>
+              <input
+                type="text"
+                name="scorerTeam"
+                onChange={handleInput}
+                className="form-control"
+              />
+            </div>
+            <div className="mb-2">
+              <label htmlFor="" className="form-label">
+                Enter number of goals:
+              </label>
+              <input
+                type="number"
+                name="scorerGoals"
+                onChange={handleInput}
+                className="form-control"
+              />
+            </div>
+            <div className="d-flex justify-content-center">
+              <button className="btn btn-primary my-2" onClick={handleSubmit}>
+                Update
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default AdminScore;

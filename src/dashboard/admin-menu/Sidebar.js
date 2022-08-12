@@ -11,10 +11,13 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import UpdateResults from "../update results/updateResults";
 import GenerateFixtures from "../generate fixtures/generateFixtures";
 import Users from "../users/users";
+import AdminResults from "../results/AdminResults";
+// import AdminScore from "../results/AdminScore";
 
 export default function Sidebar() {
   const navigate = useNavigate();
   const { pathname } = useLocation();
+  console.log(pathname);
 
   return (
     <>
@@ -41,6 +44,14 @@ export default function Sidebar() {
                     Kusa Events
                   </Nav.Link>
                   <Nav.Link as={Link} to="/admin/results" className="my-3">
+                    <i className="bi bi-pencil-square me-2"></i>
+                    Update Results
+                  </Nav.Link>
+                  <Nav.Link
+                    as={Link}
+                    to="/admin/resultsUpdate"
+                    className="my-3"
+                  >
                     <i className="bi bi-pencil-square me-2"></i>
                     Results
                   </Nav.Link>
@@ -69,6 +80,8 @@ export default function Sidebar() {
               <CreateEvent />
             ) : pathname === "/admin/results" ? (
               <UpdateResults />
+            ) : pathname === "/admin/resultsUpdate" ? (
+              <AdminResults />
             ) : pathname === "/admin/fixtures" ? (
               <GenerateFixtures />
             ) : pathname === "/admin/users" ? (

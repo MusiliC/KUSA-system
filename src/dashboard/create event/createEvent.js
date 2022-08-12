@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { getEvents } from "../../redux/actions/eventsAction";
 
 export default function CreateEvent() {
   const dispatch = useDispatch();
-  const events = useSelector((state) => state.eventsReducer);
-  // console.log(events);
 
   const [event, setEvent] = useState({
     name: "KUSA Play offs Round 1 ",

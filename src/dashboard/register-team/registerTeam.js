@@ -33,6 +33,10 @@ export default function RegisterTeam() {
     dispatch(deleteTeam(id));
   };
 
+  const handleUpdate = () => {
+    
+  }
+
   useEffect(() => {
     dispatch(getTeams());
   }, [dispatch]);
@@ -105,7 +109,7 @@ export default function RegisterTeam() {
                     </td>
                     <td>
                       <div className="d-flex justify-content-around align-items-center">
-                        <i className="bi bi-pencil-square"></i>
+                        <i className="bi bi-pencil-square" onClick={handleUpdate}></i>
                         <i
                           className="bi bi-trash-fill"
                           onClick={() => handleDelete(team._id)}

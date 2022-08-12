@@ -22,7 +22,6 @@ export const getTeams = () => async (dispatch) => {
       type: actionTypes.ALL_TEAMS,
       payload: response.data,
     });
-   
   } catch (error) {
     console.log(error);
   }
@@ -30,7 +29,7 @@ export const getTeams = () => async (dispatch) => {
 
 export const updateTeam = (id, updatedTeam) => async (dispatch) => {
   try {
-    const response = await actionTypes.UPDATE_TEAM(id, updatedTeam);
+    const response = await api.editTeam(id, updatedTeam);
 
     dispatch({
       type: actionTypes.UPDATE_TEAM,
@@ -52,5 +51,5 @@ export const deleteTeam = (id) => async (dispatch) => {
   } catch (error) {
     console.log(error);
   }
-  dispatch(getTeams())
+  dispatch(getTeams());
 };

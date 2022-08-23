@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { registerUser } from "../../redux/actions/authAction";
 
 export default function Register() {
-  // const navigate = useNavigate();
+  const navigate = useNavigate();
   const dispatch = useDispatch();
  
 
@@ -22,7 +22,7 @@ export default function Register() {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(registerUser(user));
-    console.log("account created successfully");
+    navigate("/")
   };
   return (
     <div>

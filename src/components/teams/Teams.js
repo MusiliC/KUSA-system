@@ -5,7 +5,8 @@ import { getTeams } from "../../redux/actions/teamsAction";
 
 export default function Teams() {
   const dispatch = useDispatch();
-  const registeredTeams = useSelector((state) => state.teamsReducer);  
+  const registeredTeams = useSelector((state) => state.teamsReducer.teams);  
+  
 
   useEffect(() => {
     dispatch(getTeams());

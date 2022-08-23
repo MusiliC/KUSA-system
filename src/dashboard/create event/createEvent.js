@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { getEvents } from "../../redux/actions/eventsAction";
+import { createEvent, getEvents } from "../../redux/actions/eventsAction";
 
 export default function CreateEvent() {
   const dispatch = useDispatch();
@@ -19,8 +19,8 @@ export default function CreateEvent() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
-    console.log(event);
+    dispatch(createEvent(event));
+    console.log("created");
   };
 
   useEffect(() => {

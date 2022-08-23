@@ -1,8 +1,15 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import "./auth.css";
+import { signUser } from "../../redux/actions/authAction";
 
 export default function Login() {
+  const dispatch = useDispatch();
+  const auth = useSelector((state) => state.authReducer);
+
+  const navigate = useNavigate();
+
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -14,7 +21,14 @@ export default function Login() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    dispatch(signUser(user));
   };
+
+  useEffect(() => {
+    if (auth.user._id) {
+      navigate("/");
+    }
+  }, [auth.user._id, navigate]);
   return (
     <div>
       <div className="container-lg ">

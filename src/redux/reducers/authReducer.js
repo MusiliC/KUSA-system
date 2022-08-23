@@ -1,8 +1,11 @@
 import { actionTypes } from "../actions/actionTypes";
+import jwtDecode from "jwt-decode";
 
 const initialState = {
   users: [],
-  user: {},
+  user: {
+    token: localStorage.getItem("token"),
+  },
 };
 
 const authReducer = (state = initialState, action) => {
@@ -13,14 +16,27 @@ const authReducer = (state = initialState, action) => {
       };
 
     case actionTypes.REGISTER_USER:
+      const authUser = jwtDecode(action.payload);
       return {
-        ...state,
-        user: action.payload,
+        user: {
+          ...state,
+          token: action.payload,
+          name: authUser.name,
+          email: authUser.email,
+          _id: authUser._id,
+        },
       };
 
     case actionTypes.SIGN_IN:
+      const validUser = jwtDecode(action.payload);
       return {
-        user: action.payload,
+        user: {
+          ...state,
+          token: action.payload,
+          name: validUser.name,
+          email: validUser.email,
+          _id: validUser._id,
+        },
       };
 
     case actionTypes.DELETE_USER:

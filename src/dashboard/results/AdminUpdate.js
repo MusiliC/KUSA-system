@@ -39,7 +39,7 @@ function AdminUpdate() {
 
   useEffect(() => {
     dispatch(getOneResult(id));
-  }, [id]);
+  }, [dispatch,id]);
 
   return (
     <div className="container-lg">

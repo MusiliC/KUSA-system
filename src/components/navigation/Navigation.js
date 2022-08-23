@@ -37,14 +37,14 @@ export default function Navigation() {
               <Nav.Link as={Link} to="/about" className="me-3">
                 About
               </Nav.Link>
-              <div className="d-flex justify-content-end ms-5 ">
+              <div className="d-flex justify-content-end ms-2 ">
                 <Nav.Link as={Link} to="/login">
                   <Button variant="outline-light" className="btn-sm ms-5">
                     <b> Sign in</b>
                   </Button>
                 </Nav.Link>
                   <Nav.Link as={Link} to="/login">
-                  <Button variant="outline-light" className="btn-sm ms-5">
+                  <Button variant="outline-light" className="btn-sm ms-2">
                     <b> Sign Out</b>
                   </Button>
                 </Nav.Link>

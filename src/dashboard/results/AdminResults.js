@@ -8,12 +8,10 @@ import { useNavigate } from "react-router-dom";
 export default function AdminResults() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  
 
   //handling Results
 
   const results = useSelector((state) => state.resultsReducer.results);
-
 
   const handleResultDelete = (id) => {
     dispatch(deleteResult(id));
@@ -22,7 +20,6 @@ export default function AdminResults() {
   //handling top scorer
 
   const topScorer = useSelector((state) => state.playerReducer.players);
- 
 
   const handlePlayerDelete = (id) => {
     dispatch(deleteScorer(id));
@@ -43,17 +40,18 @@ export default function AdminResults() {
           <ol className="list-group group list-group-numbered">
             {results &&
               results.map((teams) => (
-                <li className="list-group-item">
+                <li className="list-group-item my-1">
                   {` ${teams.winningTeam} ${teams.winnerGoals} vs ${teams.loosingTeam} ${teams.looserGoals}`}
-
-                  <i
-                    className="bi bi-pencil-square mx-3"
-                    onClick={() => navigate(`result/${teams._id}`)}
-                  ></i>
-                  <i
-                    className="bi bi-trash-fill mx-2"
-                    onClick={() => handleResultDelete(teams._id)}
-                  ></i>
+                  <div className="d-flex justify-content-around my-1">
+                    <i
+                      className="bi bi-pencil-square "
+                      onClick={() => navigate(`result/${teams._id}`)}
+                    ></i>
+                    <i
+                      className="bi bi-trash-fill "
+                      onClick={() => handleResultDelete(teams._id)}
+                    ></i>
+                  </div>
                 </li>
               ))}
           </ol>
@@ -84,9 +82,7 @@ export default function AdminResults() {
                         <div className="d-flex justify-content-around align-items-center">
                           <i
                             className="bi bi-pencil-square"
-                            onClick={() =>
-                              navigate(`player/${player._id}`)
-                            }
+                            onClick={() => navigate(`player/${player._id}`)}
                           ></i>
                           <i
                             className="bi bi-trash-fill"

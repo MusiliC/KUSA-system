@@ -50,6 +50,7 @@ export const updatedResults = (id, newResult) => async (dispatch) => {
       type: actionTypes.UPDATE_RESULT,
       payload: response.data,
     });
+    dispatch(getResults())
   } catch (error) {
     console.log(error);
   }

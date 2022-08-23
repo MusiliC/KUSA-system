@@ -1,29 +1,32 @@
+
 import * as api from "../../api/authIndex";
 import { actionTypes } from "./actionTypes";
 
 export const registerUser = (user) => async (dispatch) => {
   try {
     const response = await api.createUser(user);
-
+    localStorage.setItem("token", response.data);
     dispatch({
       type: actionTypes.REGISTER_USER,
       payload: response.data,
     });
   } catch (error) {
     console.log(error);
+   
   }
 };
 
 export const signUser = (user) => async (dispatch) => {
   try {
     const response = await api.loginUser(user);
-
+    localStorage.setItem("token", response.data);
     dispatch({
       type: actionTypes.SIGN_IN,
       payload: response.data,
     });
   } catch (error) {
     console.log(error);
+  
   }
 };
 
@@ -51,7 +54,7 @@ export const deleteUser = (id) => async (dispatch) => {
   } catch (error) {
     console.log(error);
   }
-  dispatch(getUsers())
+  dispatch(getUsers());
 };
 
 export const signOut = () => {

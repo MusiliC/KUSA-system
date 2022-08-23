@@ -26,7 +26,7 @@ function AdminScore() {
 
   useEffect(() => {
     dispatch(getOneScore(id));
-  }, [id]);
+  }, [dispatch,id]);
 
   useEffect(() => {
     if (onePlayer) {

@@ -1,6 +1,17 @@
-import React from 'react'
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getEvents } from "../../redux/actions/eventsAction";
 
 export default function AdminEvents() {
+
+const dispatch = useDispatch()  
+  const events = useSelector((state) => state.eventsReducer.events);
+  console.log(events);
+
+
+  useEffect(() => {
+    dispatch(getEvents())
+  },[])
   return (
     <div>
       <div className="container-lg">

@@ -57,13 +57,7 @@ async function createUser(req, res) {
     );
 
     //   return success response
-    res.status(200).send({
-      message: "Registration Successful",
-      id: user._id,
-      name: user.name,
-      email: user.email,
-      token,
-    });
+    res.status(200).send(token);
   } catch (error) {
     res.status(500).send(error.message);
     console.log(error);
@@ -103,13 +97,7 @@ async function signUser(req, res) {
     );
 
     //   return success response
-    res.status(200).send({
-      message: "Login Successful",
-      id: user._id,
-      name: user.name,
-      email: user.email,
-      token,
-    });
+    res.status(200).send(token);
   } catch (error) {
     res.status(500).send(error.message);
     console.log(error);

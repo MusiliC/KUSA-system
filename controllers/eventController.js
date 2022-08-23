@@ -26,19 +26,36 @@ async function oneEvent(req, res) {
   }
 }
 
-//register events
 
-// // SET STORAGE
-// const Storage = multer.diskStorage({
-//   destination: (req,file, cb) => {
-//     cb(null, 'uploads')
-//   }, 
-//   filename: (req,file,cb) => {
-//     cb(null, file.originalname)
-//   }
-// })
+// SET STORAGE
+const storage = multer.diskStorage({
+  destination: (req,file, cb) => {
+    cb(null, 'uploads')
+  },
+  filename: (req,file,cb) => {
+    cb(null, file.originalname.toLowerCase().split(' ').join('-'))
+  }
+})
 
 // const upload = multer({storage: Storage})
+
+var upload = multer({
+  storage: storage,
+  fileFilter: (req, file, cb) => {
+    if (
+      file.mimetype == "image/png" ||
+      file.mimetype == "image/jpg" ||
+      file.mimetype == "image/jpeg"
+    ) {
+      cb(null, true);
+    } else {
+      cb(null, false);
+      return cb(new Error("Only .png, .jpg and .jpeg format allowed!"));
+    }
+  },
+}).single('img')
+
+
 
 async function registerEvent(req, res) {
   const { error } = validEvent(req.body);
@@ -51,10 +68,10 @@ async function registerEvent(req, res) {
     if (registeredEvent)
       res.status(400).send("This event is already registered..");
     else {
-      const { name, date, host } = req.body
+      const { img, name, date, host } = req.body;
 
       registeredEvent = new Event({
-       
+        img,
         name,
         date,
         host,
@@ -96,11 +113,12 @@ async function updateEvent(req, res) {
     const eventToUpdate = await Event.findById(req.params.id);
     if (!eventToUpdate) return res.status(404).send("event not found..");
 
-    const { name, date, host } = req.body;
+    const { img, name, date, host } = req.body;
 
     const updatedEvent = await Event.findByIdAndUpdate(
       req.params.id,
       {
+        img,
         name,
         date,
         host,

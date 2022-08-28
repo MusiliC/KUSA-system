@@ -32,34 +32,16 @@ async function postResults(req, res) {
   if (error) return res.status(400).send(error.details[0].message);
 
   try {
-    const { winningTeam, loosingTeam, winnerGoals, looserGoals } = req.body;
+    const { homeTeam, awayTeam, homeTeamGoals, awayTeamGoals } = req.body;
 
     let newResult = new Result({
-      winningTeam,
-      loosingTeam,
-      winnerGoals,
-      looserGoals,
+      homeTeam,
+      awayTeam,
+      homeTeamGoals,
+      awayTeamGoals,
     });
 
     await newResult.save();
-
-    // let existingResult = await Result.findOne({ scorer: req.body.scorer });
-
-    // if (topScorer)
-    //   res.status(400).send("This player already exist update goals tally");
-    // else {
-    //   const { scorer, scorerTeam, scorerGoals } = req.body;
-
-    //   topScorer = new Score({
-    //     scorer,
-    //     scorerTeam,
-    //     scorerGoals,
-    //   });
-
-    //   await topScorer.save();
-    // }
-
-    //confirmation message
 
     res.status(200).send({
       message: "Results  posted successful",
@@ -94,15 +76,15 @@ async function updateResults(req, res) {
     // const playerToUpdate = await Score.findById(req.params.id);
     // if (!playerToUpdate) return res.status(404).send("Player not found..");
 
-    const { winningTeam, loosingTeam, winnerGoals, looserGoals } = req.body;
+    const { homeTeam, awayTeam, homeTeamGoals, awayTeamGoals } = req.body;
 
     const updatedResults = await Result.findByIdAndUpdate(
       req.params.id,
       {
-        winningTeam,
-        loosingTeam,
-        winnerGoals,
-        looserGoals,
+        homeTeam,
+        awayTeam,
+        homeTeamGoals,
+        awayTeamGoals,
       },
       { new: true }
     );

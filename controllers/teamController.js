@@ -38,12 +38,14 @@ async function registerTeam(req, res) {
     if (registeredTeam)
       res.status(400).send("This institution is already registered..");
     else {
-      const { team, county, town } = req.body;
+      const { team, county, wins, draws, lost } = req.body;
 
       registeredTeam = new Team({
         team,
         county,
-        town,
+        wins,
+        draws,
+        lost,
       });
 
       await registeredTeam.save();
@@ -80,14 +82,16 @@ async function updateTeam(req, res) {
     const teamToUpdate = await Team.findById(req.params.id);
     if (!teamToUpdate) return res.status(404).send("Team not found..");
 
-    const { team, county, town } = req.body;
+    const { team, county, wins, draws, lost } = req.body;
 
     const updatedTeam = await Team.findByIdAndUpdate(
       req.params.id,
       {
         team,
         county,
-        town,
+        wins,
+        draws,
+        lost,
       },
       { new: true }
     );
@@ -98,10 +102,76 @@ async function updateTeam(req, res) {
   }
 }
 
+async function updateWin(req, res) {
+  try {
+    const { team } = req.body;
+    const updateResult = await Team.findByIdAndUpdate(
+      req.params.id,
+      {
+        team,
+        $inc: {
+          wins: 1,
+        },
+      },
+      { new: true }
+    );
+    res.send(updateResult);
+  } catch (error) {
+    res.status(500).send(error.message);
+    console.log(error);
+  }
+}
+
+
+async function updateDraw(req, res) {
+  try {
+    const { team } = req.body;
+    const updateResult = await Team.findByIdAndUpdate(
+      req.params.id,
+      {
+        team,
+        $inc: {
+          draws: 1,
+        },
+      },
+      { new: true }
+    );
+    res.send(updateResult);
+  } catch (error) {
+    res.status(500).send(error.message);
+    console.log(error);
+  }
+}
+
+async function updateLost(req, res) {
+  try {
+    const { team } = req.body;
+    const updateResult = await Team.findByIdAndUpdate(
+      req.params.id,
+      {
+        team,
+        $inc: {
+          lost: 1,
+        },
+      },
+      { new: true }
+    );
+    res.send(updateResult);
+  } catch (error) {
+    res.status(500).send(error.message);
+    console.log(error);
+  }
+}
+
+
+
 module.exports = {
   registerTeam,
   allTeams,
   getTeam,
   deleteTeam,
   updateTeam,
+  updateWin,
+  updateDraw,
+  updateLost,
 };

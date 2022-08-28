@@ -1,17 +1,17 @@
 const mongoose = require("mongoose");
 
 const resultsSchema = new mongoose.Schema({
-  winningTeam: {
+  homeTeam: {
     type: String,
-    unique: true,
+    unique: false,
   },
-  loosingTeam: {
+  awayTeam: {
     type: String,
   },
-  winnerGoals: {
+  homeTeamGoals: {
     type: Number,
   },
-  looserGoals: {
+  awayTeamGoals: {
     type: Number,
   },
 });

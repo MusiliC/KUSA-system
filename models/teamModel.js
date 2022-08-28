@@ -8,8 +8,17 @@ const teamSchema = new mongoose.Schema({
   county: {
     type: String,
   },
-  town: {
-    type: String,
+  wins: {
+    type: Number,
+    default: 0,
+  },
+  lost: {
+    type: Number,
+    default: 0,
+  },
+  draws: {
+    type: Number,
+    default: 0,
   },
 });
 

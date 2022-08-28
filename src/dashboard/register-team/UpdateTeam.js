@@ -1,27 +1,49 @@
-import React, {useState} from 'react'
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import Button from "react-bootstrap/Button";
+import { useNavigate, useParams } from "react-router-dom";
+import { getOneTeam, updateTeam } from "../../redux/actions/teamsAction";
 
 function UpdateTeam() {
+  const newTeam = useSelector((state) => state.teamsReducer.team);
+  // console.log(newTeam);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  let { id } = useParams();
+  // console.log(newTeam);
 
   const [institution, setInstitution] = useState({
     team: "",
     county: "",
-    town: "",
   });
+
+  const { team, county } = institution;
 
   const handleInputChange = (e) => {
     setInstitution((v) => ({ ...v, [e.target.name]: e.target.value }));
   };
 
-const handleSubmit = () => {
-    console.log(institution);
-}
+  const handleSubmit = () => {
+    dispatch(updateTeam(id, institution));
+    navigate("/admin/register");
+  };
 
+  useEffect(() => {
+    if (newTeam) {
+      setInstitution({ ...newTeam });
+    }
+  }, [newTeam]);
+
+  useEffect(() => {
+    dispatch(getOneTeam(id));
+  }, [dispatch, id]);
   return (
     <div className="container-lg">
-      <div className="row">
-        <div className="text-center display-6 my-3">Update Team</div>
-        <div className="col-lg-6">
+      <div className="row justify-content-center">
+        <div className="text-center display-6 my-5">Update Team</div>
+        <div className="col-lg-6 ">
           <form action="">
             <div className="mb-2">
               <label htmlFor="" className="form-label">
@@ -31,6 +53,7 @@ const handleSubmit = () => {
                 type="text"
                 name="team"
                 className="form-control"
+                value={team}
                 onChange={handleInputChange}
               />
             </div>
@@ -42,17 +65,7 @@ const handleSubmit = () => {
                 type="text"
                 name="county"
                 className="form-control"
-                onChange={handleInputChange}
-              />
-            </div>
-            <div className="mb-2">
-              <label htmlFor="" className="form-label">
-                Enter town located:
-              </label>
-              <input
-                type="text"
-                name="town"
-                className="form-control"
+                value={county}
                 onChange={handleInputChange}
               />
             </div>
@@ -69,4 +82,4 @@ const handleSubmit = () => {
   );
 }
 
-export default UpdateTeam
+export default UpdateTeam;

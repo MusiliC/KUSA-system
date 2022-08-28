@@ -12,3 +12,12 @@ export const editTeam = (id, updatedTeam) =>
   axios.patch(`${url}/${id}`, updatedTeam);
 
 export const deleteTeam = (id) => axios.delete(`${url}/${id}`);
+
+export const editWin = (id, updatedTeam) =>
+  axios.patch(`${url}/win/${id}`, updatedTeam);
+
+export const editDraw = (id, updatedTeam) =>
+  axios.patch(`${url}/draw/${id}`, updatedTeam);
+
+export const editLost = (id, updatedTeam) =>
+  axios.patch(`${url}/lost/${id}`, updatedTeam);

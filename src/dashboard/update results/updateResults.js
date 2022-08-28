@@ -1,34 +1,48 @@
-import React, { useState,  } from "react";
-import { useDispatch, } from "react-redux";
-import {  postScorer } from "../../redux/actions/playerActions";
-import {  postResults } from "../../redux/actions/resultsActions";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { postScorer } from "../../redux/actions/playerActions";
+import { postResults } from "../../redux/actions/resultsActions";
+import { getTeams, updateWin } from "../../redux/actions/teamsAction";
 // import Table from "react-bootstrap/Table";
 
 export default function UpdateResults() {
   const dispatch = useDispatch();
 
+  const points = useSelector((state) => state.teamsReducer.allTeams);
+  console.log(points);
+
   const [newResults, setNewResults] = useState({
-    winningTeam: "",
-    loosingTeam: "",
-    winnerGoals: "",
-    looserGoals: "",
+    homeTeam: "",
+    awayTeam: "",
+    homeTeamGoals: "",
+    awayTeamGoals: "",
   });
 
-  //handling Results
+  const { homeTeam, awayTeam, homeTeamGoals, awayTeamGoals } = newResults;
 
-  
+  //handling Results
 
   const handleInputChange = (e) => {
     setNewResults((v) => ({ ...v, [e.target.name]: e.target.value }));
   };
 
+  // let allTeams = [];
+
+  // points.map((item) => allTeams.push(item.team));
+
+  // const teamA = allTeams.find((team) => team === homeTeam);
+
+  // console.log(teamA);
+
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(postResults(newResults));
+    // if (homeTeamGoals > awayTeamGoals && homeTeam ===teamA) {
+    //   dispatch(updateWin(teamA._id, homeTeam));
+    // }
   };
 
   //handling top scorer
-
 
   const [player, setPlayer] = useState({
     scorer: "",
@@ -45,10 +59,9 @@ export default function UpdateResults() {
     dispatch(postScorer(player));
   };
 
-  // useEffect(() => {
-  //   dispatch(getResults());
-  //   dispatch(getScorers());
-  // }, []);
+  useEffect(() => {
+    dispatch(getTeams());
+  }, [dispatch]);
 
   return (
     <div>
@@ -59,44 +72,44 @@ export default function UpdateResults() {
             <form action="">
               <div className="mb-2">
                 <label htmlFor="" className="form-label">
-                  Enter winning team:
+                  Enter home team:
                 </label>
                 <input
                   type="text"
-                  name="winningTeam"
+                  name="homeTeam"
                   onChange={handleInputChange}
                   className="form-control"
                 />
               </div>
               <div className="mb-2">
                 <label htmlFor="" className="form-label">
-                  Enter loosing team:
+                  Enter away team:
                 </label>
                 <input
                   type="text"
-                  name="loosingTeam"
+                  name="awayTeam"
                   onChange={handleInputChange}
                   className="form-control"
                 />
               </div>
               <div className="mb-2">
                 <label htmlFor="" className="form-label">
-                  Goals scored by winning team:
+                  Goals scored by home team:
                 </label>
                 <input
                   type="number"
-                  name="winnerGoals"
+                  name="homeTeamGoals"
                   onChange={handleInputChange}
                   className="form-control"
                 />
               </div>
               <div className="mb-2">
                 <label htmlFor="" className="form-label">
-                  Goals scored by loosing team:
+                  Goals scored by away team:
                 </label>
                 <input
                   type="number"
-                  name="looserGoals"
+                  name="awayTeamGoals"
                   onChange={handleInputChange}
                   className="form-control mb-2"
                 />
@@ -151,7 +164,6 @@ export default function UpdateResults() {
             </form>
           </div>
         </div>
-       
       </div>
     </div>
   );

@@ -49,6 +49,49 @@ export const updateTeam = (id, updatedTeam) => async (dispatch) => {
       type: actionTypes.UPDATE_TEAM,
       payload: response.data,
     });
+    dispatch(getTeams());
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const updateWin = (id, updatedTeam) => async (dispatch) => {
+  try {
+    const response = await api.editWin(id, updatedTeam);
+
+    dispatch({
+      type: actionTypes.UPDATE_WIN,
+      payload: response.data,
+    });
+    dispatch(getTeams());
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const updateDraw = (id, updatedTeam) => async (dispatch) => {
+  try {
+    const response = await api.editDraw(id, updatedTeam);
+
+    dispatch({
+      type: actionTypes.UPDATE_DRAW,
+      payload: response.data,
+    });
+    dispatch(getTeams());
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const updateLost = (id, updatedTeam) => async (dispatch) => {
+  try {
+    const response = await api.editLost(id, updatedTeam);
+
+    dispatch({
+      type: actionTypes.UPDATE_LOST,
+      payload: response.data,
+    });
+    dispatch(getTeams());
   } catch (error) {
     console.log(error);
   }

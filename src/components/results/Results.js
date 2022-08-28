@@ -40,7 +40,7 @@ export default function Results() {
                     results.map((teams) => (
                       <tr>
                         <td>
-                          {` ${teams.winningTeam} ${teams.winnerGoals} vs ${teams.loosingTeam} ${teams.looserGoals}`}
+                          {` ${teams.homeTeam} ${teams.homeTeamGoals} vs ${teams.awayTeam} ${teams.awayTeamGoals}`}
                         </td>
                         <td>
                           <i className="bi bi-geo-alt-fill mx-2"></i> Chuka

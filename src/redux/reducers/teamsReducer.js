@@ -1,7 +1,7 @@
 import { actionTypes } from "../actions/actionTypes";
 
 const initialState = {
-  teams: [],
+  allTeams: [],
   team: {},
 };
 
@@ -15,7 +15,8 @@ const teamsReducer = (state = initialState, action) => {
 
     case actionTypes.ALL_TEAMS:
       return {
-        teams: action.payload,
+        ...state,
+        allTeams: action.payload,
       };
 
     case actionTypes.ONE_TEAM:
@@ -25,12 +26,33 @@ const teamsReducer = (state = initialState, action) => {
 
     case actionTypes.DELETE_TEAM:
       return {
-        teams: state.filter((team) => team._id !== action.payload),
+        allTeams: state.filter((team) => team._id !== action.payload),
       };
 
     case actionTypes.UPDATE_TEAM:
       return {
-        teams: state.map((team) =>
+        allTeams: state.map((team) =>
+          team._id === action.payload.id ? action.payload : team
+        ),
+      };
+
+    case actionTypes.UPDATE_WIN:
+      return {
+        allTeams: state.map((team) =>
+          team._id === action.payload.id ? action.payload : team
+        ),
+      };
+
+    case actionTypes.UPDATE_DRAW:
+      return {
+        allTeams: state.map((team) =>
+          team._id === action.payload.id ? action.payload : team
+        ),
+      };
+
+    case actionTypes.UPDATE_LOST:
+      return {
+        allTeams: state.map((team) =>
           team._id === action.payload.id ? action.payload : team
         ),
       };

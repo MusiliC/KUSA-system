@@ -1,24 +1,28 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { getOneResult, updatedResults } from "../../redux/actions/resultsActions";
+import {
+  getOneResult,
+  updatedResults,
+} from "../../redux/actions/resultsActions";
 
 function AdminUpdate() {
   const results = useSelector((state) => state.resultsReducer.result);
+ 
 
   const dispatch = useDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   let { id } = useParams();
 
   const [newResults, setNewResults] = useState({
-    winningTeam: "",
-    loosingTeam: "",
-    winnerGoals: "",
-    looserGoals: "",
+    homeTeam: "",
+    awayTeam: "",
+    homeTeamGoals: "",
+    awayTeamGoals: "",
   });
 
-  const { winningTeam, loosingTeam, winnerGoals, looserGoals } = newResults;
+  const { homeTeam, awayTeam, homeTeamGoals, awayTeamGoals } = newResults;
 
   const handleInputChange = (e) => {
     setNewResults((v) => ({ ...v, [e.target.name]: e.target.value }));
@@ -26,20 +30,19 @@ function AdminUpdate() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(updatedResults(id, newResults))
-    navigate("/admin/resultsUpdate")
+    dispatch(updatedResults(id, newResults));
+    navigate("/admin/resultsUpdate");
   };
 
   useEffect(() => {
     if (results) {
       setNewResults({ ...results });
-
     }
   }, [results]);
 
   useEffect(() => {
     dispatch(getOneResult(id));
-  }, [dispatch,id]);
+  }, [dispatch, id]);
 
   return (
     <div className="container-lg">
@@ -49,48 +52,48 @@ function AdminUpdate() {
           <form action="">
             <div className="mb-2">
               <label htmlFor="" className="form-label">
-                Enter winning team:
+                Enter home team:
               </label>
               <input
                 type="text"
-                name="winningTeam"
-                value={winningTeam}
+                name="homeTeam"
+                value={homeTeam}
                 onChange={handleInputChange}
                 className="form-control"
               />
             </div>
             <div className="mb-2">
               <label htmlFor="" className="form-label">
-                Enter loosing team:
+                Enter away team:
               </label>
               <input
                 type="text"
-                name="loosingTeam"
-                value={loosingTeam}
+                name="awayTeam"
+                value={awayTeam}
                 onChange={handleInputChange}
                 className="form-control"
               />
             </div>
             <div className="mb-2">
               <label htmlFor="" className="form-label">
-                Goals scored by winning team:
+                Goals scored by home team:
               </label>
               <input
                 type="number"
-                name="winnerGoals"
-                value={winnerGoals}
+                name="homeTeamGoals"
+                value={homeTeamGoals}
                 onChange={handleInputChange}
                 className="form-control"
               />
             </div>
             <div className="mb-2">
               <label htmlFor="" className="form-label">
-                Goals scored by loosing team:
+                Goals scored by away team:
               </label>
               <input
                 type="number"
-                name="looserGoals"
-                value={looserGoals}
+                name="awayTeamGoals"
+                value={awayTeamGoals}
                 onChange={handleInputChange}
                 className="form-control mb-2"
               />

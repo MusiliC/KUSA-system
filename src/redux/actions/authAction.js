@@ -1,4 +1,4 @@
-
+import { toast } from "react-toastify";
 import * as api from "../../api/authIndex";
 import { actionTypes } from "./actionTypes";
 
@@ -12,7 +12,6 @@ export const registerUser = (user) => async (dispatch) => {
     });
   } catch (error) {
     console.log(error);
-   
   }
 };
 
@@ -26,7 +25,9 @@ export const signUser = (user) => async (dispatch) => {
     });
   } catch (error) {
     console.log(error);
-  
+      toast.error(error.response?.data, {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
   }
 };
 

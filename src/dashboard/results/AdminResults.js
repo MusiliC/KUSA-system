@@ -41,7 +41,7 @@ export default function AdminResults() {
             {results &&
               results.map((teams) => (
                 <li className="list-group-item my-1">
-                  {` ${teams.winningTeam} ${teams.winnerGoals} vs ${teams.loosingTeam} ${teams.looserGoals}`}
+                  {` ${teams.homeTeam} ${teams.homeTeamGoals} vs ${teams.awayTeam} ${teams.awayTeamGoals}`}
                   <div className="d-flex justify-content-around my-1">
                     <i
                       className="bi bi-pencil-square "

@@ -13,13 +13,13 @@ import {
 export default function RegisterTeam() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const registeredTeams = useSelector((state) => state.teamsReducer.teams);
-  // console.log(registeredTeams);
+  const registeredTeams = useSelector((state) => state.teamsReducer.allTeams);
+  //  console.log(registeredTeams);
 
   const [institution, setInstitution] = useState({
     team: "",
     county: "",
-    town: "",
+    
   });
 
   const handleInputChange = (e) => {
@@ -29,6 +29,7 @@ export default function RegisterTeam() {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(registerTeam(institution));
+    
   };
 
   const handleDelete = (id) => {
@@ -71,17 +72,6 @@ export default function RegisterTeam() {
                 onChange={handleInputChange}
               />
             </div>
-            <div className="mb-2">
-              <label htmlFor="" className="form-label">
-                Enter town located:
-              </label>
-              <input
-                type="text"
-                name="town"
-                className="form-control"
-                onChange={handleInputChange}
-              />
-            </div>
           </form>
           <div className="d-flex justify-content-center my-3">
             <Button variant="primary" onClick={handleSubmit}>
@@ -105,7 +95,7 @@ export default function RegisterTeam() {
                   <tr key={team._id}>
                     <td>{team.team}</td>
                     <td>
-                      {team.county}, {team.town}
+                      {team.county}
                     </td>
                     <td>
                       <div className="d-flex justify-content-around align-items-center">

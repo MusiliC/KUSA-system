@@ -5,7 +5,7 @@ import { getTeams } from "../../redux/actions/teamsAction";
 
 export default function Teams() {
   const dispatch = useDispatch();
-  const registeredTeams = useSelector((state) => state.teamsReducer.teams);  
+  const registeredTeams = useSelector((state) => state.teamsReducer.allTeams);  
   
 
   useEffect(() => {
@@ -70,7 +70,7 @@ export default function Teams() {
           <div className="row my-4 justify-content-center">
             <div className="display-6 text-center"> Teams</div>
             <div className="lead text-center">The registered teams..</div>
-            <div className="col-lg-8 my-5 mx-1">
+            <div className="col-lg-6 my-5 mx-1">
               <Table striped bordered hover>
                 <thead>
                   <tr>
@@ -85,7 +85,7 @@ export default function Teams() {
                       <tr key={team._id}>
                         <td>{team.team}</td>
                         <td>
-                          {team.county},  {team.town}
+                          {team.county}
                         </td>
                       </tr>
                     ))}

@@ -1,6 +1,7 @@
-import { toast } from "react-toastify";
+import { toast, } from "react-toastify";
 import * as api from "../../api/authIndex";
 import { actionTypes } from "./actionTypes";
+
 
 export const registerUser = (user) => async (dispatch) => {
   try {
@@ -11,7 +12,10 @@ export const registerUser = (user) => async (dispatch) => {
       payload: response.data,
     });
   } catch (error) {
-    console.log(error);
+    console.log(error.response.data);
+   toast.error(error.response?.data,{
+    position: toast.POSITION.BOTTOM_RIGHT
+   })
   }
 };
 
@@ -24,10 +28,10 @@ export const signUser = (user) => async (dispatch) => {
       payload: response.data,
     });
   } catch (error) {
-    console.log(error);
-      toast.error(error.response?.data, {
-        position: toast.POSITION.BOTTOM_RIGHT,
-      });
+    console.log(error.response.data);
+    toast.error(error.response?.data, {
+      position: toast.POSITION.BOTTOM_RIGHT,
+    });
   }
 };
 
@@ -41,6 +45,9 @@ export const getUsers = () => async (dispatch) => {
     });
   } catch (error) {
     console.log(error);
+      toast.error(error.response?.data, {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
   }
 };
 
@@ -54,6 +61,9 @@ export const deleteUser = (id) => async (dispatch) => {
     });
   } catch (error) {
     console.log(error);
+      toast.error(error.response?.data, {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
   }
   dispatch(getUsers());
 };

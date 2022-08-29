@@ -7,6 +7,8 @@ import { createEvent, getEvents } from "../../redux/actions/eventsAction";
 export default function CreateEvent() {
   const dispatch = useDispatch();
 
+  const navigate = useNavigate()
+
   const [event, setEvent] = useState({
     name: "KUSA Play offs Round 1 ",
     date: "",
@@ -20,7 +22,7 @@ export default function CreateEvent() {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(createEvent(event));
-    console.log("created");
+    navigate("/admin/event")
   };
 
   useEffect(() => {
@@ -30,11 +32,11 @@ export default function CreateEvent() {
   return (
     <div className="ms-2">
       <div className="container-lg">
-        <div className="text-center mt-3">
-          <div className="lead">Create KUSA Event</div>
+        <div className="text-center mt-4">
+          <div className="display-6">Create KUSA Event</div>
         </div>
         <div className="row justify-content-around">
-          <div className="col-10 col-lg-5 mt-3">
+          <div className="col-10 col-lg-5 mt-4">
             <form action="">
               <div className="mb-3">
                 <label htmlFor="host" className="form-label">
@@ -67,7 +69,7 @@ export default function CreateEvent() {
                   onChange={handleInputChange}
                 />
               </div>
-              <div className="mb-3">
+              <div className="mb-4">
                 <label htmlFor="date" className="form-label">
                   Date for the event:
                 </label>
@@ -78,14 +80,9 @@ export default function CreateEvent() {
                   onChange={handleInputChange}
                 />
               </div>
-              <div className="mb-3">
-                <label htmlFor="formFile" className="form-label">
-                  Attach a picture:
-                </label>
-                <input type="file" className="form-control" />
-              </div>
+          
             </form>
-            <div className="d-flex justify-content-center mb-3">
+            <div className="d-flex justify-content-center mt-4">
               <Button variant="primary" onClick={handleSubmit}>
                 Create Event
               </Button>

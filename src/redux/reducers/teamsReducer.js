@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import { actionTypes } from "../actions/actionTypes";
 
 const initialState = {
@@ -8,6 +9,9 @@ const initialState = {
 const teamsReducer = (state = initialState, action) => {
   switch (action.type) {
     case actionTypes.REGISTER_TEAM:
+      toast("Team registered successful...", {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
       return {
         ...state,
         team: action.payload,
@@ -25,11 +29,17 @@ const teamsReducer = (state = initialState, action) => {
       };
 
     case actionTypes.DELETE_TEAM:
+        toast.error("Team deleted successful...", {
+          position: toast.POSITION.BOTTOM_RIGHT,
+        });
       return {
         allTeams: state.filter((team) => team._id !== action.payload),
       };
 
     case actionTypes.UPDATE_TEAM:
+        toast.success("Team updated successful...", {
+          position: toast.POSITION.BOTTOM_RIGHT,
+        });
       return {
         allTeams: state.map((team) =>
           team._id === action.payload.id ? action.payload : team

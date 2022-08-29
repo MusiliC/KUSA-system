@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import * as api from "../../api/teamIndex";
 import { actionTypes } from "./actionTypes";
 
@@ -12,6 +13,9 @@ export const registerTeam = (team) => async (dispatch) => {
     dispatch(getTeams());
   } catch (error) {
     console.log(error);
+    toast.error(error.response?.data, {
+      position: toast.POSITION.BOTTOM_RIGHT,
+    });
   }
 };
 
@@ -38,6 +42,9 @@ export const getOneTeam = (id) => async (dispatch) => {
     });
   } catch (error) {
     console.log(error);
+    toast.error(error.response?.data, {
+      position: toast.POSITION.BOTTOM_RIGHT,
+    });
   }
 };
 
@@ -52,6 +59,9 @@ export const updateTeam = (id, updatedTeam) => async (dispatch) => {
     dispatch(getTeams());
   } catch (error) {
     console.log(error);
+    toast.error(error.response?.data, {
+      position: toast.POSITION.BOTTOM_RIGHT,
+    });
   }
 };
 

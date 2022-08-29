@@ -9,7 +9,7 @@ export default function UpdateResults() {
   const dispatch = useDispatch();
 
   const points = useSelector((state) => state.teamsReducer.allTeams);
-  console.log(points);
+ console.log(points);
 
   const [newResults, setNewResults] = useState({
     homeTeam: "",
@@ -26,13 +26,7 @@ export default function UpdateResults() {
     setNewResults((v) => ({ ...v, [e.target.name]: e.target.value }));
   };
 
-  // let allTeams = [];
 
-  // points.map((item) => allTeams.push(item.team));
-
-  // const teamA = allTeams.find((team) => team === homeTeam);
-
-  // console.log(teamA);
 
   const handleSubmit = (e) => {
     e.preventDefault();

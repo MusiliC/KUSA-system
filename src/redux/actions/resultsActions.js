@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import * as api from "../../api/resultsIndex";
 import { actionTypes } from "./actionTypes";
 
@@ -9,9 +10,12 @@ export const postResults = (result) => async (dispatch) => {
       type: actionTypes.POST_RESULT,
       payload: response.data,
     });
-    dispatch(getResults())
+    dispatch(getResults());
   } catch (error) {
     console.log(error);
+    toast.error(error.response?.data, {
+      position: toast.POSITION.BOTTOM_RIGHT,
+    });
   }
 };
 
@@ -25,9 +29,9 @@ export const getResults = () => async (dispatch) => {
     });
   } catch (error) {
     console.log(error);
+   
   }
 };
-
 
 export const getOneResult = (id) => async (dispatch) => {
   try {
@@ -39,6 +43,9 @@ export const getOneResult = (id) => async (dispatch) => {
     });
   } catch (error) {
     console.log(error);
+    toast.error(error.response?.data, {
+      position: toast.POSITION.BOTTOM_RIGHT,
+    });
   }
 };
 
@@ -50,9 +57,12 @@ export const updatedResults = (id, newResult) => async (dispatch) => {
       type: actionTypes.UPDATE_RESULT,
       payload: response.data,
     });
-    dispatch(getResults())
+    dispatch(getResults());
   } catch (error) {
     console.log(error);
+    toast.error(error.response?.data, {
+      position: toast.POSITION.BOTTOM_RIGHT,
+    });
   }
 };
 
@@ -66,6 +76,9 @@ export const deleteResult = (id) => async (dispatch) => {
     });
   } catch (error) {
     console.log(error);
-    dispatch(getResults())
+    toast.error(error.response?.data, {
+      position: toast.POSITION.BOTTOM_RIGHT,
+    });
+    dispatch(getResults());
   }
 };

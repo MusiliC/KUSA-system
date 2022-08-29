@@ -1,11 +1,15 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { ToastContainer } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { registerUser } from "../../redux/actions/authAction";
 
 export default function Register() {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+   
+   const auth = useSelector((state) => state.authReducer);
  
 
   const [user, setUser] = useState({
@@ -22,8 +26,14 @@ export default function Register() {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(registerUser(user));
-    navigate("/")
+    
   };
+
+    useEffect(() => {
+      if (auth.user._id) {
+        navigate("/");
+      }
+    }, [auth.user._id, navigate]);
   return (
     <div>
       <div className="container-lg">
@@ -84,6 +94,7 @@ export default function Register() {
                 Sign Up
               </button>
             </div>
+            <ToastContainer/>
           </div>
         </div>
       </div>

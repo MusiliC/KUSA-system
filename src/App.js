@@ -1,5 +1,6 @@
 
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
 import Fixtures from './components/fixtures/Fixtures';
@@ -8,7 +9,6 @@ import Navigation from './components/navigation/Navigation';
 import Results from './components/results/Results';
 import Teams from './components/teams/Teams';
 import Sidebar from "./dashboard/admin-menu/Sidebar";
-
 
 
 
@@ -31,6 +31,7 @@ function App() {
           </Routes>
         </Router>
       </div>
+      <ToastContainer/>
     </>
   );
 }

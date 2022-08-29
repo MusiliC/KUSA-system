@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import * as api from "../../api/eventsIndex";
 import { actionTypes } from "./actionTypes";
 
@@ -9,8 +10,12 @@ export const createEvent = (event) => async (dispatch) => {
       type: actionTypes.CREATE_EVENT,
       payload: response.data,
     });
+    dispatch(getEvents())
   } catch (error) {
     console.log(error);
+    toast.error(error.response?.data, {
+      position: toast.POSITION.BOTTOM_RIGHT,
+    });
   }
 };
 
@@ -24,6 +29,7 @@ export const getEvents = () => async (dispatch) => {
     });
   } catch (error) {
     console.log(error);
+   
   }
 };
 
@@ -37,6 +43,9 @@ export const getOneEvent = (id) => async (dispatch) => {
     });
   } catch (error) {
     console.log(error);
+    toast.error(error.response?.data, {
+      position: toast.POSITION.BOTTOM_RIGHT,
+    });
   }
 };
 
@@ -48,8 +57,12 @@ export const updatedEvent = (id, newEvent) => async (dispatch) => {
       type: actionTypes.UPDATE_EVENT,
       payload: response.data,
     });
+    dispatch(getEvents())
   } catch (error) {
     console.log(error);
+    toast.error(error.response?.data, {
+      position: toast.POSITION.BOTTOM_RIGHT,
+    });
   }
 };
 
@@ -61,7 +74,11 @@ export const deleteEvent = (id) => async (dispatch) => {
       type: actionTypes.DELETE_EVENT,
       payload: id,
     });
+    dispatch(getEvents());
   } catch (error) {
     console.log(error);
+    toast.error(error.response?.data, {
+      position: toast.POSITION.BOTTOM_RIGHT,
+    });
   }
 };

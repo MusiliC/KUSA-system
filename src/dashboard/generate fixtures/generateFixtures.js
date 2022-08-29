@@ -5,7 +5,7 @@ import { getTeams } from "../../redux/actions/teamsAction";
 
 export default function GenerateFixtures() {
   const dispatch = useDispatch();
-  const registeredTeams = useSelector((state) => state.teamsReducer.teams);
+  const registeredTeams = useSelector((state) => state.teamsReducer.allTeams);
 
   useEffect(() => {
     dispatch(getTeams());

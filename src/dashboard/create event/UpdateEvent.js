@@ -1,11 +1,22 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate, useParams } from "react-router-dom";
+import { getOneEvent, updatedEvent } from "../../redux/actions/eventsAction";
 
 function UpdateEvent() {
+  const newEvent = useSelector((state) => state.eventsReducer.event);
+  console.log(newEvent);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  let { id } = useParams();
+
   const [event, setEvent] = useState({
     name: "KUSA Play offs Round 1 ",
-    date: "",
     host: "",
+    date: "",
   });
 
   const handleInputChange = (e) => {
@@ -14,13 +25,24 @@ function UpdateEvent() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(event);
+    dispatch(updatedEvent(id, event))
+    navigate("/admin/event")
   };
+
+  useEffect(() => {
+    if (newEvent) {
+      setEvent({ ...newEvent });
+    }
+  }, [newEvent]);
+
+  useEffect(() => {
+    dispatch(getOneEvent(id));
+  }, [dispatch, id]);
 
   return (
     <div className="container-lg">
-      <div className="text-center mt-3">
-        <div className="lead">Update KUSA Event</div>
+      <div className="text-center my-4">
+        <div className="display-6">Update KUSA Event</div>
       </div>
       <div className="row justify-content-around">
         <div className="col-10 col-lg-5 mt-3">
@@ -52,6 +74,7 @@ function UpdateEvent() {
               <input
                 type="text"
                 name="host"
+                value={event.host}
                 className="form-control"
                 onChange={handleInputChange}
               />
@@ -63,20 +86,15 @@ function UpdateEvent() {
               <input
                 type="date"
                 name="date"
+                value={event.date}
                 className="form-control"
                 onChange={handleInputChange}
               />
             </div>
-            <div className="mb-3">
-              <label htmlFor="formFile" className="form-label">
-                Attach a picture:
-              </label>
-              <input type="file" className="form-control" />
-            </div>
           </form>
           <div className="d-flex justify-content-center mb-3">
             <Button variant="primary" onClick={handleSubmit}>
-              Create Event
+              Update Event
             </Button>
           </div>
         </div>

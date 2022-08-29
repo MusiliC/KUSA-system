@@ -1,8 +1,8 @@
+import { Link } from "react-router-dom";
 import React from "react";
 import "./fixtures.css";
 
 export default function Fixtures() {
-
   const testData = ["Dekut", "karatina", "KU", "uon", "chuka", "Egerton"];
 
   const matchParticipants = (participants) => {
@@ -40,14 +40,12 @@ export default function Fixtures() {
   };
 
   const matchday1 = generateTournament(testData)[0];
- const matchday2 = generateTournament(testData)[1];
- const matchday3 = generateTournament(testData)[2];
- const matchday4 = generateTournament(testData)[3];
+  const matchday2 = generateTournament(testData)[1];
+  const matchday3 = generateTournament(testData)[2];
+  const matchday4 = generateTournament(testData)[3];
   // const handleClick = () => {
   //   console.log(matches);
   // };
-
-
 
   return (
     <div>
@@ -209,6 +207,48 @@ export default function Fixtures() {
             </div>
           </div>
         </div>
+      </section>
+      <section id="footer" className="bg-dark">
+        <footer className="footer mt-auto py-3 ">
+          <div className="container">
+            <div className="row text-light justify-content-lg-start align-content-end">
+              {/* <h5 className="ms-5">Links</h5> */}
+              <div className="col-lg-2">
+                <ul>
+                  <Link to={"/home"} id="footer-links">
+                    <li>Home</li>
+                  </Link>
+                  <Link to="/teams" id="footer-links">
+                    <li>Teams</li>
+                  </Link>
+                </ul>
+              </div>
+              <div className="col-lg-2">
+                <ul>
+                  <Link to="/fixtures" id="footer-links">
+                    <li>Fixtures</li>
+                  </Link>
+                  <Link to="/results" id="footer-links">
+                    <li>Results</li>
+                  </Link>
+                </ul>
+              </div>
+              <div className="col-lg-2">
+                <ul>
+                  <Link to="/about" id="footer-links">
+                    <li>About Us</li>
+                  </Link>
+                </ul>
+              </div>
+              <div className="col-lg-6">
+                <div className="text-center">
+                  This site is protected by the Google Privacy Policy and Terms
+                  of Service apply.
+                </div>
+              </div>
+            </div>
+          </div>
+        </footer>
       </section>
     </div>
   );

@@ -29,7 +29,10 @@ export default function RegisterTeam() {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(registerTeam(institution));
-    
+    setInstitution({
+      team: "",
+      county: "",
+    });
   };
 
   const handleDelete = (id) => {

@@ -15,6 +15,7 @@ import AdminResults from "../results/AdminResults";
 import AdminUpdate from "../results/AdminUpdate";
 import AdminScore from "../results/AdminScore";
 import UpdateTeam from "../register-team/UpdateTeam";
+import UpdateEvent from "../create event/UpdateEvent";
 // import AdminScore from "../results/AdminScore";
 
 export default function Sidebar() {
@@ -37,15 +38,15 @@ export default function Sidebar() {
                     <i className="bi bi-people-fill me-2"></i>
                     Register Team
                   </Nav.Link>
-                  <Nav.Link as={Link} to="/admin/create" className="my-3">
+                  <Nav.Link as={Link} to="/admin/create" className="my-2">
                     <i className="bi bi-calendar-date me-2"></i>
                     Create Event
                   </Nav.Link>
-                  <Nav.Link as={Link} to="/admin/event" className="my-3">
+                  <Nav.Link as={Link} to="/admin/event" className="my-2">
                     <i className="bi bi-calendar-date me-2"></i>
                     Kusa Events
                   </Nav.Link>
-                  <Nav.Link as={Link} to="/admin/results" className="my-3">
+                  <Nav.Link as={Link} to="/admin/results" className="my-2">
                     <i className="bi bi-pencil-square me-2"></i>
                     Update Results
                   </Nav.Link>
@@ -57,7 +58,7 @@ export default function Sidebar() {
                     <i className="bi bi-pencil-square me-2"></i>
                     Results
                   </Nav.Link>
-                  <Nav.Link as={Link} to="/admin/fixtures" className="my-3">
+                  <Nav.Link as={Link} to="/admin/fixtures" className="my-2">
                     <i className="bi bi-hourglass-bottom me-2"></i>
                     Fixtures
                   </Nav.Link>
@@ -82,10 +83,14 @@ export default function Sidebar() {
                 path="resultsUpdate/result/:id"
                 element={<AdminUpdate />}
               />
-              <Route path="/resultsUpdate/player/:id" element={<AdminScore />} />
+              <Route
+                path="/resultsUpdate/player/:id"
+                element={<AdminScore />}
+              />
               <Route path="/fixtures" element={<GenerateFixtures />} />
               <Route path="/results" element={<UpdateResults />} />
               <Route path="/event" element={<AdminEvents />} />
+              <Route path="/event/eventUpdate/:id" element={<UpdateEvent />} />
             </Routes>
           </div>
         </div>

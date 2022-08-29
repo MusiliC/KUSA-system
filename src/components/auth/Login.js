@@ -1,3 +1,5 @@
+import { ToastContainer,  } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,6 +20,8 @@ export default function Login() {
   const handleInputChange = (e) => {
     setUser((v) => ({ ...v, [e.target.name]: e.target.value }));
   };
+
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -74,6 +78,7 @@ export default function Login() {
                 Log in
               </button>
             </div>
+            <ToastContainer />
           </div>
         </div>
       </div>

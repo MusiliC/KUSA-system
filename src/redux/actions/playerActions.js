@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import * as api from "../../api/playerIndex";
 import { actionTypes } from "./actionTypes";
 
@@ -9,9 +10,12 @@ export const postScorer = (player) => async (dispatch) => {
       type: actionTypes.POST_PLAYER,
       payload: response.data,
     });
-    dispatch(getScorers())
+    dispatch(getScorers());
   } catch (error) {
     console.log(error);
+    toast.error(error.response?.data, {
+      position: toast.POSITION.BOTTOM_RIGHT,
+    });
   }
 };
 
@@ -25,6 +29,7 @@ export const getScorers = () => async (dispatch) => {
     });
   } catch (error) {
     console.log(error);
+  
   }
 };
 
@@ -38,6 +43,9 @@ export const getOneScore = (id) => async (dispatch) => {
     });
   } catch (error) {
     console.log(error);
+    toast.error(error.response?.data, {
+      position: toast.POSITION.BOTTOM_RIGHT,
+    });
   }
 };
 
@@ -49,9 +57,12 @@ export const updateScorers = (id, updatedPlayers) => async (dispatch) => {
       type: actionTypes.UPDATE_PLAYER,
       payload: response.data,
     });
-    dispatch(getScorers())
+    dispatch(getScorers());
   } catch (error) {
     console.log(error);
+    toast.error(error.response?.data, {
+      position: toast.POSITION.BOTTOM_RIGHT,
+    });
   }
 };
 
@@ -65,6 +76,9 @@ export const deleteScorer = (id) => async (dispatch) => {
     });
   } catch (error) {
     console.log(error);
+    toast.error(error.response?.data, {
+      position: toast.POSITION.BOTTOM_RIGHT,
+    });
   }
   dispatch(getScorers());
 };

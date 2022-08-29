@@ -64,7 +64,7 @@ export default function Results() {
           </div>
           <div className="row justify-content-center my-3">
             <div className="col-lg-5">
-              <div className="text-center my-2 lead">
+              <div className="text-center my-3 display-6">
                 <b> Top Scorer</b>
               </div>
               {

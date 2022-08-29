@@ -1,3 +1,4 @@
+import { toast, ToastContainer } from "react-toastify";
 import { actionTypes } from "../actions/actionTypes";
 import jwtDecode from "jwt-decode";
 
@@ -16,6 +17,9 @@ const authReducer = (state = initialState, action) => {
       };
 
     case actionTypes.REGISTER_USER:
+        toast("welcome...", {
+          position: toast.POSITION.BOTTOM_RIGHT,
+        });
       const authUser = jwtDecode(action.payload);
       return {
         user: {
@@ -28,7 +32,12 @@ const authReducer = (state = initialState, action) => {
       };
 
     case actionTypes.SIGN_IN:
+    
       const validUser = jwtDecode(action.payload);
+        toast.success("Welcome...", {
+          position: toast.POSITION.BOTTOM_RIGHT,
+        });
+        
       return {
         user: {
           ...state,
@@ -38,8 +47,12 @@ const authReducer = (state = initialState, action) => {
           _id: validUser._id,
         },
       };
+      
 
     case actionTypes.DELETE_USER:
+       toast("User deleted...", {
+         position: toast.POSITION.BOTTOM_RIGHT,
+       });
       return {
         users: state.filter((deleteUser) => deleteUser._id !== state._id),
       };

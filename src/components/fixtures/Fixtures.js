@@ -3,7 +3,7 @@ import React from "react";
 import "./fixtures.css";
 
 export default function Fixtures() {
-  const testData = ["Dekut", "karatina", "KU", "uon", "chuka", "Egerton"];
+  const testData = ["Dekut", "karatina", "KU", "uon"];
 
   const matchParticipants = (participants) => {
     const p = Array.from(participants);
@@ -39,10 +39,10 @@ export default function Fixtures() {
     return tournamentRounds;
   };
 
-  const matchday1 = generateTournament(testData)[0];
-  const matchday2 = generateTournament(testData)[1];
-  const matchday3 = generateTournament(testData)[2];
-  const matchday4 = generateTournament(testData)[3];
+  const matchDay1 = generateTournament(testData)[0];
+  const matchDay2 = generateTournament(testData)[1];
+  const matchDay3 = generateTournament(testData)[2];
+  const matchDay4 = generateTournament(testData)[3];
   // const handleClick = () => {
   //   console.log(matches);
   // };
@@ -55,17 +55,17 @@ export default function Fixtures() {
             <div className="text-center display-6 py-3 " id="fix-heading">
               <b> KUSA Fixtures </b>
             </div>
-            <div className="row justify-content-between">
+            <div className="row justify-content-around">
               <div className="col-10 col-lg-5 ">
                 <div className="card py-2 my-3">
-                  <div className="row p-1 justify-content-around">
+                  <div className="row p-1 d-flex justify-content-around">
                     <div className="card-text mb-1 text-center">
                       {
                         <div>
-                          {matchday1 ? (
+                          {matchDay1 ? (
                             <h6>Match day 1</h6>
                           ) : (
-                            <h6>No matchday 1</h6>
+                            <h6>No match day 1</h6>
                           )}
                         </div>
                       }
@@ -74,8 +74,8 @@ export default function Fixtures() {
                       </h6>
                     </div>
                     <div className="col-md-5 ms-2">
-                      {matchday1 &&
-                        matchday1.map((fix) => (
+                      {matchDay1 &&
+                        matchDay1.map((fix) => (
                           <div className="card-text " key={fix}>
                             {" "}
                             <h6>
@@ -100,7 +100,7 @@ export default function Fixtures() {
                       <div className="card-text mb-1 text-center">
                         {
                           <div>
-                            {matchday3 ? (
+                            {matchDay3 ? (
                               <h6>Match day 3</h6>
                             ) : (
                               <h6>No matchday 3</h6>
@@ -112,8 +112,8 @@ export default function Fixtures() {
                         </h6>
                       </div>
                       <div className="col-md-5 ms-2">
-                        {matchday3 &&
-                          matchday3.map((fix) => (
+                        {matchDay3 &&
+                          matchDay3.map((fix) => (
                             <div className="card-text " key={fix}>
                               {" "}
                               <h6>
@@ -136,10 +136,10 @@ export default function Fixtures() {
                 <div className="card py-2 my-3">
                   <div className="row p-1 justify-content-around">
                     <div className="card-text mb-1 text-center">
-                      {matchday2 ? (
+                      {matchDay2 ? (
                         <h6>Match day 2</h6>
                       ) : (
-                        <h6>No matchday 2</h6>
+                        <h6>No match day 2</h6>
                       )}
                       <h6>
                         <i className="bi bi-calendar-event mx-3"></i>Date
@@ -147,8 +147,8 @@ export default function Fixtures() {
                     </div>
                     <div className="col-md-4 ms-2">
                       <div className="card-text ">
-                        {matchday2 &&
-                          matchday2.map((fix) => (
+                        {matchDay2 &&
+                          matchDay2.map((fix) => (
                             <div className="card-text " key={fix}>
                               {" "}
                               <h6>
@@ -172,10 +172,10 @@ export default function Fixtures() {
                   <div className="card py-2">
                     <div className="row p-1 justify-content-around">
                       <div className="card-text mb-1 text-center">
-                        {matchday4 ? (
+                        {matchDay4 ? (
                           <h6>Match day 4</h6>
                         ) : (
-                          <h6>No matchday 4</h6>
+                          <h6>No match day 4</h6>
                         )}
                         <h6>
                           <i className="bi bi-calendar-event mx-3"></i>Date
@@ -183,8 +183,8 @@ export default function Fixtures() {
                       </div>
                       <div className="col-md-4 ms-2">
                         <div className="card-text ">
-                          {matchday4 &&
-                            matchday4.map((fix) => (
+                          {matchDay4 &&
+                            matchDay4.map((fix) => (
                               <div className="card-text " key={fix}>
                                 {" "}
                                 <h6>

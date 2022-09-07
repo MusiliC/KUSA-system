@@ -1,14 +1,27 @@
 import React from 'react'
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import "./navigation.css"
+import { useDispatch } from 'react-redux';
+import { signOut } from '../../redux/actions/authAction';
 
 
 
 export default function Navigation() {
+
+// const dispatch = useDispatch()
+// const navigate = useNavigate()
+
+//   const handleSignOut = (e) => {
+//     e.preventDefault();
+//     dispatch(signOut())
+//     navigate("/login")
+//   };
+
+
   return (
     <div className="text-center">
       <Navbar bg="dark" variant="dark" expand="lg">
@@ -43,11 +56,11 @@ export default function Navigation() {
                     <b> Sign in</b>
                   </Button>
                 </Nav.Link>
-                  <Nav.Link as={Link} to="/login">
-                  <Button variant="outline-light" className="btn-sm ms-2">
+                  {/* <Nav.Link >
+                  <Button variant="outline-light" className="btn-sm ms-2" >
                     <b> Sign Out</b>
                   </Button>
-                </Nav.Link>
+                </Nav.Link> */}
               </div>
             </Nav>
           </Navbar.Collapse>

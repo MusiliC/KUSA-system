@@ -10,7 +10,7 @@ export const createEvent = (event) => async (dispatch) => {
       type: actionTypes.CREATE_EVENT,
       payload: response.data,
     });
-    dispatch(getEvents())
+    dispatch(getEvents());
   } catch (error) {
     console.log(error);
     toast.error(error.response?.data, {
@@ -29,7 +29,6 @@ export const getEvents = () => async (dispatch) => {
     });
   } catch (error) {
     console.log(error);
-   
   }
 };
 
@@ -57,7 +56,7 @@ export const updatedEvent = (id, newEvent) => async (dispatch) => {
       type: actionTypes.UPDATE_EVENT,
       payload: response.data,
     });
-    dispatch(getEvents())
+    dispatch(getEvents());
   } catch (error) {
     console.log(error);
     toast.error(error.response?.data, {

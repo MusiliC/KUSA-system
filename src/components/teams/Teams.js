@@ -28,12 +28,12 @@ export default function Teams() {
     <div>
       <section id="teams-page">
         <div className="container-lg">
-          <div className="row justify-content-around my-4">
+          <div className="row justify-content-around py-4">
             <h4 className="text-center display-6 " id="eventsTitle">
               KUSA Events
             </h4>
             {events.map((event) => (
-              <div className="col-9 col-lg-4 col-xl-3 my-2" id="main-card">
+              <div className="col-9 col-lg-4 col-xl-3 py-2" id="main-card">
                 <div className="card mt-2" key={event._id}>
                   <img
                     src="/pictures/fixtures.jpg"
@@ -56,18 +56,17 @@ export default function Teams() {
                 </div>
               </div>
             ))}
-
           </div>
         </div>
       </section>
       <section className="registered-teams">
-        <div className="row mt-4 justify-content-center">
-          <div className="display-6 text-center fw-bold mt-4"> Teams</div>
+        <div className="row pt-4 justify-content-center">
+          <div className="display-6 text-center fw-bold pt-4"> Teams</div>
           <div className="lead text-center">The registered teams...</div>
 
-          <div className="col-lg-6 my-5 mt-4 mx-1">
+          <div className="col-lg-6 my-5 mt-4 mx-1 px-4">
             <Table striped bordered hover>
-              <thead>
+              <thead >
                 <tr>
                   <th>University Name</th>
                   <th>Location</th>

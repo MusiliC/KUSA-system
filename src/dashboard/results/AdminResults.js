@@ -4,6 +4,7 @@ import { deleteScorer, getScorers } from "../../redux/actions/playerActions";
 import { deleteResult, getResults } from "../../redux/actions/resultsActions";
 import Table from "react-bootstrap/Table";
 import { useNavigate } from "react-router-dom";
+import { getTeams } from "../../redux/actions/teamsAction";
 
 export default function AdminResults() {
   const dispatch = useDispatch();
@@ -12,6 +13,8 @@ export default function AdminResults() {
   //handling Results
 
   const results = useSelector((state) => state.resultsReducer.results);
+  //   const teams = useSelector((state) => state.teamsReducer.allTeams);
+  // console.log(teams);
 
   const handleResultDelete = (id) => {
     dispatch(deleteResult(id));
@@ -28,7 +31,9 @@ export default function AdminResults() {
   useEffect(() => {
     dispatch(getResults());
     dispatch(getScorers());
+    dispatch(getTeams());
   }, [dispatch]);
+
   return (
     <div className="container-lg">
       <div className="display-6 text-center">Results</div>
@@ -36,12 +41,19 @@ export default function AdminResults() {
         <div className="col-lg-5">
           <div className="lead text-center my-3">
             <b>Results</b>
+            {/* {
+              teams.map((team) => (
+                <ul>{team.team}</ul>
+                
+              ))
+              
+            } */}
           </div>
           <ol className="list-group group list-group-numbered">
             {results &&
               results.map((teams) => (
-                <li className="list-group-item my-1">
-                  {` ${teams.homeTeam} ${teams.homeTeamGoals} vs ${teams.awayTeam} ${teams.awayTeamGoals}`}
+                <li className="list-group-item my-1 text-center">
+                  {` ${teams?.homeTeam?.team} ${teams.homeTeamGoals} vs ${teams?.awayTeam?.team} ${teams.awayTeamGoals}`}
                   <div className="d-flex justify-content-around my-1">
                     <i
                       className="bi bi-pencil-square "

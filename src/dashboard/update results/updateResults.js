@@ -2,38 +2,31 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { postScorer } from "../../redux/actions/playerActions";
 import { postResults } from "../../redux/actions/resultsActions";
-import { getTeams, updateWin } from "../../redux/actions/teamsAction";
+import { getTeams } from "../../redux/actions/teamsAction";
 // import Table from "react-bootstrap/Table";
+import { useForm } from "react-hook-form";
+import FormInputErrorAlert from "../../components/commons/FormInputErrorAlert";
 
 export default function UpdateResults() {
+  const teams = useSelector((state) => state.teamsReducer.allTeams);
+
+  // State
+  const [postingResult, setPostingResult] = useState(false);
+
   const dispatch = useDispatch();
+  const {
+    register,
+    handleSubmit,
+    watch,
+    reset,
+    formState: { errors },
+  } = useForm();
 
-  const points = useSelector((state) => state.teamsReducer.allTeams);
- console.log(points);
-
-  const [newResults, setNewResults] = useState({
-    homeTeam: "",
-    awayTeam: "",
-    homeTeamGoals: "",
-    awayTeamGoals: "",
-  });
-
-  const { homeTeam, awayTeam, homeTeamGoals, awayTeamGoals } = newResults;
-
-  //handling Results
-
-  const handleInputChange = (e) => {
-    setNewResults((v) => ({ ...v, [e.target.name]: e.target.value }));
-  };
-
-
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    dispatch(postResults(newResults));
-    // if (homeTeamGoals > awayTeamGoals && homeTeam ===teamA) {
-    //   dispatch(updateWin(teamA._id, homeTeam));
-    // }
+  const handlePostResultSubmit = async (data) => {
+    setPostingResult(true);
+    await dispatch(postResults(data));
+    setPostingResult(false);
+    reset();
   };
 
   //handling top scorer
@@ -63,39 +56,82 @@ export default function UpdateResults() {
         <div className="text-center display-6 my-3">Post Results</div>
         <div className="row justify-content-around">
           <div className="col-lg-4">
-            <form action="">
+            <form onSubmit={handleSubmit(handlePostResultSubmit)}>
               <div className="mb-2">
                 <label htmlFor="" className="form-label">
-                  Enter home team:
+                  Select home team:
                 </label>
-                <input
-                  type="text"
+                <select
                   name="homeTeam"
-                  onChange={handleInputChange}
-                  className="form-control"
-                />
+                  className="form-select"
+                  id=""
+                  {...register("homeTeam", {
+                    required: {
+                      value: true,
+                      message: "Home team is required",
+                    },
+                  })}
+                >
+                  <option value="">Select Home Team</option>
+                  {teams.map((team) => (
+                    <option key={team._id} value={team._id}>
+                      {team.team}
+                    </option>
+                  ))}
+                </select>
+                {errors?.homeTeam && (
+                  <FormInputErrorAlert message={errors?.homeTeam?.message} />
+                )}
               </div>
-              <div className="mb-2">
+              <div className="my-3">
                 <label htmlFor="" className="form-label">
-                  Enter away team:
+                  Select away team:
                 </label>
-                <input
-                  type="text"
+                <select
                   name="awayTeam"
-                  onChange={handleInputChange}
-                  className="form-control"
-                />
+                  className="form-select"
+                  id=""
+                  {...register("awayTeam", {
+                    required: {
+                      value: true,
+                      message: "Away team is required",
+                    },
+                  })}
+                  disabled={watch("homeTeam") === ""}
+                >
+                  <option value="">Select Away Team</option>
+                  {teams
+                    ?.filter((team) => team?._id !== watch("homeTeam"))
+                    .map((team) => (
+                      <option key={team._id} value={team._id}>
+                        {team.team}
+                      </option>
+                    ))}
+                </select>
+                {errors?.awayTeam && (
+                  <FormInputErrorAlert message={errors?.awayTeam?.message} />
+                )}
               </div>
-              <div className="mb-2">
+              <div className="my-3">
                 <label htmlFor="" className="form-label">
                   Goals scored by home team:
                 </label>
                 <input
                   type="number"
                   name="homeTeamGoals"
-                  onChange={handleInputChange}
+                  {...register("homeTeamGoals", {
+                    required: {
+                      value: true,
+                      message: "Field is required",
+                    },
+                  })}
                   className="form-control"
                 />
+                {errors?.homeTeamGoals && (
+                  <FormInputErrorAlert
+                    message={errors?.homeTeamGoals?.message}
+                  />
+                )}
               </div>
               <div className="mb-2">
                 <label htmlFor="" className="form-label">
@@ -104,13 +140,26 @@ export default function UpdateResults() {
                 <input
                   type="number"
                   name="awayTeamGoals"
-                  onChange={handleInputChange}
+                  {...register("awayTeamGoals", {
+                    required: {
+                      value: true,
+                      message: "Field is required",
+                    },
+                  })}
                   className="form-control mb-2"
                 />
+                {errors?.awayTeamGoals && (
+                  <FormInputErrorAlert
+                    message={errors?.awayTeamGoals?.message}
+                  />
+                )}
               </div>
               <div className="d-flex justify-content-center">
-                <button className="btn btn-primary my-2" onClick={handleSubmit}>
-                  Post Results
+                <button
+                  disabled={postingResult}
+                  className="btn btn-primary my-2"
+                >
+                  {postingResult ? "Loading..." : "Post Results"}
                 </button>
               </div>
             </form>

@@ -1,6 +1,6 @@
 #fixture-bg {
     background-image: url("/public/pictures/fix.jpg");
-    height: 120vh;
+    height: 140vh;
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -8,4 +8,16 @@
 
 #fix-heading{
     font-weight: 500;
+}
+
+@media only screen and (max-width: 768px) {
+
+    /* For mobile phones: */
+    #fixture-bg {
+        background-image: url("/public/pictures/fix.jpg");
+            height: 200vh;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+    }
 }

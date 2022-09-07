@@ -1,11 +1,12 @@
 const { validResults } = require("../helpers/resultsValidator");
 const { Result } = require("../models/resultsModel");
+const { Team } = require("../models/teamModel");
 
 //Get results
 
 async function allSResults(req, res) {
   try {
-    const results = await Result.find({});
+    const results = await Result.find({}).populate("homeTeam awayTeam");
     res.status(200).send(results);
   } catch (error) {
     res.status(500).send(error.message);
@@ -42,6 +43,43 @@ async function postResults(req, res) {
     });
 
     await newResult.save();
+
+    const homeTeam_ = await Team.findById(homeTeam);
+    const awayTeam_ = await Team.findById(awayTeam);
+
+    if (homeTeam_) {
+      const win = homeTeamGoals > awayTeamGoals ? 1 : 0;
+      const draw = homeTeamGoals === awayTeamGoals ? 1 : 0;
+      const lose = homeTeamGoals < awayTeamGoals ? 1 : 0;
+
+      await Team.findByIdAndUpdate(homeTeam, {
+        $set: {
+          results: [...homeTeam_.results, newResult.id],
+        },
+        $inc: {
+          draws: draw,
+          wins: win,
+          lost: lose,
+        },
+      });
+    }
+
+    if (awayTeam_) {
+      const win = awayTeamGoals > homeTeamGoals ? 1 : 0;
+      const draw = homeTeamGoals === awayTeamGoals ? 1 : 0;
+      const lose = homeTeamGoals > awayTeamGoals ? 1 : 0;
+
+      await Team.findByIdAndUpdate(awayTeam, {
+        $set: {
+          results: [...awayTeam_.results, newResult.id],
+        },
+        $inc: {
+          draws: draw,
+          wins: win,
+          lost: lose,
+        },
+      });
+    }
 
     res.status(200).send({
       message: "Results  posted successful",

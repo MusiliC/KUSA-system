@@ -5,7 +5,7 @@ const { Team } = require("../models/teamModel");
 
 async function allTeams(req, res) {
   try {
-    const teams = await Team.find({});
+    const teams = await Team.find({}).populate("results");
     res.status(200).send(teams);
   } catch (error) {
     res.status(500).send(error.message);
@@ -104,11 +104,10 @@ async function updateTeam(req, res) {
 
 async function updateWin(req, res) {
   try {
-    const { team } = req.body;
+    const { id } = req.params;
     const updateResult = await Team.findByIdAndUpdate(
-      req.params.id,
+      id,
       {
-        team,
         $inc: {
           wins: 1,
         },
@@ -121,7 +120,6 @@ async function updateWin(req, res) {
     console.log(error);
   }
 }
-
 
 async function updateDraw(req, res) {
   try {
@@ -162,8 +160,6 @@ async function updateLost(req, res) {
     console.log(error);
   }
 }
-
-
 
 module.exports = {
   registerTeam,

@@ -2,11 +2,12 @@ const mongoose = require("mongoose");
 
 const resultsSchema = new mongoose.Schema({
   homeTeam: {
-    type: String,
-    unique: false,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Team",
   },
   awayTeam: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Team",
   },
   homeTeamGoals: {
     type: Number,

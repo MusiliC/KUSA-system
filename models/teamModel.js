@@ -20,6 +20,11 @@ const teamSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
+  results: {
+    type: [mongoose.Schema.Types.ObjectId],
+    ref: "Result",
+    default: [],
+  },
 });
 
 const Team = mongoose.model("Team", teamSchema);

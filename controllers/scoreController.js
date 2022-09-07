@@ -5,7 +5,9 @@ const { Score } = require("../models/scoreModel");
 
 async function allScores(req, res) {
   try {
-    const scores = await Score.find({});
+    const scores = await Score.find({}).sort({
+      scorerGoals: -1,
+    });
     res.status(200).send(scores);
   } catch (error) {
     res.status(500).send(error.message);
@@ -102,7 +104,6 @@ async function updateScores(req, res) {
     console.log(error);
   }
 }
-
 
 module.exports = {
   updateScores,

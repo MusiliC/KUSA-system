@@ -6,7 +6,7 @@ const { Team } = require("../models/teamModel");
 
 async function allSResults(req, res) {
   try {
-    const results = await Result.find({}).populate("homeTeam awayTeam");
+    const results = await Result.find({}).populate("homeTeam awayTeam")
     res.status(200).send(results);
   } catch (error) {
     res.status(500).send(error.message);
@@ -42,7 +42,7 @@ async function postResults(req, res) {
       awayTeamGoals,
     });
 
-    await newResult.save();
+    await newResult.save()
 
     const homeTeam_ = await Team.findById(homeTeam);
     const awayTeam_ = await Team.findById(awayTeam);

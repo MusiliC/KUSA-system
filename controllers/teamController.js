@@ -5,7 +5,13 @@ const { Team } = require("../models/teamModel");
 
 async function allTeams(req, res) {
   try {
-    const teams = await Team.find({}).populate("results");
+    const teams = await Team.find({})
+      .sort({
+        wins: -1,
+        draws: -1,
+        lost: -1,
+      })
+      .populate("results");
     res.status(200).send(teams);
   } catch (error) {
     res.status(500).send(error.message);

@@ -6,7 +6,7 @@ import {
   allFixtures,
   generateFixtures,
 } from "../../redux/actions/fixturesAction";
-import { getTeams } from "../../redux/actions/teamsAction";
+
 
 export default function GenerateFixtures() {
   const dispatch = useDispatch();
@@ -16,17 +16,17 @@ export default function GenerateFixtures() {
   const [selectedEventDisplay, setSelectedEventDisplay] = useState("");
   const [selectedEventGenerate, setSelectedEventGenerate] = useState("");
 
-  const [generatingFixtures, setgeneratingFixtures] = useState(false);
+  const [generatingFixtures, setGeneratingFixtures] = useState(false);
 
   useEffect(() => {
     dispatch(getEvents());
   }, [dispatch]);
 
   const handleGenerate = async () => {
-    setgeneratingFixtures(true);
+    setGeneratingFixtures(true);
     setSelectedEventDisplay("");
     await dispatch(generateFixtures(selectedEventGenerate));
-    setgeneratingFixtures(false);
+    setGeneratingFixtures(false);
     setSelectedEventDisplay(selectedEventGenerate);
   };
 

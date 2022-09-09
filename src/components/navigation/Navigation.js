@@ -44,11 +44,9 @@ export default function Navigation() {
               <Nav.Link as={Link} to="/results" className="me-3">
                 Results
               </Nav.Link>
-              {/* <Nav.Link as={Link} to="/contact" className="me-3">
-                Contact Us
-              </Nav.Link> */}
-              <Nav.Link as={Link} to="/about" className="me-3">
-                About
+             
+              <Nav.Link as={Link} to="/tables" className="me-3">
+                League Tables
               </Nav.Link>
               <div className="d-flex justify-content-end ms-2 ">
                 <Nav.Link as={Link} to="/login">
@@ -56,11 +54,7 @@ export default function Navigation() {
                     <b> Sign in</b>
                   </Button>
                 </Nav.Link>
-                  {/* <Nav.Link >
-                  <Button variant="outline-light" className="btn-sm ms-2" >
-                    <b> Sign Out</b>
-                  </Button>
-                </Nav.Link> */}
+                
               </div>
             </Nav>
           </Navbar.Collapse>

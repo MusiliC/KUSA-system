@@ -68,14 +68,16 @@ export default function Teams() {
             <Table striped bordered hover>
               <thead >
                 <tr>
+                <th>#</th>
                   <th>University Name</th>
                   <th>Location</th>
                 </tr>
               </thead>
               <tbody>
                 {registeredTeams &&
-                  registeredTeams.map((team) => (
+                  registeredTeams.map((team, i) => (
                     <tr key={team._id}>
+                    <td>{i = i+1}</td>
                       <td>{team.team}</td>
                       <td>{team.county}</td>
                     </tr>

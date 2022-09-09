@@ -34,19 +34,19 @@ export default function Sidebar() {
                   <Navbar.Brand as={Link} to="#" className="my-3">
                     KUSA Admin
                   </Navbar.Brand>
-                  <Nav.Link as={Link} to="/admin/register" className="my-2">
+                  <Nav.Link as={Link} to="/admin/register" className="my-3">
                     <i className="bi bi-people-fill me-2"></i>
                     Register Team
                   </Nav.Link>
-                  <Nav.Link as={Link} to="/admin/create" className="my-2">
+                  <Nav.Link as={Link} to="/admin/create" className="my-3">
                     <i className="bi bi-calendar-date me-2"></i>
                     Create Event
                   </Nav.Link>
-                  <Nav.Link as={Link} to="/admin/event" className="my-2">
+                  <Nav.Link as={Link} to="/admin/event" className="my-3">
                     <i className="bi bi-calendar-date me-2"></i>
                     Kusa Events
                   </Nav.Link>
-                  <Nav.Link as={Link} to="/admin/results" className="my-2">
+                  <Nav.Link as={Link} to="/admin/results" className="my-3">
                     <i className="bi bi-pencil-square me-2"></i>
                     Update Results
                   </Nav.Link>
@@ -58,7 +58,7 @@ export default function Sidebar() {
                     <i className="bi bi-pencil-square me-2"></i>
                     Results
                   </Nav.Link>
-                  <Nav.Link as={Link} to="/admin/fixtures" className="my-2">
+                  <Nav.Link as={Link} to="/admin/fixtures" className="my-3">
                     <i className="bi bi-hourglass-bottom me-2"></i>
                     Fixtures
                   </Nav.Link>

@@ -7,12 +7,14 @@ import Fixtures from './components/fixtures/Fixtures';
 import Home from "./components/home/Home";
 import Navigation from './components/navigation/Navigation';
 import Results from './components/results/Results';
+import Table from "./components/table/Table";
 import Teams from './components/teams/Teams';
 import Sidebar from "./dashboard/admin-menu/Sidebar";
 
 
 
 function App() {
+  
   return (
     <>
       <div className="App">
@@ -26,12 +28,12 @@ function App() {
             <Route path="/teams" element={<Teams />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-         
+            <Route path="/tables" element={<Table/>} />
             <Route path="/admin/*" element={<Sidebar />} />
           </Routes>
         </Router>
       </div>
-      <ToastContainer/>
+      <ToastContainer />
     </>
   );
 }

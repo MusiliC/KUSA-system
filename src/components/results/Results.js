@@ -30,7 +30,7 @@ export default function Results() {
               <b> Results </b>
             </div>
             <div className="col-lg-6 my-1">
-              <Table  bordered hover>
+              <Table bordered hover>
                 <h5 className="pb-2">
                   <i className="bi bi-calendar-event mx-3"></i> Date
                 </h5>
@@ -40,7 +40,7 @@ export default function Results() {
                     results.map((teams) => (
                       <tr>
                         <td>
-                          {` ${teams.homeTeam} ${teams.homeTeamGoals} vs ${teams.awayTeam} ${teams.awayTeamGoals}`}
+                          {` ${teams?.homeTeam?.team} ${teams.homeTeamGoals} vs ${teams.awayTeam?.team} ${teams.awayTeamGoals}`}
                         </td>
                         <td>
                           <i className="bi bi-geo-alt-fill mx-2"></i> Chuka
@@ -48,16 +48,6 @@ export default function Results() {
                         </td>
                       </tr>
                     ))}
-                  {/* <tr>
-                    <td className="lead">
-                      <b> Karatina 3 : 0 Kimathi </b>
-                    </td>
-
-                    <td>
-                      <i className="bi bi-geo-alt-fill mx-2"></i> Chuka
-                      University
-                    </td>
-                  </tr> */}
                 </tbody>
               </Table>
             </div>

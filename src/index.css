@@ -12,4 +12,15 @@ code {
     monospace;
 }
 
+.underline{
+  height: 3px;
+  width: 180px;
+  border: 1px solid;
+  background-color: black;
+  border-radius: 10px;
+}
+
+#footer{
+  color: black;
+}
 

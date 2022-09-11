@@ -24,7 +24,7 @@ export default function Navigation() {
 
   return (
     <div className="text-center">
-      <Navbar bg="dark" variant="dark" expand="lg">
+      <Navbar bg="info" variant="light" expand="lg">
         <Container>
           <Navbar.Brand href="/" className="me-5">
             KUSA
@@ -50,7 +50,7 @@ export default function Navigation() {
               </Nav.Link>
               <div className="d-flex justify-content-end ms-2 ">
                 <Nav.Link as={Link} to="/login">
-                  <Button variant="outline-light" className="btn-sm ms-5">
+                  <Button variant="outline-dark" className="btn-sm ms-5">
                     <b> Sign in</b>
                   </Button>
                 </Nav.Link>

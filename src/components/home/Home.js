@@ -8,7 +8,6 @@ export default function Home() {
   return (
     <>
       <section id="home">
-      
         <div className="bg" id="home-bg">
           <div className="container-lg py-5 ">
             <div className="row justify-content-between">
@@ -160,10 +159,10 @@ export default function Home() {
         </section>
       </section>
 
-      <section id="footer" className="bg-dark">
+      <section id="footer" className="bg-info">
         <footer className="footer mt-auto py-3 ">
           <div className="container">
-            <div className="row text-light justify-content-lg-start align-content-end">
+            <div className="row text-dark justify-content-lg-start align-content-end">
               {/* <h5 className="ms-5">Links</h5> */}
               <div className="col-lg-2">
                 <ul>
@@ -187,8 +186,8 @@ export default function Home() {
               </div>
               <div className="col-lg-2">
                 <ul>
-                  <Link to="/about" id="footer-links">
-                    <li>About Us</li>
+                  <Link to="/tables" id="footer-links">
+                    <li>League table</li>
                   </Link>
                 </ul>
               </div>

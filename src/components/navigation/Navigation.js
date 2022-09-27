@@ -36,7 +36,7 @@ export default function Navigation() {
                 Home
               </Nav.Link>
               <Nav.Link as={Link} to="/teams" className="me-3">
-               Events & Teams
+                Events & Teams
               </Nav.Link>
               <Nav.Link as={Link} to="/fixtures" className="me-3">
                 Fixtures
@@ -44,7 +44,7 @@ export default function Navigation() {
               <Nav.Link as={Link} to="/results" className="me-3">
                 Results
               </Nav.Link>
-             
+
               <Nav.Link as={Link} to="/tables" className="me-3">
                 League Tables
               </Nav.Link>
@@ -54,7 +54,12 @@ export default function Navigation() {
                     <b> Sign in</b>
                   </Button>
                 </Nav.Link>
-                
+
+                {/* <Nav.Link as={Link} to="/login">
+                  <Button variant="outline-dark" className="btn-sm ms-5" onClick={handleSignOut}>
+                    <b> Sign Out</b>
+                  </Button>
+                </Nav.Link> */}
               </div>
             </Nav>
           </Navbar.Collapse>

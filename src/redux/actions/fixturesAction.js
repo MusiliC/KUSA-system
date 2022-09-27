@@ -33,3 +33,21 @@ export const allFixtures =
       console.log(error);
     }
   };
+
+
+  export const deleteFixtures = (id) => async (dispatch) => {
+    try {
+      await api.deleteFixture(id);
+
+      dispatch({
+        type: actionTypes.DELETE_FIXTURE,
+        payload: id,
+      });
+     
+    } catch (error) {
+      console.log(error);
+      toast.error(error.response?.data, {
+        position: toast.POSITION.BOTTOM_RIGHT,
+      });
+    }
+  };

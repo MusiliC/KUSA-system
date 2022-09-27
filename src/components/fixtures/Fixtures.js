@@ -1,217 +1,123 @@
 import { Link } from "react-router-dom";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./fixtures.css";
+import { useDispatch, useSelector } from "react-redux";
+import { allFixtures } from "../../redux/actions/fixturesAction";
+import { getEvents } from "../../redux/actions/eventsAction";
+
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
 
 export default function Fixtures() {
-  const testData = ["Dekut", "karatina", "KU", "uon"];
+  const dispatch = useDispatch();
+  const events = useSelector((state) => state.eventsReducer.events);
+  const comingFixtures = useSelector((state) => state.fixtureReducer.fixtures);
 
-  const matchParticipants = (participants) => {
-    const p = Array.from(participants);
-    if (p % 2 === 1) {
-      p.push(null);
-    }
-    const pairings = [];
-    while (p.length !== 0) {
-      let participantA = p.shift();
-      let participantB = p.pop();
-      if (participantA !== undefined && participantB !== undefined) {
-        pairings.push([`${participantA} vs ${participantB}`]);
-      }
-    }
-    return pairings;
+  const [selectedEventDisplay, setSelectedEventDisplay] = useState("");
+  const [selectedFixture, setSelectedFixture] = useState(null);
+
+  useEffect(() => {
+    dispatch(getEvents());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (selectedEventDisplay) dispatch(allFixtures(selectedEventDisplay));
+  }, [dispatch, selectedEventDisplay]);
+
+  const handleFixtureClick = (id1, id2) => {
+    const { id, ...rest } = comingFixtures[0].fixture.find((f) => f.id === id1);
+    const date = Object.keys(rest)[0];
+    const values = rest[date];
+
+    const fixture = values.find((f) => f.id === id2);
+    setSelectedFixture(fixture);
   };
-
-  const rotateArray = (array) => {
-    const p = Array.from(array);
-    const firstElement = p.shift();
-    const lastElement = p.pop();
-    return [firstElement, lastElement, ...p];
-  };
-
-  const generateTournament = (participants) => {
-    const tournamentRounds = [];
-    const rounds = Math.ceil(participants.length / 2);
-    let p = Array.from(participants);
-    for (let i = 0; i < rounds; i++) {
-      tournamentRounds.push(matchParticipants(p));
-      p = rotateArray(p);
-    }
-    return tournamentRounds;
-  };
-
-  const matchDay1 = generateTournament(testData)[0];
-  const matchDay2 = generateTournament(testData)[1];
-  const matchDay3 = generateTournament(testData)[2];
-  const matchDay4 = generateTournament(testData)[3];
-  // const handleClick = () => {
-  //   console.log(matches);
-  // };
 
   return (
     <div>
       <section id="fixture-page">
         <div className="bg" id="fixture-bg">
           <div className="container-lg">
-            <div className="text-center display-6 py-3 " id="fix-heading">
+            <div className="text-center display-6 py-4 " id="fix-heading">
               <b> KUSA Fixtures </b>
             </div>
-            <div className="row justify-content-around">
-              <div className="col-10 col-lg-5 ">
-                <div className="card py-2 my-3">
-                  <div className="row p-1 d-flex justify-content-around">
-                    <div className="card-text mb-1 text-center">
-                      {
-                        <div>
-                          {matchDay1 ? (
-                            <h6>Match day 1</h6>
-                          ) : (
-                            <h6>No match day 1</h6>
-                          )}
-                        </div>
-                      }
-                      <h6>
-                        <i className="bi bi-calendar-event mx-3"></i>Date
-                      </h6>
-                    </div>
-                    <div className="col-md-5 ms-2">
-                      {matchDay1 &&
-                        matchDay1.map((fix) => (
-                          <div className="card-text " key={fix}>
-                            {" "}
-                            <h6>
-                              <b className="mx-2"> {fix}</b>
-                            </h6>
-                          </div>
-                        ))}
-                    </div>
-                    <div className="col-md-6 align-items-center ">
-                      <div className="card-text my-2">
-                        <i className="bi bi-geo-alt-fill mx-2"></i>Chuka
-                        University
-                      </div>
-                    </div>
-                  </div>
-                </div>
 
-                {
-                  //card 2
-                  <div className="card py-2 my-2">
-                    <div className="row p-1 justify-content-around">
-                      <div className="card-text mb-1 text-center">
-                        {
-                          <div>
-                            {matchDay3 ? (
-                              <h6>Match day 3</h6>
-                            ) : (
-                              <h6>No matchday 3</h6>
-                            )}
-                          </div>
-                        }
-                        <h6>
-                          <i className="bi bi-calendar-event mx-3"></i>Date
-                        </h6>
-                      </div>
-                      <div className="col-md-5 ms-2">
-                        {matchDay3 &&
-                          matchDay3.map((fix) => (
-                            <div className="card-text " key={fix}>
-                              {" "}
-                              <h6>
-                                <b className="mx-2"> {fix}</b>
-                              </h6>
-                            </div>
-                          ))}
-                      </div>
-                      <div className="col-md-6 align-items-center ">
-                        <div className="card-text my-2">
-                          <i className="bi bi-geo-alt-fill mx-2"></i>Chuka
-                          University
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                }
-              </div>
-              <div className="col-10 col-lg-5 ">
-                <div className="card py-2 my-3">
-                  <div className="row p-1 justify-content-around">
-                    <div className="card-text mb-1 text-center">
-                      {matchDay2 ? (
-                        <h6>Match day 2</h6>
-                      ) : (
-                        <h6>No match day 2</h6>
-                      )}
-                      <h6>
-                        <i className="bi bi-calendar-event mx-3"></i>Date
-                      </h6>
-                    </div>
-                    <div className="col-md-4 ms-2">
-                      <div className="card-text ">
-                        {matchDay2 &&
-                          matchDay2.map((fix) => (
-                            <div className="card-text " key={fix}>
-                              {" "}
-                              <h6>
-                                <b className="mx-2"> {fix}</b>
-                              </h6>
-                            </div>
-                          ))}
-                      </div>
-                    </div>
-                    <div className="col-md-6 align-items-center ">
-                      <div className="card-text my-2">
-                        <i className="bi bi-geo-alt-fill mx-2"></i>Chuka
-                        University
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                {
-                  //card 4
+            <div className="row justify-content-around mb-5">
+              <div className="col-lg-10 ">
+                <div className="form-group mt-2 my-5">
+                  <label htmlFor="" className="fs-4">
+                    Select event to get Fixtures
+                  </label>
+                  <select
+                    value={selectedEventDisplay}
+                    onChange={(e) => setSelectedEventDisplay(e.target.value)}
+                    className="form-select mt-2"
+                  >
+                    <option value="">Select Event</option>
 
-                  <div className="card py-2">
-                    <div className="row p-1 justify-content-around">
-                      <div className="card-text mb-1 text-center">
-                        {matchDay4 ? (
-                          <h6>Match day 4</h6>
-                        ) : (
-                          <h6>No match day 4</h6>
-                        )}
-                        <h6>
-                          <i className="bi bi-calendar-event mx-3"></i>Date
-                        </h6>
-                      </div>
-                      <div className="col-md-4 ms-2">
-                        <div className="card-text ">
-                          {matchDay4 &&
-                            matchDay4.map((fix) => (
-                              <div className="card-text " key={fix}>
-                                {" "}
-                                <h6>
-                                  <b className="mx-2"> {fix}</b>
-                                </h6>
-                              </div>
-                            ))}
-                        </div>
-                      </div>
-                      <div className="col-md-6 align-items-center ">
-                        <div className="card-text my-2">
-                          <i className="bi bi-geo-alt-fill mx-2"></i>Chuka
-                          University
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                }
+                    {events?.map((event) => (
+                      <option value={event?._id} key={event?._id}>
+                        {event?.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+                <table className="table table-hover">
+                  <thead>
+                    <tr>
+                      <th>Date</th>
+                      <th>Time</th>
+                      <th>Home Team</th>
+                      <th>Away Team</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {comingFixtures?.length === 0 && (
+                      <tr>
+                        <td colSpan={20} className="text-center">
+                          No Fixture Found For Given Event
+                        </td>
+                      </tr>
+                    )}
+
+                    {comingFixtures?.map((singleFixture, i1) => (
+                      <React.Fragment>
+                        {singleFixture?.fixture?.map((fixture, i2) => {
+                          const date = Object.keys(fixture)[0];
+                          const values = fixture[date];
+
+                          return (
+                            <React.Fragment>
+                              {values?.map((value, i) => (
+                                <tr
+                                  onClick={() =>
+                                    handleFixtureClick(fixture?.id, value?.id)
+                                  }
+                                >
+                                  <td className="">
+                                    {new Date(date).toLocaleDateString()}
+                                  </td>
+                                  <td>{value?.time}</td>
+                                  <td>{value?.awayTeam?.team}</td>
+                                  <td>{value?.homeTeam?.team}</td>
+                                </tr>
+                              ))}
+                            </React.Fragment>
+                          );
+                        })}
+                      </React.Fragment>
+                    ))}
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>
         </div>
       </section>
-      <section id="footer" className="bg-dark">
+      <section id="footer" className="bg-info">
         <footer className="footer mt-auto py-3 ">
           <div className="container">
-            <div className="row text-light justify-content-lg-start align-content-end">
+            <div className="row text-dark justify-content-lg-start align-content-end">
               {/* <h5 className="ms-5">Links</h5> */}
               <div className="col-lg-2">
                 <ul>
@@ -250,6 +156,26 @@ export default function Fixtures() {
           </div>
         </footer>
       </section>
+
+      {selectedFixture && (
+        <Modal show={true} onHide={() => setSelectedFixture(null)}>
+          <Modal.Header closeButton>
+            <Modal.Title>Modal heading</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+          <Modal.Footer>
+            <Button
+              variant="secondary"
+              onClick={() => setSelectedFixture(null)}
+            >
+              Close
+            </Button>
+            <Button variant="primary" onClick={() => setSelectedFixture(null)}>
+              Save Changes
+            </Button>
+          </Modal.Footer>
+        </Modal>
+      )}
     </div>
   );
 }

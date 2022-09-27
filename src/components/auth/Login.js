@@ -1,6 +1,6 @@
-import { ToastContainer,  } from "react-toastify";
+import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import "./auth.css";
@@ -9,6 +9,7 @@ import { signUser } from "../../redux/actions/authAction";
 export default function Login() {
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.authReducer);
+  console.log(auth);
 
   const navigate = useNavigate();
 
@@ -21,18 +22,25 @@ export default function Login() {
     setUser((v) => ({ ...v, [e.target.name]: e.target.value }));
   };
 
-
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    dispatch(signUser(user));
+    const { success, auth } = await dispatch(signUser(user));
+    if (success) {
+      if (auth.isAdmin) {
+        navigate("/admin");
+      }else{
+        navigate("/")
+      }
+    }
   };
 
-  useEffect(() => {
-    if (auth.user._id) {
-      navigate("/");
-    }
-  }, [auth.user._id, navigate]);
+  // useEffect(()  =>  {
+  //   if (auth.user._id && auth.user.isAdmin) {
+  //     navigate("/admin");
+  //   }else   if (auth.user._id) {
+  //     navigate("/")
+  //   }
+  // }, [auth.user._id, navigate ,auth.user.isAdmin]);
   return (
     <div>
       <div className="container-lg ">
@@ -41,7 +49,7 @@ export default function Login() {
             <div className="text-center">
               <i className="bi bi-person-circle" id="signin"></i>
             </div>
-            <div className="text-center lead"> Sign in</div>
+            <div className="text-center lead fw-bold"> Sign in</div>
             <form action="">
               <label htmlFor="email" className="form-label">
                 Email:
@@ -72,7 +80,7 @@ export default function Login() {
             <div className="text-center  my-3">
               <button
                 type="button"
-                className="btn btn-primary"
+                className="btn btn-primary btn-lg"
                 onClick={handleSubmit}
               >
                 Log in

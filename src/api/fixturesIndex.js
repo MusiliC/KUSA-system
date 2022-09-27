@@ -6,3 +6,5 @@ export const generateFixtures = (eventId) =>
 
 export const getFixtures = (event) =>
   axios.get(`${url}${event && "?event=" + event}`);
+
+export const deleteFixture = (id) => axios.delete(`${url}/${id}`);

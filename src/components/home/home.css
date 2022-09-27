@@ -1,19 +1,44 @@
 
 
-#home-bg {
+/* #home-bg {
     background-image: url("/public/pictures/bg.jpg");
     height: 100vh;
    background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
+} */
+
+#kusaLogo{
+    height: 170px;
+    object-fit: cover;
+}
+
+#ballFive{
+    /* border-radius: 5px; */
+    object-fit: contain;
+    border-radius: 50%;
+box-shadow: 6px 6px 6px 4px rgba(0, 0, 0, 0.5);
+}
+
+.kusaa{
+  color: rgb(8, 198, 236); 
+  font-weight: 700;
+  text-shadow: 3px 3px 2px #726161;
+line-height: 10px;
+font-size: 3rem;
+   
 }
 
 #title {
     font-weight: 700;
+    
 }
 
 #subtitle {
-    font-weight: 600;
+    font-weight: 650;
+    letter-spacing: 2px;
+    margin-top: 10px;
+    font-size: 3em;
 }
 
 #eventful{
@@ -48,18 +73,38 @@ background-color: #EAFFF2;
 
 
 @media (max-width: 1000px) {
-    #home-bg{
+    /* #home-bg{
     background-image: url("/public/pictures/bg.jpg");
         height: 65vh;
         background-position: left;
         background-repeat: no-repeat;
         background-size: cover;
 
-    }
+    } */
 
         #subtitle {
             font-weight: 700;
+
         }
+
+     #title{
+        text-align: center;
+        font-size: 1.5em;
+     }
+
+     #subtitle{
+        text-align: center;
+        font-size: 3em;
+        
+     }
+
+     #ballFive{
+        display: none;
+     }
+
+     #kusaLogo{
+        height: 200px;
+     }
 
 
 }

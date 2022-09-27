@@ -73,7 +73,7 @@ export const deleteEvent = (id) => async (dispatch) => {
       type: actionTypes.DELETE_EVENT,
       payload: id,
     });
-    dispatch(getEvents());
+    dispatch(getEvents())
   } catch (error) {
     console.log(error);
     toast.error(error.response?.data, {

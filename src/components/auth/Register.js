@@ -37,7 +37,7 @@ export default function Register() {
   return (
     <div>
       <div className="container-lg">
-        <div className="text-center mt-2 lead">Create Account</div>
+        <div className="text-center mt-2 lead fw-bold">Create Account</div>
         <div className="row justify-content-center my-2 p-3">
           <div className="col-lg-4 border border-dark rounded p-4">
             <form action="">
@@ -88,7 +88,7 @@ export default function Register() {
             <div className="text-center  my-3">
               <button
                 type="button"
-                className="btn btn-primary"
+                className="btn btn-primary btn-lg"
                 onClick={handleSubmit}
               >
                 Sign Up

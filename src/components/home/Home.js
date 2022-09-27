@@ -9,21 +9,34 @@ export default function Home() {
     <>
       <section id="home">
         <div className="bg" id="home-bg">
-          <div className="container-lg py-5 ">
-            <div className="row justify-content-between">
+          <div className="container-lg py-3 ">
+            <div className="row justify-content-around">
               <div className="col-lg-4">
-                <div className="display-3 text-center" id="title">
-                  KUSA
+                <div className="display-3 " id="title">
+                  <img
+                    src="/pictures/kusaLogo.png"
+                    alt=""
+                    className="img-fluid"
+                    id="kusaLogo"
+                  />
                 </div>
-                <div className="lead text-center" id="title">
+                <div className="lead ms-4" id="title">
                   Games...
                 </div>
-                <div className="display-5 text-center my-5" id="subtitle">
-                  Kenya <br /> Universities Sports <br /> Association
+                <div className="display-5 ms-4 mt-4 mb-5" id="subtitle">
+                  <span className="kusaa">K</span>enya <br />
+                  <span className="kusaa">U</span>niversities <br />
+                  <span className="kusaa">S</span>port's
+                  <br /> <span className="kusaa">A</span>ssociation
                 </div>
               </div>
-              <div className="col-lg-7">
-                <img src="" className="img-fluid" alt="" />
+              <div className="col-lg-7 py-4">
+                <img
+                  src="/pictures/ballFive.jpg"
+                  className="img-fluid"
+                  alt=""
+                  id="ballFive"
+                />
               </div>
             </div>
           </div>
@@ -34,91 +47,83 @@ export default function Home() {
         <section id="about">
           <div className="container-lg">
             <div className="text-center">
-              {/* <img
-              src="/pictures/Screenshot_20220703-190052_3.png"
-              alt=""
-              className="img-fluid"
-            /> */}
               <h3 className="mb-1 display-6">
                 <b> Get started....</b>
               </h3>
             </div>
           </div>
         </section>
-        {/* <div className="row justify-content-center">
-            <div className="col-lg-8">
-              <div className="text-center">
-                <p>
-                  <b>KUSA</b> - is the body that governs university sports
-                  across the country. It organizes the venues to host sports,
-                  schedules the dates the sporting activities will take place
-                  and then to the best performing teams proceeds to participate
-                  in the national levels.
-                </p>
-              </div>
-            </div>
-          </div> */}
-        <section id="eventful" className=" pt-5">
-          <div className="container-lg">
-            <div className="row align-items-center justify-content-around">
-              <div className="col-10 col-lg-4 col-xl-3">
-                <div className="card mt-2">
-                  <img
-                    src="/pictures/teams.jpg"
-                    alt=""
-                    className="card-img-top"
-                  />
-                  <div className="card-body">
-                    <div className="card-title">
-                      <h5>Teams</h5>
-                    </div>
-                    <div className="card-text">
-                      Teams that are going to participate and registered for the
-                      coming scheduled KUSA games
+        <div className="container-lg">
+          <section id="eventful" className=" pt-3">
+            <div className="container-lg">
+              <div className="row align-items-center justify-content-around">
+                <div className="col-11 col-lg-4 col-xl-3">
+                  <div className="card mt-2">
+                    <img
+                      src="/pictures/teams.jpg"
+                      alt=""
+                      className="card-img-top"
+                    />
+                    <div className="card-body">
+                      <div className="card-title">
+                        <h5>Teams</h5>
+                      </div>
+                      <div className="card-text">
+                        Teams that are going to participate and registered for
+                        the coming scheduled KUSA games
+                      </div>
+                      <Link to="/teams" class="btn btn-primary my-2">
+                        Teams
+                      </Link>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div className="col-10 col-lg-4 col-xl-3">
-                <div className="card mt-1">
-                  <img
-                    src="/pictures/cups-4278774_1920.jpg"
-                    alt=""
-                    className="card-img-top"
-                  />
-                  <div className="card-body">
-                    <div className="card-title">
-                      <h5>Upcoming Events</h5>
-                    </div>
-                    <div className="card-text">
-                      Events will begin at playoffs in various regions and later
-                      to national levels, either tournaments or leagues.
+                <div className="col-11 col-lg-4 col-xl-3">
+                  <div className="card mt-1">
+                    <img
+                      src="/pictures/ball-four.jpg"
+                      alt=""
+                      className="card-img-top"
+                    />
+                    <div className="card-body">
+                      <div className="card-title">
+                        <h5>Upcoming Events</h5>
+                      </div>
+                      <div className="card-text">
+                        Events will begin at playoffs in various regions and
+                        later to national levels, either tournaments or leagues.
+                      </div>
+                      <Link to="/teams" class="btn btn-primary my-2">
+                        Events
+                      </Link>
                     </div>
                   </div>
                 </div>
-              </div>
-              <div className="col-10 col-lg-4 col-xl-3">
-                <div className="card mt-2">
-                  <img
-                    src="/pictures/fixtures.jpg"
-                    alt=""
-                    className="card-img-top"
-                  />
-                  <div className="card-body">
-                    <div className="card-title">
-                      <h5>Fixtures</h5>
-                    </div>
-                    <div className="card-text">
-                      Fixtures of the participating institutions and when they
-                      will be played, alongside the venue of participation.
+                <div className="col-11 col-lg-4 col-xl-3">
+                  <div className="card mt-2">
+                    <img
+                      src="/pictures/fixtures.jpg"
+                      alt=""
+                      className="card-img-top"
+                    />
+                    <div className="card-body">
+                      <div className="card-title">
+                        <h5>Fixtures</h5>
+                      </div>
+                      <div className="card-text">
+                        Fixtures of the participating institutions and when they
+                        will be played, alongside the venue of participation.
+                      </div>
+                      <Link to="/fixtures" class="btn btn-primary my-2">
+                        Fixtures
+                      </Link>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-        </section>
-
+          </section>
+        </div>
         <section id="contact" className="pb-5">
           <div className="container-lg p-4">
             <div className="text-center">
@@ -150,7 +155,9 @@ export default function Home() {
                     <label htmlFor="query">Your query... </label>
                   </div>
                   <div className="mb-4 text-center">
-                    <button className="btn btn-secondary">submit</button>
+                    <button className="btn btn-primary btn-lg">
+                      Send Message
+                    </button>
                   </div>
                 </form>
               </div>

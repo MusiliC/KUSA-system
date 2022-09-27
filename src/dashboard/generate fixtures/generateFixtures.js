@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getEvents } from "../../redux/actions/eventsAction";
 import {
   allFixtures,
+  deleteFixtures,
   generateFixtures,
 } from "../../redux/actions/fixturesAction";
 
@@ -12,6 +13,7 @@ export default function GenerateFixtures() {
   const dispatch = useDispatch();
   const events = useSelector((state) => state.eventsReducer.events);
   const comingFixtures = useSelector((state) => state.fixtureReducer.fixtures);
+  
 
   const [selectedEventDisplay, setSelectedEventDisplay] = useState("");
   const [selectedEventGenerate, setSelectedEventGenerate] = useState("");
@@ -30,9 +32,15 @@ export default function GenerateFixtures() {
     setSelectedEventDisplay(selectedEventGenerate);
   };
 
+    const handleDelete = (id) => {
+    dispatch(deleteFixtures(id))
+  }
+
+
   useEffect(() => {
     if (selectedEventDisplay) dispatch(allFixtures(selectedEventDisplay));
   }, [dispatch, selectedEventDisplay]);
+
 
   return (
     <div>
@@ -53,7 +61,7 @@ export default function GenerateFixtures() {
             </ol>
           </div> */}
 
-          <div className="card col-2 col-md-9 col-lg-6 mt-4">
+          <div className="card col-lg-6 mt-4">
             <div className="card-body">
               <div className="form-group">
                 <label htmlFor="">Select Event To Generate Fixture</label>
@@ -80,15 +88,15 @@ export default function GenerateFixtures() {
             </div>
           </div>
           <div className="col-12">
-            <div className="text-center lead py-4">Fixtures</div>
+            <div className="text-center lead py-2 fw-bold">Fixtures</div>
 
-            <hr className="my-5" />
+            <hr className="my-5 mt-4" />
             <div className="form-group">
               <label htmlFor="">Select Event To Get Fixture</label>
               <select
                 value={selectedEventDisplay}
                 onChange={(e) => setSelectedEventDisplay(e.target.value)}
-                className="form-control mt-2"
+                className="form-select mt-2"
               >
                 <option value="">Select Event</option>
 
@@ -106,8 +114,8 @@ export default function GenerateFixtures() {
                   <tr>
                     <th>Date</th>
                     <th>Time</th>
-                    <th>Away Team</th>
                     <th>Home Team</th>
+                    <th>Away Team</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -142,6 +150,11 @@ export default function GenerateFixtures() {
                   ))}
                 </tbody>
               </table>
+              <div className="text-center">
+                {/* <button type="button" className="btn btn-primary btn-lg my-3" onClick={() => handleDelete(value._id)}>
+                  Delete Fixtures
+                </button> */}
+              </div>
             </div>
           </div>
         </div>

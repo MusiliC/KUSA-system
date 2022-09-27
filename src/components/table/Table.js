@@ -23,9 +23,9 @@ function Table() {
           </div>
           <div className="underline mb-4"></div>
           <div className="row justify-content-center">
-            <div className="col-lg-12 mb-5">
+            <div className=" col-lg-12 mb-5">
               <table className="table ">
-                <thead className="border border-none bg-light">
+                <thead className="border border-none bg-light table-bordered border-primary">
                   <tr id="t-head">
                     <th>Position</th>
                     <th>Team</th>
@@ -37,6 +37,13 @@ function Table() {
                   </tr>
                 </thead>
                 <tbody className="border-top-0">
+                  {teams?.length === 0 && (
+                    <tr>
+                      <td colSpan={20} className="text-center">
+                        No teams to update table yet
+                      </td>
+                    </tr>
+                  )}
                   {teams &&
                     teams.map((team, i) => (
                       <tr id="result-data">
@@ -55,6 +62,21 @@ function Table() {
               </table>
             </div>
           </div>
+          <div className="row mb-4">
+            <div className="col-lg-4">
+              <ul className="list-group">
+                <li className="list-group-item">Win - 3 points</li>
+                <li className="list-group-item">Draw - 1 point</li>
+                <li className="list-group-item">Lost - 0 points</li>
+              </ul>
+            </div>
+          </div>
+          {/* <div className="row mb-5">
+            <div className="col-lg-10">
+              <div className="fs-3">Match Reports</div>
+              <div className="underline mb-4"></div>
+            </div>
+          </div> */}
         </div>
       </section>
       <section id="footer" className="bg-info">

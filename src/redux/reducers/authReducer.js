@@ -6,6 +6,10 @@ const initialState = {
   users: [],
   user: {
     token: localStorage.getItem("token"),
+    name: null,
+    email: null,
+    _id: null,
+    isAdmin: null
   },
 };
 
@@ -28,6 +32,7 @@ const authReducer = (state = initialState, action) => {
           name: authUser.name,
           email: authUser.email,
           _id: authUser._id,
+          isAdmin:authUser.isAdmin
         },
       };
 
@@ -44,6 +49,7 @@ const authReducer = (state = initialState, action) => {
           name: validUser.name,
           email: validUser.email,
           _id: validUser._id,
+          isAdmin: validUser.isAdmin
         },
       };
 

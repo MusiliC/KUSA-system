@@ -44,11 +44,12 @@ async function registerTeam(req, res) {
     if (registeredTeam)
       res.status(400).send("This institution is already registered..");
     else {
-      const { team, county, wins, draws, lost } = req.body;
+      const { team, county, players, wins, draws, lost } = req.body;
 
       registeredTeam = new Team({
         team,
         county,
+        players,
         wins,
         draws,
         lost,

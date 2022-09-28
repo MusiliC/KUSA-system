@@ -97,7 +97,7 @@ async function signUser(req, res) {
     );
 
     //   return success response
-    res.status(200).send(token);
+    res.status(200).send({token, user});
   } catch (error) {
     res.status(500).send(error.message);
     console.log(error);

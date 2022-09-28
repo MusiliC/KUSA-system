@@ -29,16 +29,19 @@ const generateFixtures = async (req, res) => {
   const fixtureData = await Promise.all(
     tournaments.map(async (tourn, i) => {
       const nextDate = new Date(startDate);
+      let id = Math.ceil(Math.random() * 10000000);
       nextDate.setDate(nextDate.getDate() + i);
 
       const teamObj = await Promise.all(
         tourn.map(async (t, i) => {
-          const time = i == 0 ? "11:00 AM" : i === 1 ? "14:00 PM" : "17:00 PM";
+          const time = i == 0 ? "9:00 AM" : i === 1 ? "12:00 PM" : "15:30 PM";
 
           const awayTeam = await Team.findById(t[0]);
           const homeTeam = await Team.findById(t[1]);
+          let id2 = Math.ceil(Math.random() * 10000000);
 
           return {
+            id: id2,
             time,
             awayTeam: {
               _id: awayTeam._id,
@@ -51,7 +54,7 @@ const generateFixtures = async (req, res) => {
           };
         })
       );
-      return { [nextDate.toISOString()]: teamObj };
+      return { [nextDate.toISOString()]: teamObj, id };
     })
   );
   //
@@ -98,7 +101,7 @@ async function uploadFixtures(req, res) {
   }
 }
 
-//Get results
+//Get fixtures
 
 async function allFixtures(req, res) {
   const { status, event } = req.query;
@@ -119,8 +122,23 @@ async function allFixtures(req, res) {
   }
 }
 
+//delete fixtures
+
+async function deleteFixtures(req, res) {
+  try {
+    const fixtureDelete = await Fixture.findByIdAndDelete(req.params.id);
+    res.status(200).send({
+      message: "Fixtures deleted...",
+    });
+  } catch (error) {
+    res.status(500).send(error.message);
+    console.log(error);
+  }
+}
+
 module.exports = {
   uploadFixtures,
   allFixtures,
   generateFixtures,
+  deleteFixtures,
 };

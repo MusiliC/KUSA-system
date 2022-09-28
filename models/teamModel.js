@@ -8,6 +8,9 @@ const teamSchema = new mongoose.Schema({
   county: {
     type: String,
   },
+  players: {
+    type: Array,
+  },
   wins: {
     type: Number,
     default: 0,

@@ -19,6 +19,7 @@ export default function RegisterTeam() {
   const [institution, setInstitution] = useState({
     team: "",
     county: "",
+    players:[]
     
   });
 
@@ -27,6 +28,7 @@ export default function RegisterTeam() {
   };
 
   const handleSubmit = (e) => {
+    console.log(institution);
     e.preventDefault();
     dispatch(registerTeam(institution));
     setInstitution({
@@ -75,6 +77,19 @@ export default function RegisterTeam() {
                 onChange={handleInputChange}
               />
             </div>
+
+            <div className="mb-2">
+              <label htmlFor="" className="form-label">
+                Enter team squad players:
+              </label>
+
+              <textarea
+                id="query"
+                className="form-control"
+                name="players"
+                onChange={handleInputChange}
+              ></textarea>
+            </div>
           </form>
           <div className="d-flex justify-content-center my-3">
             <Button variant="primary" onClick={handleSubmit}>
@@ -97,9 +112,7 @@ export default function RegisterTeam() {
                 registeredTeams.map((team) => (
                   <tr key={team._id}>
                     <td>{team.team}</td>
-                    <td>
-                      {team.county}
-                    </td>
+                    <td>{team.county}</td>
                     <td>
                       <div className="d-flex justify-content-around align-items-center">
                         <i

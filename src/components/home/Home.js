@@ -1,10 +1,30 @@
-import React from "react";
+import React, { useState } from "react";
+import { useForm } from "react-hook-form";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-
+import { sendEmail } from "../../redux/actions/emailAction";
+import FormInputErrorAlert from "../commons/FormInputErrorAlert";
 
 import "./home.css";
 
 export default function Home() {
+  // State
+  const [sendingEmail, setSendingEmail] = useState(false);
+  const dispatch = useDispatch();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm();
+
+  const handleEmail = async (data) => {
+    setSendingEmail(true);
+    await dispatch(sendEmail(data));
+    setSendingEmail(false);
+    reset();
+  };
+
   return (
     <>
       <section id="home">
@@ -134,7 +154,7 @@ export default function Home() {
             </div>
             <div className="row justify-content-center">
               <div className="col-lg-6">
-                <form action="">
+                <form action="" onSubmit={handleSubmit(handleEmail)}>
                   <label htmlFor="email" className="form-label">
                     Email Address:
                   </label>
@@ -145,18 +165,43 @@ export default function Home() {
                     <input
                       type="email"
                       className="form-control"
-                      id="email"
+                      id="who"
+                      name="who"
                       placeholder="email@gmail.com"
+                      {...register("who", {
+                        required: {
+                          value: true,
+                          message: "Your email is required..",
+                        },
+                      })}
                     />
+                    {errors?.who && (
+                      <FormInputErrorAlert message={errors?.who?.message} />
+                    )}
                   </div>
                   <div className="form-floating mb-2 mt-3">
-                    <textarea id="query" className="form-control"></textarea>
-
+                    <textarea
+                      id="query"
+                      className="form-control"
+                      name="query"
+                      {...register("query", {
+                        required: {
+                          value: true,
+                          message: "Input query..",
+                        },
+                      })}
+                    ></textarea>
+                    {errors?.query && (
+                      <FormInputErrorAlert message={errors?.query?.message} />
+                    )}
                     <label htmlFor="query">Your query... </label>
                   </div>
                   <div className="mb-4 text-center">
-                    <button className="btn btn-primary btn-lg">
-                      Send Message
+                    <button
+                      disabled={sendingEmail}
+                      className="btn btn-primary my-2"
+                    >
+                      {sendingEmail ? "Loading..." : "Send Message"}
                     </button>
                   </div>
                 </form>

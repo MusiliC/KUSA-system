@@ -5,6 +5,7 @@ import eventsReducer from "./eventsReducer";
 import playerReducer from "./playerReducer";
 import resultsReducer from "./resultsReducer";
 import fixtureReducer from "./fixtureReducers";
+import emailReducer from "./emailReducer";
 
 export const reducers = combineReducers({
   authReducer,
@@ -12,5 +13,6 @@ export const reducers = combineReducers({
   eventsReducer,
   playerReducer,
   resultsReducer,
-  fixtureReducer
+  fixtureReducer,
+  emailReducer
 });

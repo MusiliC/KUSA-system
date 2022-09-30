@@ -162,16 +162,85 @@ export default function Results() {
       {selectedResult?._id && (
         <Modal show={true} onHide={() => setSelectedResult(null)}>
           <Modal.Header closeButton>
-            <Modal.Title>Modal heading</Modal.Title>
+            <Modal.Title>
+              <div className="moduleTitle">Match Reports</div>
+            </Modal.Title>
           </Modal.Header>
-          <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+          <Modal.Body id="module-body">
+            <div id="module-content">
+              <div id="one">
+                <div id="homeTeamContent" className="fw-bold">
+                  Home Team
+                </div>
+                <span id="bt"> vs</span>
+                <div id="awayTeamContent" className="fw-bold">
+                  Away Team
+                </div>
+              </div>
+              <div id="one">
+                <div id="homeTeamContent">2</div> <span id="bt">Goals</span>
+                <div id="awayTeamContent">3</div>
+              </div>
+              <div id="one">
+                <div id="homeTeamContent">2</div> <span id="bt">Shots</span>
+                <div id="awayTeamContent">3</div>
+              </div>
+              <div id="one">
+                <div id="homeTeamContent">2</div> <span id="bt">Fouls</span>
+                <div id="awayTeamContent">3</div>
+              </div>
+              <div id="one">
+                <div id="homeTeamContent">2 </div>
+
+                <span id="bt">Yellow Cards</span>
+                <div id="awayTeamContent">3</div>
+              </div>
+              <div id="one">
+                <div id="homeTeamContent">
+                  <ul>
+                    <div>omolo</div>
+                    <div>owino</div>
+                  </ul>
+                </div>
+
+                <span id="bt">Yellow carded players</span>
+                <div id="awayTeamContent">
+                  <ul>
+                    <div>omolo</div>
+                    <div>owino</div>
+                  </ul>
+                </div>
+              </div>
+              <div id="one">
+                <div id="homeTeamContent">2</div> <span id="bt">Red Cards</span>
+                <div id="awayTeamContent">3</div>
+              </div>
+
+              <div id="one">
+                <div id="homeTeamContent">
+                  <ul>
+                    <div>omolo</div>
+                    <div>owino</div>
+                  </ul>
+                </div>
+
+                <span id="bt">Red carded players</span>
+                <div id="awayTeamContent">
+                  <ul>
+                    <div>omolo</div>
+                    <div>owino</div>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </Modal.Body>
           <Modal.Footer>
-            <Button variant="secondary" onClick={() => setSelectedResult(null)}>
+            <Button variant="primary" onClick={() => setSelectedResult(null)}>
               Close
             </Button>
-            <Button variant="primary" onClick={() => setSelectedResult(null)}>
+            {/* <Button variant="primary" onClick={() => setSelectedResult(null)}>
               Save Changes
-            </Button>
+            </Button> */}
           </Modal.Footer>
         </Modal>
       )}

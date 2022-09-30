@@ -1,0 +1,17 @@
+@media (min-width: 1000px) {
+    /* #home-bg{
+    background-image: url("/public/pictures/bg.jpg");
+        height: 65vh;
+        background-position: left;
+        background-repeat: no-repeat;
+        background-size: cover;
+
+    } */
+
+   
+    #rest-bg {
+        padding-bottom: 40vh;
+    }
+
+
+}

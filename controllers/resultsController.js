@@ -6,7 +6,7 @@ const { Team } = require("../models/teamModel");
 
 async function allSResults(req, res) {
   try {
-    const results = await Result.find({}).populate("homeTeam awayTeam")
+    const results = await Result.find({}).populate("homeTeam awayTeam");
     res.status(200).send(results);
   } catch (error) {
     res.status(500).send(error.message);
@@ -33,16 +33,45 @@ async function postResults(req, res) {
   if (error) return res.status(400).send(error.details[0].message);
 
   try {
-    const { homeTeam, awayTeam, homeTeamGoals, awayTeamGoals } = req.body;
+    const {
+      homeTeam,
+      awayTeam,
+      homeTeamGoals,
+      awayTeamGoals,
+      homeTeamShots,
+      homeTeamFouls,
+      homeTeamYellow,
+      homeTeamRed,
+      homeTeamYellowPlayers,
+      homeTeamRedPlayers,
+      awayTeamShots,
+      awayTeamFouls,
+      awayTeamYellow,
+      awayTeamRed,
+      awayTeamYellowPlayers,
+      awayTeamRedPlayers,
+    } = req.body;
 
     let newResult = new Result({
       homeTeam,
       awayTeam,
       homeTeamGoals,
       awayTeamGoals,
+      homeTeamShots,
+      homeTeamFouls,
+      homeTeamYellow,
+      homeTeamRed,
+      homeTeamYellowPlayers,
+      homeTeamRedPlayers,
+      awayTeamShots,
+      awayTeamFouls,
+      awayTeamYellow,
+      awayTeamRed,
+      awayTeamYellowPlayers,
+      awayTeamRedPlayers,
     });
 
-    await newResult.save()
+    await newResult.save();
 
     const homeTeam_ = await Team.findById(homeTeam);
     const awayTeam_ = await Team.findById(awayTeam);
@@ -114,7 +143,24 @@ async function updateResults(req, res) {
     // const playerToUpdate = await Score.findById(req.params.id);
     // if (!playerToUpdate) return res.status(404).send("Player not found..");
 
-    const { homeTeam, awayTeam, homeTeamGoals, awayTeamGoals } = req.body;
+    const {
+      homeTeam,
+      awayTeam,
+      homeTeamGoals,
+      awayTeamGoals,
+      homeTeamShots,
+      homeTeamFouls,
+      homeTeamYellow,
+      homeTeamRed,
+      homeTeamYellowPlayers,
+      homeTeamRedPlayers,
+      awayTeamShots,
+      awayTeamFouls,
+      awayTeamYellow,
+      awayTeamRed,
+      awayTeamYellowPlayers,
+      awayTeamRedPlayers,
+    } = req.body;
 
     const updatedResults = await Result.findByIdAndUpdate(
       req.params.id,
@@ -123,6 +169,18 @@ async function updateResults(req, res) {
         awayTeam,
         homeTeamGoals,
         awayTeamGoals,
+        homeTeamShots,
+        homeTeamFouls,
+        homeTeamYellow,
+        homeTeamRed,
+        homeTeamYellowPlayers,
+        homeTeamRedPlayers,
+        awayTeamShots,
+        awayTeamFouls,
+        awayTeamYellow,
+        awayTeamRed,
+        awayTeamYellowPlayers,
+        awayTeamRedPlayers,
       },
       { new: true }
     );

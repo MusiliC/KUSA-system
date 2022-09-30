@@ -8,6 +8,18 @@ exports.validResults = (results) => {
     awayTeam: Joi.string().required(),
     homeTeamGoals: Joi.number().required(),
     awayTeamGoals: Joi.number().required(),
+    homeTeamShots: Joi.number(),
+    homeTeamFouls: Joi.number(),
+    homeTeamYellow: Joi.number(),
+    homeTeamRed: Joi.number(),
+    homeTeamYellowPlayers: Joi.string(),
+    homeTeamRedPlayers: Joi.string(),
+    awayTeamShots: Joi.number(),
+    awayTeamFouls: Joi.number(),
+    awayTeamYellow: Joi.number(),
+    awayTeamRed: Joi.number(),
+    awayTeamYellowPlayers: Joi.string(),
+    awayTeamRedPlayers: Joi.string(),
   });
 
   return schema.validate(results);

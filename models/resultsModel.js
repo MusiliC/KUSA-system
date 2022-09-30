@@ -15,6 +15,42 @@ const resultsSchema = new mongoose.Schema({
   awayTeamGoals: {
     type: Number,
   },
+  homeTeamShots: {
+    type: Number,
+  },
+  awayTeamShots: {
+    type: Number,
+  },
+  homeTeamFouls: {
+    type: Number,
+  },
+  awayTeamFouls: {
+    type: Number,
+  },
+  homeTeamYellow: {
+    type: Number,
+  },
+  awayTeamYellow: {
+    type: Number,
+  },
+  homeTeamRed: {
+    type: Number,
+  },
+  awayTeamRed: {
+    type: Number,
+  },
+  homeTeamYellowPlayers: {
+    type: String,
+  },
+  homeTeamRedPlayers: {
+    type: String,
+  },
+  awayTeamYellowPlayers: {
+    type: String,
+  },
+  awayTeamRedPlayers: {
+    type: String,
+  },
 });
 
 const Result = mongoose.model("Result", resultsSchema);

@@ -25,10 +25,11 @@ export default function Results() {
     dispatch(getScorers());
   }, [dispatch]);
 
-  const handleResult = (id) => {
+  const handleResult = async (id) => {
     const result = results.find((f) => f._id === id);
 
-    setSelectedResult(result);
+    await setSelectedResult(result);
+    // console.log(result);
   };
 
   return (
@@ -170,66 +171,82 @@ export default function Results() {
             <div id="module-content">
               <div id="one">
                 <div id="homeTeamContent" className="fw-bold">
-                  Home Team
+                  {selectedResult.homeTeam.team}
                 </div>
                 <span id="bt"> vs</span>
                 <div id="awayTeamContent" className="fw-bold">
-                  Away Team
+                  {selectedResult.awayTeam.team}
                 </div>
               </div>
               <div id="one">
-                <div id="homeTeamContent">2</div> <span id="bt">Goals</span>
-                <div id="awayTeamContent">3</div>
+                <div id="homeTeamContent">{selectedResult.homeTeamGoals}</div>
+                <span id="bt">Goals</span>
+                <div id="awayTeamContent">{selectedResult.awayTeamGoals}</div>
               </div>
               <div id="one">
-                <div id="homeTeamContent">2</div> <span id="bt">Shots</span>
-                <div id="awayTeamContent">3</div>
+                <div id="homeTeamContent">{selectedResult.homeTeamShots}</div>
+                <span id="bt">Shots</span>
+                <div id="awayTeamContent">{selectedResult.homeTeamGoals}</div>
               </div>
               <div id="one">
-                <div id="homeTeamContent">2</div> <span id="bt">Fouls</span>
-                <div id="awayTeamContent">3</div>
+                <div id="homeTeamContent">{selectedResult.homeTeamFouls}</div>
+                <span id="bt">Fouls</span>
+                <div id="awayTeamContent">{selectedResult.awayTeamFouls}</div>
               </div>
               <div id="one">
-                <div id="homeTeamContent">2 </div>
+                <div id="homeTeamContent">{selectedResult.homeTeamYellow} </div>
 
                 <span id="bt">Yellow Cards</span>
-                <div id="awayTeamContent">3</div>
+                <div id="awayTeamContent">{selectedResult.awayTeamYellow}</div>
               </div>
               <div id="one">
                 <div id="homeTeamContent">
-                  <ul>
-                    <div>omolo</div>
-                    <div>owino</div>
-                  </ul>
+                  <div>
+                    {selectedResult.homeTeamYellowPlayers ? (
+                      <ul>{selectedResult.homeTeamYellowPlayers}</ul>
+                    ) : (
+                      "None"
+                    )}
+                  </div>
                 </div>
 
                 <span id="bt">Yellow carded players</span>
                 <div id="awayTeamContent">
-                  <ul>
-                    <div>omolo</div>
-                    <div>owino</div>
-                  </ul>
+                  <div>
+                    {selectedResult.awayTeamYellowPlayers ? (
+                      <ul>{selectedResult.awayTeamYellowPlayers}</ul>
+                    ) : (
+                      "None"
+                    )}
+                  </div>
                 </div>
               </div>
               <div id="one">
-                <div id="homeTeamContent">2</div> <span id="bt">Red Cards</span>
-                <div id="awayTeamContent">3</div>
+                <div id="homeTeamContent">{selectedResult.homeTeamRed}</div>
+                <span id="bt">Red Cards</span>
+                <div id="awayTeamContent">{selectedResult.awayTeamRed}</div>
               </div>
 
               <div id="one">
                 <div id="homeTeamContent">
-                  <ul>
-                    <div>omolo</div>
-                    <div>owino</div>
-                  </ul>
+                  <div>
+                    {selectedResult.homeTeamRedPlayers ? (
+                      <ul>{selectedResult.homeTeamRedPlayers}</ul>
+                    ) : (
+                      "None"
+                    )}
+                  </div>
                 </div>
 
                 <span id="bt">Red carded players</span>
                 <div id="awayTeamContent">
-                  <ul>
-                    <div>omolo</div>
-                    <div>owino</div>
-                  </ul>
+                  <div >
+                    {selectedResult.awayTeamRedPlayers ? (
+                      <ul>{selectedResult.awayTeamRedPlayers}</ul>
+                    ) : (
+                      "None"
+                    )}
+                  </div>
                 </div>
               </div>
             </div>

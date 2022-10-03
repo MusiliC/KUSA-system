@@ -12,14 +12,14 @@ exports.validResults = (results) => {
     homeTeamFouls: Joi.number(),
     homeTeamYellow: Joi.number(),
     homeTeamRed: Joi.number(),
-    homeTeamYellowPlayers: Joi.string(),
-    homeTeamRedPlayers: Joi.string(),
+    homeTeamYellowPlayers: Joi.string().empty("").default("none"),
+    homeTeamRedPlayers: Joi.string().empty("").default("none"),
     awayTeamShots: Joi.number(),
     awayTeamFouls: Joi.number(),
     awayTeamYellow: Joi.number(),
     awayTeamRed: Joi.number(),
-    awayTeamYellowPlayers: Joi.string(),
-    awayTeamRedPlayers: Joi.string(),
+    awayTeamYellowPlayers: Joi.string().empty("").default("none"),
+    awayTeamRedPlayers: Joi.string().empty("").default("none"),
   });
 
   return schema.validate(results);

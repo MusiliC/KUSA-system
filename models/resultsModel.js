@@ -41,15 +41,19 @@ const resultsSchema = new mongoose.Schema({
   },
   homeTeamYellowPlayers: {
     type: String,
+    default: "none",
   },
   homeTeamRedPlayers: {
     type: String,
+    default: "none",
   },
   awayTeamYellowPlayers: {
     type: String,
+    default: "none",
   },
   awayTeamRedPlayers: {
     type: String,
+    default: "none",
   },
 });
 

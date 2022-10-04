@@ -29,12 +29,12 @@ export default function RegisterTeam() {
 
   const handleSubmit = (e) => {
     console.log(institution);
-    e.preventDefault();
-    dispatch(registerTeam(institution));
-    setInstitution({
-      team: "",
-      county: "",
-    });
+    // e.preventDefault();
+    // dispatch(registerTeam(institution));
+    // setInstitution({
+    //   team: "",
+    //   county: "",
+    // });
   };
 
   const handleDelete = (id) => {
@@ -127,30 +127,7 @@ export default function RegisterTeam() {
                     </td>
                   </tr>
                 ))}
-              {/* <tr>
-                <td>Karatina Universiity</td>
-                <td>Nyeri, karatina</td>
-                <td>
-                  <div className="d-flex justify-content-around align-items-center">
-                    <i className="bi bi-pencil-square"></i>
-                    <i className="bi bi-trash-fill"></i>
-                  </div>
-                </td>
-              </tr>
-              <tr>
-                <td>Kirinyaga Universiity</td>
-                <td className="d-flex justify-content-around">
-                  <i className="bi bi-pencil-square"></i>
-                  <i className="bi bi-trash-fill"></i>
-                </td>
-              </tr>
-              <tr>
-                <td>Chuka Universiity</td>
-                <td className="d-flex justify-content-around">
-                  <i className="bi bi-pencil-square"></i>
-                  <i className="bi bi-trash-fill"></i>
-                </td>
-              </tr> */}
+        
             </tbody>
           </Table>
         </div>

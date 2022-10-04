@@ -16,6 +16,7 @@ import AdminUpdate from "../results/AdminUpdate";
 import AdminScore from "../results/AdminScore";
 import UpdateTeam from "../register-team/UpdateTeam";
 import UpdateEvent from "../create event/UpdateEvent";
+import LiveScore from "../live-score/LiveScore";
 // import AdminScore from "../results/AdminScore";
 
 export default function Sidebar() {
@@ -45,6 +46,10 @@ export default function Sidebar() {
                   <Nav.Link as={Link} to="/admin/event" className="my-3">
                     <i className="bi bi-calendar-date me-2"></i>
                     Kusa Events
+                  </Nav.Link>
+                  <Nav.Link as={Link} to="/admin/liveScore" className="my-3">
+                    <i className="bi bi-clock-fill  me-2"></i>
+                    Live Score
                   </Nav.Link>
                   <Nav.Link as={Link} to="/admin/results" className="my-3">
                     <i className="bi bi-pencil-square me-2"></i>
@@ -88,6 +93,7 @@ export default function Sidebar() {
                 element={<AdminScore />}
               />
               <Route path="/fixtures" element={<GenerateFixtures />} />
+              <Route path="/liveScore" element={<LiveScore />} />
               <Route path="/results" element={<UpdateResults />} />
               <Route path="/event" element={<AdminEvents />} />
               <Route path="/event/eventUpdate/:id" element={<UpdateEvent />} />

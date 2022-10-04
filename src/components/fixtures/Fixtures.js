@@ -4,9 +4,10 @@ import "./fixtures.css";
 import { useDispatch, useSelector } from "react-redux";
 import { allFixtures } from "../../redux/actions/fixturesAction";
 import { getEvents } from "../../redux/actions/eventsAction";
-
+import io from "socket.io-client";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+const socket = io("http://localhost:3002");
 
 export default function Fixtures() {
   const dispatch = useDispatch();
@@ -16,6 +17,41 @@ export default function Fixtures() {
   const [selectedEventDisplay, setSelectedEventDisplay] = useState("");
   const [selectedFixture, setSelectedFixture] = useState(null);
 
+  const [time, setTime] = useState(0);
+  const [timerOn, setTimerOn] = useState(false);
+  const [timePause, setTimePause] = useState();
+
+  const [liveData, setLiveData] = useState({
+    homeTeam: "",
+    awayTeam: "",
+    goalHomeTeam: "",
+    goalTimeHomeTeam: "",
+    goalAwayTeam: "",
+    goalTimeAwayTeam: "",
+    yellowHomeTeam: "",
+    yellowTimeHomeTeam: "",
+    yellowAwayTeam: "",
+    yellowTimeAwayTeam: "",
+    redHomeTeam: "",
+    redTimeHomeTeam: "",
+    redAwayTeam: "",
+    redTimeAwayTeam: "",
+  });
+
+  useEffect(() => {
+    let interval = null;
+
+    if (timerOn) {
+      interval = setInterval(() => {
+        setTime((prevTime) => prevTime + 10);
+      }, 10);
+    } else {
+      clearInterval(interval);
+    }
+
+    return () => clearInterval(interval);
+  }, [timerOn]);
+
   useEffect(() => {
     dispatch(getEvents());
   }, [dispatch]);
@@ -23,6 +59,15 @@ export default function Fixtures() {
   useEffect(() => {
     if (selectedEventDisplay) dispatch(allFixtures(selectedEventDisplay));
   }, [dispatch, selectedEventDisplay]);
+
+  useEffect(() => {
+    socket.on("updated_score", (data) => {
+      console.log(data.live);
+      setLiveData(data.live);
+      setTimerOn(true);
+      
+    });
+  }, [socket]);
 
   const handleFixtureClick = (id1, id2) => {
     const { id, ...rest } = comingFixtures[0].fixture.find((f) => f.id === id1);
@@ -44,7 +89,7 @@ export default function Fixtures() {
 
             <div className="row justify-content-around mb-5">
               <div className="col-lg-10 ">
-                <div className="form-group mt-2 my-5">
+                <div className="form-group mt-2 my-5 mb-2">
                   <label htmlFor="" className="fs-4">
                     Select event to get Fixtures
                   </label>
@@ -62,6 +107,58 @@ export default function Fixtures() {
                     ))}
                   </select>
                 </div>
+
+                {/* LIVE SCORE */}
+
+                <div className="my-5 " id="liveScore">
+                  <div className="text-center lead fw-bold ">
+                    <b> Live Score </b>
+                  </div>
+
+                  <div className="d-flex justify-content-center mb-1 fs-4">
+                    <span className="mx-1">
+                      {("0" + Math.floor((time / 60000) % 60)).slice(-2)} :
+                    </span>
+                    <span className="mx-1">
+                      {("0" + Math.floor((time / 1000) % 60)).slice(-2)} :
+                    </span>
+                    <span className="mx-1">
+                      {("0" + ((time / 10) % 100)).slice(-2)}
+                    </span>
+                  </div>
+                  <div id="two">
+                    <div id="homeTeamContent" className="fw-bold">
+                      Kemu
+                    </div>
+                    <span id="bt"> vs</span>
+                    <div id="awayTeamContent" className="fw-bold">
+                      Dekut
+                    </div>
+                  </div>
+                  <div id="two">
+                    <div id="homeTeamContent">1</div>
+                    <span id="bt">Goals</span>
+                    <div id="awayTeamContent">1</div>
+                  </div>
+                  <div id="two">
+                    <div id="homeTeamContent">komu 16'</div>
+                    <span id="bt">Goals scorer</span>
+                    <div id="awayTeamContent">Pato 12'</div>
+                  </div>
+                  <div id="two">
+                    <div id="homeTeamContent">0</div>
+                    <span id="bt">Yelow Cards</span>
+                    <div id="awayTeamContent">0</div>
+                  </div>
+                  <div id="two">
+                    <div id="homeTeamContent">0</div>
+                    <span id="bt">Red Cards</span>
+                    <div id="awayTeamContent">0</div>
+                  </div>
+                </div>
+
+                {/* FIXTURES */}
+
                 <table className="table table-hover">
                   <thead>
                     <tr>

@@ -203,7 +203,7 @@ export default function Results() {
                 <div id="homeTeamContent">
                   <div>
                     {selectedResult.homeTeamYellowPlayers ? (
-                      <ul>{selectedResult.homeTeamYellowPlayers}</ul>
+                      <div>{selectedResult.homeTeamYellowPlayers}</div>
                     ) : (
                       "None"
                     )}
@@ -214,7 +214,7 @@ export default function Results() {
                 <div id="awayTeamContent">
                   <div>
                     {selectedResult.awayTeamYellowPlayers ? (
-                      <ul>{selectedResult.awayTeamYellowPlayers}</ul>
+                      <div>{selectedResult.awayTeamYellowPlayers}</div>
                     ) : (
                       "None"
                     )}
@@ -231,7 +231,7 @@ export default function Results() {
                 <div id="homeTeamContent">
                   <div>
                     {selectedResult.homeTeamRedPlayers ? (
-                      <ul>{selectedResult.homeTeamRedPlayers}</ul>
+                      <div>{selectedResult.homeTeamRedPlayers}</div>
                     ) : (
                       "None"
                     )}
@@ -242,7 +242,7 @@ export default function Results() {
                 <div id="awayTeamContent">
                   <div >
                     {selectedResult.awayTeamRedPlayers ? (
-                      <ul>{selectedResult.awayTeamRedPlayers}</ul>
+                      <div>{selectedResult.awayTeamRedPlayers}</div>
                     ) : (
                       "None"
                     )}

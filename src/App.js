@@ -12,20 +12,12 @@ import Table from "./components/table/Table";
 import Teams from "./components/teams/Teams";
 import Sidebar from "./dashboard/admin-menu/Sidebar";
 import { getUsers } from "./redux/actions/authAction";
-import io from "socket.io-client";
 
-const socket = io("http://localhost:3002");
 
 function App() {
  
 
-  // useEffect(() => {
-  //   socket.on("hello", (arg1, arg2, arg3) => {
-  //     console.log(arg1); // 1
-  //     console.log(arg2); // "2"
-  //     console.log(arg3); // { 3: '4', 5: ArrayBuffer (1) [ 6 ] }
-  //   });
-  // }, [socket]);
+
 
   return (
     <>

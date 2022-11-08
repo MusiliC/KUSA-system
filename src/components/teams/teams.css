@@ -45,17 +45,64 @@
     
 }
 
+body{
+    margin: 0;
+}
+
+
+.teamsTable{
+    background-color: white;
+    border: 2px solid black;
+}
+
+.big-image{
+height: 130vh;
+width: 100vw;
+position: relative;
+background-size: cover;
+background-position: 50% 50%;
+background-image: url("../../../public/pictures/fix.jpg");
+}
+
+.overlay{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background: rgba(3, 138, 255, 0.2);
+}
+
+#overlayTitle {
+
+    background-color: white;
+    color: black;
+    font-weight: 500;
+    padding: 10px 20px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
+    
+}
+
+#noRegister{
+    border: 1px solid black;
+    background-color: white;
+    color: black;
+    font-weight: 500;
+    padding: 20px 30px;
+    border-radius: 20px;
+    
+}
+
 .eachCard{
     padding: 10px 20px;
     margin: 15px 5px;
     border-radius: 5px;
     box-shadow: 3px 3px 3px 2px rgba(0, 0, 0, 0.2);
-    background-color: rgb(188, 206, 220);
+    background-color: rgb(251, 253, 255);
 
 }
 
 .eachCard:hover{
-    background-color: rgb(13, 202, 240);
+    background-color: rgb(220, 224, 224);
     cursor: pointer;
 }
 

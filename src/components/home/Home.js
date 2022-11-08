@@ -27,7 +27,7 @@ export default function Home() {
 
   return (
     <>
-      <section id="home">
+      <section id="home" className="">
         <div className="bg" id="home-bg">
           <div className="container-lg py-3 ">
             <div className="row justify-content-around">
@@ -144,8 +144,8 @@ export default function Home() {
             </div>
           </section>
         </div>
-        <section id="contact" className="pb-5">
-          <div className="container-lg p-4">
+        <section id="contact" className="pb-2">
+          <div className="container-lg p-4 pb-1">
             <div className="text-center">
               <p className="display-6">
                 <b> Get in Touch..</b>{" "}
@@ -212,7 +212,7 @@ export default function Home() {
       </section>
 
       <section id="footer" className="bg-info">
-        <footer className="footer mt-auto py-3 ">
+        <footer className="footer  py-3 ">
           <div className="container">
             <div className="row text-dark justify-content-lg-start align-content-end">
               {/* <h5 className="ms-5">Links</h5> */}

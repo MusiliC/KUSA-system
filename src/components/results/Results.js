@@ -29,7 +29,7 @@ export default function Results() {
     const result = results.find((f) => f._id === id);
 
     await setSelectedResult(result);
-    // console.log(result);
+    console.log(result);
   };
 
   return (

@@ -7,6 +7,8 @@ const socket = io("http://localhost:3002");
 export default function LiveScore() {
   const [time, setTime] = useState(0);
   const [timerOn, setTimerOn] = useState(false);
+  const [gamePause, setGamePause] = useState(false);
+
   const [live, setLive] = useState({
     homeTeam: "",
     awayTeam: "",
@@ -23,12 +25,6 @@ export default function LiveScore() {
     redAwayTeam: "",
     redTimeAwayTeam: "",
   });
-
-
-
-//   const sendTime = () => {
-
-//   }
 
   useEffect(() => {
     let interval = null;
@@ -49,9 +45,19 @@ export default function LiveScore() {
   };
 
   const handleSubmit = () => {
-      socket.emit("live_score", { live });
-    //   socket.emit("game_time", { time });
-  }
+    socket.emit("live_score", { live });
+    socket.emit("game_time", { gamePause });
+  };
+
+  const handleTime = () => {
+    if (timerOn) {
+      socket.emit("game_time", { gamePause });
+    } else if (!timerOn && time > 0) {
+      setGamePause(true);
+      console.log(gamePause);
+      socket.emit("game_time", { gamePause });
+    }
+  };
 
   return (
     <div className="container-lg">
@@ -81,7 +87,7 @@ export default function LiveScore() {
         {timerOn && (
           <button
             className="btn btn-primary mb-2 mx-2"
-            onClick={() => setTimerOn(false)}
+            onClick={() => setTimerOn(false) && setGamePause(false)}
           >
             Stop
           </button>
@@ -90,7 +96,7 @@ export default function LiveScore() {
         {!timerOn && time !== 0 && (
           <button
             className="btn btn-primary mb-2 mx-2"
-            onClick={() => setTimerOn(true)}
+            onClick={() => setTimerOn(true) && setGamePause(true)}
           >
             Resume
           </button>
@@ -112,9 +118,14 @@ export default function LiveScore() {
             <div className="homeTeamScore">
               <div className="mb-2">
                 <label htmlFor="" className="form-label">
-                  Enter institution team:
+                  Enter institution home team:
                 </label>
-                <input type="text" name="team" className="form-control" />
+                <input
+                  type="text"
+                  name="homeTeam"
+                  className="form-control"
+                  onChange={handleInputChange}
+                />
               </div>
 
               <div className="mb-2">
@@ -195,9 +206,14 @@ export default function LiveScore() {
             <div className="awayTeamScore">
               <div className="mb-2">
                 <label htmlFor="" className="form-label">
-                  Enter institution team:
+                  Enter institution away team:
                 </label>
-                <input type="text" name="team" className="form-control" />
+                <input
+                  type="text"
+                  name="awayTeam"
+                  className="form-control"
+                  onChange={handleInputChange}
+                />
               </div>
 
               <div className="mb-2">
@@ -274,8 +290,15 @@ export default function LiveScore() {
             </div>
           </form>
           <div className="d-flex justify-content-center">
-            <button className="btn btn-primary my-2" onClick={handleSubmit}>
+            <button
+              className="btn btn-primary my-2 mx-2"
+              onClick={handleSubmit}
+            >
               Update Scores
+            </button>
+
+            <button className="btn btn-primary my-2" onClick={handleTime}>
+              Start game time
             </button>
           </div>
         </div>

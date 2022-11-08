@@ -19,7 +19,7 @@ export default function Fixtures() {
 
   const [time, setTime] = useState(0);
   const [timerOn, setTimerOn] = useState(false);
-  const [timePause, setTimePause] = useState();
+  const [timePause, setTimePause] = useState(Boolean);
 
   const [liveData, setLiveData] = useState({
     homeTeam: "",
@@ -64,18 +64,34 @@ export default function Fixtures() {
     socket.on("updated_score", (data) => {
       console.log(data.live);
       setLiveData(data.live);
-      setTimerOn(true);
-      
+      if (!timePause) {
+        setTimerOn(true);
+      } else {
+        setTimerOn(false);
+      }
+    });
+
+    socket.on("game_pause", (data) => {
+      setTimePause(data.gamePause);
+
+      if (!timePause) {
+        setTimerOn(true);
+      } else {
+        console.log(timePause);
+        setTimerOn(false);
+      }
     });
   }, [socket]);
 
-  const handleFixtureClick = (id1, id2) => {
+  const handleFixtureClick = async (id1, id2) => {
     const { id, ...rest } = comingFixtures[0].fixture.find((f) => f.id === id1);
     const date = Object.keys(rest)[0];
     const values = rest[date];
 
-    const fixture = values.find((f) => f.id === id2);
-    setSelectedFixture(fixture);
+    const fixture = await values.find((f) => f.id === id2);
+
+    await setSelectedFixture(fixture);
+    console.log(selectedFixture);
   };
 
   return (
@@ -110,52 +126,88 @@ export default function Fixtures() {
 
                 {/* LIVE SCORE */}
 
-                <div className="my-5 " id="liveScore">
-                  <div className="text-center lead fw-bold ">
-                    <b> Live Score </b>
-                  </div>
+                {time === 0 && (
+                  <div className="my-5 " id="liveScore">
+                    <div className="text-center lead fw-bold mb-3 ">
+                      <b> Live Score </b>
+                    </div>
+                    <div className="d-flex justify-content-center mb-1 fs-4">
+                      <span className="mx-1">
+                        {("0" + Math.floor((time / 60000) % 60)).slice(-2)} :
+                      </span>
+                      <span className="mx-1">
+                        {("0" + Math.floor((time / 1000) % 60)).slice(-2)}
+                      </span>
+                      {/* <span className="mx-1">
+                        {("0" + ((time / 10) % 100)).slice(-2)}
+                      </span> */}
+                    </div>
 
-                  <div className="d-flex justify-content-center mb-1 fs-4">
-                    <span className="mx-1">
-                      {("0" + Math.floor((time / 60000) % 60)).slice(-2)} :
-                    </span>
-                    <span className="mx-1">
-                      {("0" + Math.floor((time / 1000) % 60)).slice(-2)} :
-                    </span>
-                    <span className="mx-1">
-                      {("0" + ((time / 10) % 100)).slice(-2)}
-                    </span>
-                  </div>
-                  <div id="two">
-                    <div id="homeTeamContent" className="fw-bold">
-                      Kemu
+                    <div id="two">
+                      <div id="homeTeamContent" className="fw-bold">
+                        Home Team
+                      </div>
+                      <span id="bt"> vs</span>
+                      <div id="awayTeamContent" className="fw-bold">
+                        Away Team
+                      </div>
                     </div>
-                    <span id="bt"> vs</span>
-                    <div id="awayTeamContent" className="fw-bold">
-                      Dekut
+
+                    <div className="text-center my-2 fs-4">
+                      No game taking place right now..
                     </div>
                   </div>
-                  <div id="two">
-                    <div id="homeTeamContent">1</div>
-                    <span id="bt">Goals</span>
-                    <div id="awayTeamContent">1</div>
+                )}
+
+                {time > 0 && (
+                  <div className="my-5 " id="liveScore">
+                    <div className="text-center lead fw-bold ">
+                      <b> Live Score </b>
+                    </div>
+
+                    <div className="d-flex justify-content-center mb-1 fs-4">
+                      <span className="mx-1">
+                        {("0" + Math.floor((time / 60000) % 60)).slice(-2)} :
+                      </span>
+                      <span className="mx-1">
+                        {("0" + Math.floor((time / 1000) % 60)).slice(-2)}
+                      </span>
+                      {/* <span className="mx-1">
+                        {("0" + ((time / 10) % 100)).slice(-2)}
+                      </span> */}
+                    </div>
+
+                    <div id="two">
+                      <div id="homeTeamContent" className="fw-bold">
+                        Kemu
+                      </div>
+                      <span id="bt"> vs</span>
+                      <div id="awayTeamContent" className="fw-bold">
+                        Dekut
+                      </div>
+                    </div>
+                    <div id="two">
+                      <div id="homeTeamContent">1</div>
+                      <span id="bt">Goals</span>
+                      <div id="awayTeamContent">1</div>
+                    </div>
+                    <div id="two">
+                      <div id="homeTeamContent">komu 16'</div>
+                      <span id="bt">Goals scorer</span>
+                      <div id="awayTeamContent">Pato 12'</div>
+                    </div>
+                    <div id="two">
+                      <div id="homeTeamContent">0</div>
+                      <span id="bt">Yelow Cards</span>
+                      <div id="awayTeamContent">0</div>
+                    </div>
+                    <div id="two">
+                      <div id="homeTeamContent">0</div>
+                      <span id="bt">Red Cards</span>
+                      <div id="awayTeamContent">0</div>
+                    </div>
                   </div>
-                  <div id="two">
-                    <div id="homeTeamContent">komu 16'</div>
-                    <span id="bt">Goals scorer</span>
-                    <div id="awayTeamContent">Pato 12'</div>
-                  </div>
-                  <div id="two">
-                    <div id="homeTeamContent">0</div>
-                    <span id="bt">Yelow Cards</span>
-                    <div id="awayTeamContent">0</div>
-                  </div>
-                  <div id="two">
-                    <div id="homeTeamContent">0</div>
-                    <span id="bt">Red Cards</span>
-                    <div id="awayTeamContent">0</div>
-                  </div>
-                </div>
+                )}
 
                 {/* FIXTURES */}
 
@@ -257,18 +309,41 @@ export default function Fixtures() {
       {selectedFixture && (
         <Modal show={true} onHide={() => setSelectedFixture(null)}>
           <Modal.Header closeButton>
-            <Modal.Title>Modal heading</Modal.Title>
+            <Modal.Title>Team Report</Modal.Title>
           </Modal.Header>
-          <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+          <Modal.Body>
+            <div className="d-flex flex-row justify-content-around">
+              {/* first team */}
+              <div>
+                <div className="mb-4">Home Team</div>
+                <div className="mb-2">Wins - 4</div>
+                <div className="mb-2">Draws - 2</div>
+                <div className="mb-2">Lost - 1</div>
+                <div className="mb-2">
+                  Win probability - {Math.floor((4 / 7) * 100)}%
+                </div>
+              </div>
+
+              <div className="fw-bold">Vs</div>
+              {/* away team */}
+
+              <div>
+                <div className="mb-4">Away Team</div>
+                <div className="mb-2">Wins - 2</div>
+                <div className="mb-2">Draws - 2</div>
+                <div className="mb-2">Lost - 1</div>
+                <div className="mb-2">
+                  Win probability - {Math.floor((2 / 7) * 100)}%
+                </div>
+              </div>
+            </div>
+          </Modal.Body>
           <Modal.Footer>
             <Button
               variant="secondary"
               onClick={() => setSelectedFixture(null)}
             >
               Close
-            </Button>
-            <Button variant="primary" onClick={() => setSelectedFixture(null)}>
-              Save Changes
             </Button>
           </Modal.Footer>
         </Modal>

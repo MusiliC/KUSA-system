@@ -1,5 +1,6 @@
 const { validTeam } = require("../helpers/teamValidator");
 const { Team } = require("../models/teamModel");
+const crypto = require("crypto");
 
 //Get teams
 
@@ -37,6 +38,11 @@ async function registerTeam(req, res) {
   const { error } = validTeam(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
+  if (!req.files || !req.files.image)
+    return res.status(400).send("Image is required");
+
+  
+
   try {
     //check if team exists
 
@@ -44,6 +50,12 @@ async function registerTeam(req, res) {
     if (registeredTeam)
       res.status(400).send("This institution is already registered..");
     else {
+      const image = req.files.image;
+      const randId = crypto.randomBytes(8).toString("hex");
+      const imageName = randId + image.name;
+
+      image.mv("uploads/" + imageName);
+      
       const { team, county, players, wins, draws, lost } = req.body;
 
       registeredTeam = new Team({
@@ -53,6 +65,7 @@ async function registerTeam(req, res) {
         wins,
         draws,
         lost,
+        image: imageName,
       });
 
       await registeredTeam.save();
@@ -62,6 +75,7 @@ async function registerTeam(req, res) {
 
     res.status(200).send({
       message: "Team registered successful",
+      team: registeredTeam,
     });
   } catch (error) {
     res.status(500).send(error.message);

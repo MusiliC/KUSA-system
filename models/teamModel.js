@@ -9,7 +9,10 @@ const teamSchema = new mongoose.Schema({
     type: String,
   },
   players: {
-    type: Array,
+    type: String,
+  },
+  image:{
+    type:String
   },
   wins: {
     type: Number,

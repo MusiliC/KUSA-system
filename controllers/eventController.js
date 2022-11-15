@@ -26,16 +26,6 @@ async function oneEvent(req, res) {
   }
 }
 
-// SET STORAGE
-// const storage = multer.diskStorage({
-//   destination: (req,file, cb) => {
-//     cb(null, 'uploads')
-//   },
-//   filename: (req,file,cb) => {
-//     cb(null, file.originalname.toLowerCase().split(' ').join('-'))
-//   }
-// })
-
 // const upload = multer({storage: Storage})
 
 // var upload = multer({
@@ -57,6 +47,8 @@ async function oneEvent(req, res) {
 async function registerEvent(req, res) {
   const { error } = validEvent(req.body);
   if (error) return res.status(400).send(error.details[0].message);
+
+ 
 
   try {
     //check if event exists

@@ -15,6 +15,12 @@ const resultsSchema = new mongoose.Schema({
   awayTeamGoals: {
     type: Number,
   },
+  homeTeamGoalScorer: {
+    type: Array,
+  },
+  awayTeamGoalScorer: {
+    type: Array,
+  },
   homeTeamShots: {
     type: Number,
   },
@@ -40,19 +46,19 @@ const resultsSchema = new mongoose.Schema({
     type: Number,
   },
   homeTeamYellowPlayers: {
-    type: String,
+    type: Array,
     default: "none",
   },
   homeTeamRedPlayers: {
-    type: String,
+    type: Array,
     default: "none",
   },
   awayTeamYellowPlayers: {
-    type: String,
+    type: Array,
     default: "none",
   },
   awayTeamRedPlayers: {
-    type: String,
+    type: Array,
     default: "none",
   },
 });

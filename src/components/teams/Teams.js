@@ -7,6 +7,8 @@ import { getTeams } from "../../redux/actions/teamsAction";
 import "./teams.css";
 import { getEvents } from "../../redux/actions/eventsAction";
 
+const imgUrl = "http://localhost:5000/static";
+
 export default function Teams() {
   const dispatch = useDispatch();
   const registeredTeams = useSelector((state) => state.teamsReducer.allTeams);
@@ -41,10 +43,7 @@ export default function Teams() {
                   <div className="mainContainer mt-5">
                     {events?.length === 0 && (
                       <div className="mt-2">
-                        <div
-                          className="text-center display-6 "
-                          id="noRegister"
-                        >
+                        <div className="text-center display-6 " id="noRegister">
                           No registered KUSA events yet..
                         </div>
                       </div>
@@ -72,7 +71,7 @@ export default function Teams() {
                   <h3 className="text-center display-6 " id="overlayTitle">
                     Registered Teams
                   </h3>
-                  
+
                   <Table
                     striped
                     bordered
@@ -98,7 +97,18 @@ export default function Teams() {
                         registeredTeams.map((team, i) => (
                           <tr key={team._id}>
                             <td>{(i = i + 1)}</td>
-                            <td>{team.team}</td>
+                            <td className="d-flex align-items-center ">
+                              <div className="mx-3 ">
+                                <img
+                                  src={`${imgUrl}/${team.image}`}
+                                  alt=""
+                                  // width={40}
+                                  className="logo"
+                                  srcset=""
+                                />
+                              </div>
+                              {team.team}
+                            </td>
                             <td>{team.county}</td>
                           </tr>
                         ))}

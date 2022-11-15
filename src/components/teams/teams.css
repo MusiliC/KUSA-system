@@ -49,6 +49,10 @@ body{
     margin: 0;
 }
 
+.teamA, .teamB{
+    width: 230px;
+}
+
 
 .teamsTable{
     background-color: white;

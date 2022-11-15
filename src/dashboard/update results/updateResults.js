@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { postScorer } from "../../redux/actions/playerActions";
 import { postResults } from "../../redux/actions/resultsActions";
 import { getTeams } from "../../redux/actions/teamsAction";
+import Select from "react-select";
 // import Table from "react-bootstrap/Table";
 import { useForm } from "react-hook-form";
 import FormInputErrorAlert from "../../components/commons/FormInputErrorAlert";
@@ -13,6 +14,15 @@ export default function UpdateResults() {
   // State
   const [postingResult, setPostingResult] = useState(false);
 
+  // react select data handling
+
+  const [homeTeamGoalScorer, setHomeTeamGoalScorer] = useState("");
+  const [awayTeamGoalScorer, setAwayTeamGoalScorer] = useState("");
+  const [homeTeamYellowPlayers, setHomeTeamYellowPlayers] = useState("");
+  const [awayTeamYellowPlayers, setAwayTeamYellowPlayers] = useState("");
+  const [homeTeamRedPlayers, setHomeTeamRedPlayers] = useState("");
+  const [awayTeamRedPlayers, setAwayTeamRedPlayers] = useState("");
+
   const dispatch = useDispatch();
   const {
     register,
@@ -22,12 +32,57 @@ export default function UpdateResults() {
     formState: { errors },
   } = useForm();
 
+  //handling results
+
+  console.log(awayTeamRedPlayers);
+
   const handlePostResultSubmit = async (data) => {
-    setPostingResult(true);
-    await dispatch(postResults(data));
-    setPostingResult(false);
-    reset();
+    const obj = {
+      ...data,
+      homeTeamGoalScorer: homeTeamGoalScorer.map((val) => val.value),
+      awayTeamGoalScorer: awayTeamGoalScorer.map((val) => val.value),
+      homeTeamYellowPlayers: homeTeamYellowPlayers.map((val) => val.value),
+      homeTeamRedPlayers: homeTeamRedPlayers.map((val) => val.value),
+      awayTeamYellowPlayers: awayTeamYellowPlayers.map((val) => val.value),
+      awayTeamRedPlayers: awayTeamRedPlayers.map((val) => val.value),
+    };
+    console.log(obj);
+    // setPostingResult(true);
+    // await dispatch(postResults(obj));
+
+    // setPostingResult(false);
+    // reset();
   };
+
+  //react select result change
+
+  // const handleResultInput = (e) => {
+  //   setPlayer((v) => ({ ...v, [e.target.name]: e.target.value }));
+  // };
+
+  //homeTeam
+
+  const selectedHomeTeam = watch("homeTeam");
+
+  const selectedHomeTeamObj = useMemo(
+    () => teams.find((t) => t._id === selectedHomeTeam),
+    [teams, selectedHomeTeam]
+  );
+  const selectedHomeTeamPlayers = selectedHomeTeamObj
+    ? selectedHomeTeamObj?.players.split(",")
+    : [];
+
+  //awayTeam
+
+  const selectedAwayTeam = watch("awayTeam");
+
+  const selectedAwayTeamObj = useMemo(
+    () => teams.find((t) => t._id === selectedAwayTeam),
+    [teams, selectedAwayTeam]
+  );
+  const selectedAwayTeamPlayers = selectedAwayTeamObj
+    ? selectedAwayTeamObj?.players.split(",")
+    : [];
 
   //handling top scorer
 
@@ -103,6 +158,42 @@ export default function UpdateResults() {
                     })}
                     className="form-control"
                   />
+                  {errors?.homeTeamGoals && (
+                    <FormInputErrorAlert
+                      message={errors?.homeTeamGoals?.message}
+                    />
+                  )}
+                </div>
+
+                {/* goal scorers */}
+
+                <div className="mb-2">
+                  <label htmlFor="" className="form-label">
+                    Goals scorers of home team:
+                  </label>
+                  {/* <input
+                    type="number"
+                    name="homeTeamGoals"
+                    {...register("homeTeamGoals", {
+                      required: {
+                        value: true,
+                        message: "Field is required",
+                      },
+                    })}
+                    className="form-control"
+                  /> */}
+
+                  <Select
+                    name="homeTeamGoalScorer"
+                    value={homeTeamGoalScorer}
+                    onChange={(value) => setHomeTeamGoalScorer(value)}
+                    options={selectedHomeTeamPlayers.map((p) => ({
+                      label: p,
+                      value: p,
+                    }))}
+                    isMulti
+                  />
+
                   {errors?.homeTeamGoals && (
                     <FormInputErrorAlert
                       message={errors?.homeTeamGoals?.message}
@@ -188,11 +279,20 @@ export default function UpdateResults() {
                   <label htmlFor="" className="form-label">
                     Players with yellow card:
                   </label>
-                  <input
+                  {/* <input
                     type="text"
                     name="homeTeamYellowPlayers"
                     {...register("homeTeamYellowPlayers", {})}
                     className="form-control"
+                  /> */}
+                  <Select
+                    value={homeTeamYellowPlayers}
+                    onChange={(value) => setHomeTeamYellowPlayers(value)}
+                    options={selectedHomeTeamPlayers.map((p) => ({
+                      label: p,
+                      value: p,
+                    }))}
+                    isMulti
                   />
                   {errors?.homeTeamYellowPlayers && (
                     <FormInputErrorAlert
@@ -218,6 +318,7 @@ export default function UpdateResults() {
                     })}
                     className="form-control"
                   />
+
                   {errors?.homeTeamRed && (
                     <FormInputErrorAlert
                       message={errors?.homeTeamRed?.message}
@@ -231,11 +332,21 @@ export default function UpdateResults() {
                   <label htmlFor="" className="form-label">
                     Players with red card:
                   </label>
-                  <input
+                  {/* <input
                     type="text"
                     name="homeTeamRedPlayers"
                     {...register("homeTeamRedPlayers", {})}
                     className="form-control"
+                  /> */}
+
+                  <Select
+                    value={homeTeamRedPlayers}
+                    onChange={(value) => setHomeTeamRedPlayers(value)}
+                    options={selectedHomeTeamPlayers.map((p) => ({
+                      label: p,
+                      value: p,
+                    }))}
+                    isMulti
                   />
                   {errors?.homeTeamRedPlayers && (
                     <FormInputErrorAlert
@@ -292,6 +403,40 @@ export default function UpdateResults() {
                       },
                     })}
                     className="form-control mb-2"
+                  />
+                  {errors?.awayTeamGoals && (
+                    <FormInputErrorAlert
+                      message={errors?.awayTeamGoals?.message}
+                    />
+                  )}
+                </div>
+
+                {/* away team goal scorers */}
+
+                <div className="mb-2">
+                  <label htmlFor="" className="form-label">
+                    Goals scorers of away team:
+                  </label>
+                  {/* <input
+                    type="number"
+                    name="awayTeamGoals"
+                    {...register("awayTeamGoals", {
+                      required: {
+                        value: true,
+                        message: "Field is required",
+                      },
+                    })}
+                    className="form-control mb-2"
+                  /> */}
+
+                  <Select
+                    value={awayTeamGoalScorer}
+                    onChange={(value) => setAwayTeamGoalScorer(value)}
+                    options={selectedAwayTeamPlayers.map((p) => ({
+                      label: p,
+                      value: p,
+                    }))}
+                    isMulti
                   />
                   {errors?.awayTeamGoals && (
                     <FormInputErrorAlert
@@ -377,11 +522,21 @@ export default function UpdateResults() {
                   <label htmlFor="" className="form-label">
                     Players with yellow cards:
                   </label>
-                  <input
+                  {/* <input
                     type="text"
                     name=" awayTeamYellowPlayers"
                     {...register("awayTeamYellowPlayers", {})}
                     className="form-control"
+                  /> */}
+
+                  <Select
+                    value={awayTeamYellowPlayers}
+                    onChange={(value) => setAwayTeamYellowPlayers(value)}
+                    options={selectedAwayTeamPlayers.map((p) => ({
+                      label: p,
+                      value: p,
+                    }))}
+                    isMulti
                   />
                   {errors?.awayTeamYellowPlayers && (
                     <FormInputErrorAlert
@@ -420,11 +575,21 @@ export default function UpdateResults() {
                   <label htmlFor="" className="form-label">
                     Players with red cards:
                   </label>
-                  <input
+                  {/* <input
                     type="text"
                     name="awayTeamRedPlayers"
                     {...register("awayTeamRedPlayers", {})}
                     className="form-control"
+                  /> */}
+
+                  <Select
+                    value={awayTeamRedPlayers}
+                    onChange={(value) => setAwayTeamRedPlayers(value)}
+                    options={selectedAwayTeamPlayers.map((p) => ({
+                      label: p,
+                      value: p,
+                    }))}
+                    isMulti
                   />
                   {errors?.awayTeamRedPlayers && (
                     <FormInputErrorAlert

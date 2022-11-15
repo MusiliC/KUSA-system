@@ -62,8 +62,8 @@ export default function Fixtures() {
 
   useEffect(() => {
     socket.on("updated_score", (data) => {
-      console.log(data.live);
       setLiveData(data.live);
+
       if (!timePause) {
         setTimerOn(true);
       } else {
@@ -93,6 +93,8 @@ export default function Fixtures() {
     await setSelectedFixture(fixture);
     console.log(selectedFixture);
   };
+
+  
 
   return (
     <div>
@@ -177,13 +179,15 @@ export default function Fixtures() {
                       </span> */}
                     </div>
 
+                    
+
                     <div id="two">
                       <div id="homeTeamContent" className="fw-bold">
-                        Kemu
+                        {liveData.homeTeam}
                       </div>
                       <span id="bt"> vs</span>
                       <div id="awayTeamContent" className="fw-bold">
-                        Dekut
+                       {liveData.awayTeam}
                       </div>
                     </div>
                     <div id="two">

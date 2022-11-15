@@ -7,6 +7,8 @@ import { getScorers } from "../../redux/actions/playerActions";
 import { Link } from "react-router-dom";
 import { Button, Modal } from "react-bootstrap";
 
+const imgUrl = "http://localhost:5000/static";
+
 export default function Results() {
   const dispatch = useDispatch();
 
@@ -57,9 +59,18 @@ export default function Results() {
                   {results &&
                     results.map((teams) => (
                       <tr onClick={() => handleResult(teams._id)}>
-                        <td className="py-3 d-flex flex-wrap" id="result-data">
+                        <td
+                          className="py-3 d-flex flex-wrap justify-content-between align-items-center "
+                          id="result-data"
+                        >
                           {/* {` ${teams?.homeTeam?.team} ${teams.homeTeamGoals} vs  ${teams.awayTeamGoals} ${teams.awayTeam?.team} `} */}
                           <div className="teamA">
+                            <img
+                              src={`${imgUrl}/${teams?.homeTeam?.image} `}
+                              alt="logo"
+                              className="logo me-2"
+                            />
+
                             {`${teams?.homeTeam?.team} `}
                           </div>
                           <span className="score-data mx-2 me-4">
@@ -67,14 +78,18 @@ export default function Results() {
                             {` ${teams.awayTeamGoals}`}
                           </span>
                           <div className="teamA">
-                            {" "}
+                            <img
+                              src={`${imgUrl}/${teams?.awayTeam?.image} `}
+                              alt="logo"
+                              className="logo me-2"
+                            />
                             {` ${teams.awayTeam?.team} `}
                           </div>
                         </td>
-                        <td className="py-3" id="result-data">
+                        {/* <td className="py-3" id="result-data">
                           <i className="bi bi-geo-alt-fill me-2 "></i> Chuka
                           University
-                        </td>
+                        </td> */}
                       </tr>
                     ))}
                 </tbody>
@@ -240,7 +255,7 @@ export default function Results() {
 
                 <span id="bt">Red carded players</span>
                 <div id="awayTeamContent">
-                  <div >
+                  <div>
                     {selectedResult.awayTeamRedPlayers ? (
                       <div>{selectedResult.awayTeamRedPlayers}</div>
                     ) : (

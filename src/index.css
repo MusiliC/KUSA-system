@@ -24,3 +24,11 @@ code {
   color: black;
 }
 
+
+.logo{
+  width: 55px;
+  height: 55px;
+  object-fit: cover;
+  border-radius: 50px;
+  border: 1px solid rgb(212, 211, 211);
+}

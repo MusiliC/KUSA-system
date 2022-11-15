@@ -19,8 +19,8 @@ export default function RegisterTeam() {
   const [institution, setInstitution] = useState({
     team: "",
     county: "",
-    players:[]
-    
+    image: "",
+    players: "",
   });
 
   const handleInputChange = (e) => {
@@ -28,20 +28,25 @@ export default function RegisterTeam() {
   };
 
   const handleSubmit = (e) => {
-    console.log(institution);
-    // e.preventDefault();
-    // dispatch(registerTeam(institution));
-    // setInstitution({
-    //   team: "",
-    //   county: "",
-    // });
+    e.preventDefault();
+    
+    const formData = new FormData();
+
+    formData.append("image", institution.image);
+    formData.append("team", institution.team);
+    formData.append("county", institution.county);
+    formData.append("players", institution.players);
+    console.log(formData);
+    dispatch(registerTeam(formData));
+    setInstitution({
+      team: "",
+      county: "",
+    });
   };
 
   const handleDelete = (id) => {
     dispatch(deleteTeam(id));
   };
-
- 
 
   useEffect(() => {
     dispatch(getTeams());
@@ -64,6 +69,25 @@ export default function RegisterTeam() {
                 name="team"
                 className="form-control"
                 onChange={handleInputChange}
+              />
+            </div>
+
+            <div className="mb-2">
+              <label htmlFor="" className="form-label">
+                Enter institution or team logo:
+              </label>
+              <input
+                type="file"
+                name="image"
+                className="form-control"
+                onChange={(e) => {
+                  if (e.target.files && e.target.files.length > 0) {
+                    setInstitution((v) => ({
+                      ...v,
+                      image: e.target.files[0],
+                    }));
+                  }
+                }}
               />
             </div>
             <div className="mb-2">
@@ -127,7 +151,6 @@ export default function RegisterTeam() {
                     </td>
                   </tr>
                 ))}
-        
             </tbody>
           </Table>
         </div>

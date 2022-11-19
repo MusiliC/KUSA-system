@@ -21,7 +21,7 @@ export default function Results() {
   //handling top scorer
 
   const topScorer = useSelector((state) => state.playerReducer.players);
-
+  // console.log(topScorer);
   useEffect(() => {
     dispatch(getResults());
     dispatch(getScorers());
@@ -60,7 +60,7 @@ export default function Results() {
                     results.map((teams) => (
                       <tr onClick={() => handleResult(teams._id)}>
                         <td
-                          className="py-3 d-flex flex-wrap justify-content-between align-items-center "
+                          className="py-3  d-flex flex-wrap justify-content-between align-items-center "
                           id="result-data"
                         >
                           {/* {` ${teams?.homeTeam?.team} ${teams.homeTeamGoals} vs  ${teams.awayTeamGoals} ${teams.awayTeam?.team} `} */}
@@ -112,16 +112,23 @@ export default function Results() {
                   <tbody>
                     {topScorer?.length === 0 && (
                       <tr>
-                        <td colSpan={20} className="text-center">
+                        <td colSpan={20} className="text-center fw-bold">
                           Goals tally of the scorers not updated..
                         </td>
                       </tr>
                     )}
                     {topScorer &&
                       topScorer.map((player) => (
-                        <tr className="py-3" id="result-data">
+                        <tr className="py-3 fw-bold align-middle" id="result-data">
                           <td>{player.scorer}</td>
-                          <td>{player.scorerTeam}</td>
+                          <td>
+                            <img
+                              src={`${imgUrl}/${player?.scorerTeam?.image} `}
+                              alt=""
+                              className="logo me-2"
+                            />
+                            {player.scorerTeam.team}
+                          </td>
                           <td>{player.scorerGoals}</td>
                         </tr>
                       ))}

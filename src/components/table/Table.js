@@ -4,6 +4,9 @@ import { Link } from "react-router-dom";
 import { getTeams } from "../../redux/actions/teamsAction";
 import "./table.css"
 
+
+const imgUrl = "http://localhost:5000/static";
+
 function Table() {
   const teams = useSelector((state) => state.teamsReducer.allTeams);
   console.log(teams);
@@ -46,10 +49,19 @@ function Table() {
                   )}
                   {teams &&
                     teams.map((team, i) => (
-                      <tr id="result-data">
+                      <tr id="result-data" className="align-middle">
                         <td className="px-3">{(i = i + 1)}</td>
-                        <td>{team.team}</td>
-                        <td>{team.wins + team.draws + team.lost}</td>
+                        <td className="flex  align-items-center">
+                          <img
+                            src={`${imgUrl}/${team?.image} `}
+                            alt="logo"
+                            className="logo me-2"
+                          />
+                          {team.team}
+                        </td>
+                        <td>
+                          <span>{team.wins + team.draws + team.lost}</span>
+                        </td>
                         <td>{team.wins}</td>
                         <td>{team.draws}</td>
                         <td>{team.lost}</td>

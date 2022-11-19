@@ -9,6 +9,8 @@ import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 const socket = io("http://localhost:3002");
 
+const imgUrl = "http://localhost:5000/static";
+
 export default function Fixtures() {
   const dispatch = useDispatch();
   const events = useSelector((state) => state.eventsReducer.events);
@@ -89,12 +91,12 @@ export default function Fixtures() {
     const values = rest[date];
 
     const fixture = await values.find((f) => f.id === id2);
-
+      
     await setSelectedFixture(fixture);
     console.log(selectedFixture);
   };
 
-  
+
 
   return (
     <div>
@@ -179,15 +181,13 @@ export default function Fixtures() {
                       </span> */}
                     </div>
 
-                    
-
                     <div id="two">
                       <div id="homeTeamContent" className="fw-bold">
                         {liveData.homeTeam}
                       </div>
                       <span id="bt"> vs</span>
                       <div id="awayTeamContent" className="fw-bold">
-                       {liveData.awayTeam}
+                        {liveData.awayTeam}
                       </div>
                     </div>
                     <div id="two">
@@ -251,8 +251,22 @@ export default function Fixtures() {
                                     {new Date(date).toLocaleDateString()}
                                   </td>
                                   <td>{value?.time}</td>
-                                  <td>{value?.awayTeam?.team}</td>
-                                  <td>{value?.homeTeam?.team}</td>
+                                  <td>
+                                    {/* <img
+                                      src={`${imgUrl}/${value?.awayTeam?.image} `}
+                                      alt="logo"
+                                      className="logo me-2"
+                                    /> */}
+                                    {value?.awayTeam?.team}
+                                  </td>
+                                  <td>
+                                    {/* <img
+                                      src={`${imgUrl}/${value?.homeTeam?.image} `}
+                                      alt="logo"
+                                      className="logo me-2"
+                                    /> */}
+                                    {value?.homeTeam?.team}
+                                  </td>
                                 </tr>
                               ))}
                             </React.Fragment>

@@ -95,7 +95,7 @@ export default function Teams() {
                       )}
                       {registeredTeams &&
                         registeredTeams.map((team, i) => (
-                          <tr key={team._id}>
+                          <tr key={team._id} className="align-middle">
                             <td>{(i = i + 1)}</td>
                             <td className="d-flex align-items-center ">
                               <div className="mx-3 ">
@@ -109,7 +109,7 @@ export default function Teams() {
                               </div>
                               {team.team}
                             </td>
-                            <td>{team.county}</td>
+                            <td className="">{team.county}</td>
                           </tr>
                         ))}
                     </tbody>

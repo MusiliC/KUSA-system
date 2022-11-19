@@ -27,20 +27,22 @@ export default function RegisterTeam() {
     setInstitution((v) => ({ ...v, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    
+
     const formData = new FormData();
 
     formData.append("image", institution.image);
     formData.append("team", institution.team);
     formData.append("county", institution.county);
     formData.append("players", institution.players);
-    console.log(formData);
+    console.log(institution);
     dispatch(registerTeam(formData));
-    setInstitution({
+    await setInstitution({
       team: "",
       county: "",
+      image:"",
+      players:""
     });
   };
 

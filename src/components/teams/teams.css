@@ -117,4 +117,8 @@ background-image: url("../../../public/pictures/fix.jpg");
             border-radius: 10px;
             margin: 10px 5px;
         }
+
+        .big-image{
+            height: 250vh;
+        }
 }

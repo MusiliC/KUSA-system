@@ -1,30 +1,49 @@
 import React from "react";
 import { useEffect } from "react";
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useState, useMemo } from "react";
+import { getTeams } from "../../redux/actions/teamsAction";
+import { useForm } from "react-hook-form";
+import Select from "react-select";
+import FormInputErrorAlert from "../../components/commons/FormInputErrorAlert";
+
+
 import io from "socket.io-client";
 const socket = io("http://localhost:3002");
 
 export default function LiveScore() {
+  const teams = useSelector((state) => state.teamsReducer.allTeams);
+
   const [time, setTime] = useState(0);
   const [timerOn, setTimerOn] = useState(false);
   const [gamePause, setGamePause] = useState(false);
 
-  const [live, setLive] = useState({
-    homeTeam: "",
-    awayTeam: "",
-    goalHomeTeam: "",
-    goalTimeHomeTeam: "",
-    goalAwayTeam: "",
-    goalTimeAwayTeam: "",
-    yellowHomeTeam: "",
-    yellowTimeHomeTeam: "",
-    yellowAwayTeam: "",
-    yellowTimeAwayTeam: "",
-    redHomeTeam: "",
-    redTimeHomeTeam: "",
-    redAwayTeam: "",
-    redTimeAwayTeam: "",
-  });
+  const dispatch = useDispatch();
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    reset,
+    formState: { errors },
+  } = useForm();
+
+  // const [live, setLive] = useState({
+  //   homeTeam: "",
+  //   awayTeam: "",
+  //   goalHomeTeam: "",
+  //   goalTimeHomeTeam: "",
+  //   goalAwayTeam: "",
+  //   goalTimeAwayTeam: "",
+  //   yellowHomeTeam: "",
+  //   yellowTimeHomeTeam: "",
+  //   yellowAwayTeam: "",
+  //   yellowTimeAwayTeam: "",
+  //   redHomeTeam: "",
+  //   redTimeHomeTeam: "",
+  //   redAwayTeam: "",
+  //   redTimeAwayTeam: "",
+  // });
 
   useEffect(() => {
     let interval = null;
@@ -40,12 +59,72 @@ export default function LiveScore() {
     return () => clearInterval(interval);
   }, [timerOn]);
 
-  const handleInputChange = (e) => {
-    setLive((v) => ({ ...v, [e.target.name]: e.target.value }));
-  };
+  // const handleInputChange = (e) => {
+  //   setLive((v) => ({ ...v, [e.target.name]: e.target.value }));
+  // };
 
-  const handleSubmit = () => {
-    socket.emit("live_score", { live });
+  //react data handling
+
+  const [homeTeamGoalScorer, setHomeTeamGoalScorer] = useState("");
+  const [awayTeamGoalScorer, setAwayTeamGoalScorer] = useState("");
+  const [homeTeamYellowPlayers, setHomeTeamYellowPlayers] = useState("");
+  const [awayTeamYellowPlayers, setAwayTeamYellowPlayers] = useState("");
+  const [homeTeamRedPlayers, setHomeTeamRedPlayers] = useState("");
+  const [awayTeamRedPlayers, setAwayTeamRedPlayers] = useState("");
+
+  //form select
+
+  //homeTeam
+
+  const selectedHomeTeam = watch("homeTeam");
+
+  const selectedHomeTeamObj = useMemo(
+    () => teams.find((t) => t.team === selectedHomeTeam),
+    [teams, selectedHomeTeam]
+  );
+  const selectedHomeTeamPlayers = selectedHomeTeamObj
+    ? selectedHomeTeamObj?.players.split(",")
+    : [];
+
+  //awayTeam
+
+  const selectedAwayTeam = watch("awayTeam");
+
+  const selectedAwayTeamObj = useMemo(
+    () => teams.find((t) => t.team === selectedAwayTeam),
+    [teams, selectedAwayTeam]
+  );
+  const selectedAwayTeamPlayers = selectedAwayTeamObj
+    ? selectedAwayTeamObj?.players.split(",")
+    : [];
+
+  const handleGameSubmit = (live) => {
+
+    const obj = {
+      ...live,
+      homeTeamGoalScorer: homeTeamGoalScorer
+        ? homeTeamGoalScorer.map((val) => val.value)
+        : ["none"],
+      awayTeamGoalScorer: awayTeamGoalScorer
+        ? awayTeamGoalScorer.map((val) => val.value)
+        : ["none"],
+      homeTeamYellowPlayers: homeTeamYellowPlayers
+        ? homeTeamYellowPlayers?.map((val) => val.value)
+        : ["none"],
+      homeTeamRedPlayers: homeTeamRedPlayers
+        ? homeTeamRedPlayers?.map((val) => val.value)
+        : ["none"],
+      awayTeamYellowPlayers: awayTeamYellowPlayers
+        ? awayTeamYellowPlayers?.map((val) => val.value)
+        : ["none"],
+      awayTeamRedPlayers: awayTeamRedPlayers
+        ? awayTeamRedPlayers?.map((val) => val.value)
+        : ["none"],
+    };
+
+    console.log(obj);
+
+    socket.emit("live_score", { obj });
     socket.emit("game_time", { gamePause });
   };
 
@@ -58,6 +137,10 @@ export default function LiveScore() {
       socket.emit("game_time", { gamePause });
     }
   };
+
+  useEffect(() => {
+    dispatch(getTeams());
+  }, [dispatch]);
 
   return (
     <div className="container-lg">
@@ -114,193 +197,514 @@ export default function LiveScore() {
 
       <div className="row justify-content-center">
         <div className="col-lg-8 mt-1">
-          <form action="" className="d-flex justify-content-between">
-            <div className="homeTeamScore">
+          <form
+            onSubmit={handleSubmit(handleGameSubmit)}
+            className="d-flex justify-content-around"
+          >
+            <div className="mb-2 me-4 w-50" id="homeTeamForm">
               <div className="mb-2">
                 <label htmlFor="" className="form-label">
-                  Enter institution home team:
+                  Select home team:
                 </label>
-                <input
-                  type="text"
+                <select
                   name="homeTeam"
-                  className="form-control"
-                  onChange={handleInputChange}
-                />
+                  className="form-select"
+                  id=""
+                  {...register("homeTeam", {
+                    required: {
+                      value: true,
+                      message: "Home team is required",
+                    },
+                  })}
+                >
+                  <option value="">Select Home Team</option>
+                  {teams.map((team) => (
+                    <option key={team._id} value={team.team}>
+                      {team.team}
+                    </option>
+                  ))}
+                </select>
+                {errors?.homeTeam && (
+                  <FormInputErrorAlert message={errors?.homeTeam?.message} />
+                )}
               </div>
 
               <div className="mb-2">
                 <label htmlFor="" className="form-label">
-                  Goal by homeTeam:
+                  Goal scored by home team:
                 </label>
                 <input
                   type="number"
-                  name="goalHomeTeam"
+                  name="homeTeamGoals"
+                  {...register("homeTeamGoals", {
+                    required: {
+                      value: false,
+                      message: "Field is required",
+                    },
+                  })}
                   className="form-control"
-                  onChange={handleInputChange}
                 />
+                {errors?.homeTeamGoals && (
+                  <FormInputErrorAlert
+                    message={errors?.homeTeamGoals?.message}
+                  />
+                )}
               </div>
+
+              {/* goal scored time */}
 
               <div className="mb-2">
                 <label htmlFor="" className="form-label">
-                  Time Goal scored by homeTeam:
+                  Time Goal scored by home team:
                 </label>
                 <input
-                  type="time"
-                  name="goalTimeHomeTeam"
+                  type="number"
+                  name="homeTeamGoalsTime"
+                  {...register("homeTeamGoalsTime", {
+                    required: {
+                      value: false,
+                      message: "Field is required",
+                    },
+                  })}
                   className="form-control"
-                  onChange={handleInputChange}
                 />
+                {errors?.homeTeamGoals && (
+                  <FormInputErrorAlert
+                    message={errors?.homeTeamGoalsTime?.message}
+                  />
+                )}
               </div>
+
+              {/* goal scorers */}
 
               <div className="mb-2">
                 <label htmlFor="" className="form-label">
-                  Yellow Card by homeTeam:
+                  Goals scorer of home team:
                 </label>
-                <input
-                  type="text"
-                  name="yellowHomeTeam"
-                  className="form-control"
-                  onChange={handleInputChange}
+
+                <Select
+                  name="homeTeamGoalScorer"
+                  value={homeTeamGoalScorer}
+                  onChange={(value) => setHomeTeamGoalScorer(value)}
+                  options={selectedHomeTeamPlayers.map((p) => ({
+                    label: p,
+                    value: p,
+                  }))}
+                  isMulti
                 />
+
+                {errors?.homeTeamGoals && (
+                  <FormInputErrorAlert
+                    message={errors?.homeTeamGoals?.message}
+                  />
+                )}
               </div>
 
-              <div className="mb-2">
+              {/* shots */}
+
+              {/* <div className="mb-3">
                 <label htmlFor="" className="form-label">
-                  Time Yellow card awarded to homeTeam:
+                  Total shots by home team:
                 </label>
                 <input
-                  type="time"
-                  name="yellowTimeHomeTeam"
+                  type="number"
+                  name="homeTeamShots"
+                  {...register("homeTeamShots", {
+                    required: {
+                      value: true,
+                      message: "Field is required",
+                    },
+                  })}
                   className="form-control"
-                  onChange={handleInputChange}
                 />
+                {errors?.homeTeamShots && (
+                  <FormInputErrorAlert
+                    message={errors?.homeTeamShots?.message}
+                  />
+                )}
+              </div> */}
+
+              {/* fouls */}
+
+              {/* <div className="mb-3">
+                <label htmlFor="" className="form-label">
+                  Total fouls by home team:
+                </label>
+                <input
+                  type="number"
+                  name="homeTeamFouls"
+                  {...register("homeTeamFouls", {
+                    required: {
+                      value: true,
+                      message: "Field is required",
+                    },
+                  })}
+                  className="form-control"
+                />
+                {errors?.homeTeamFouls && (
+                  <FormInputErrorAlert
+                    message={errors?.homeTeamFouls?.message}
+                  />
+                )}
+              </div> */}
+
+              {/* yellow cards */}
+
+              <div className="mb-3">
+                <label htmlFor="" className="form-label">
+                  Time for yellow card by home team:
+                </label>
+                <input
+                  type="number"
+                  name="homeTeamYellow"
+                  {...register("homeTeamYellow", {
+                    required: {
+                      value: false,
+                      message: "Field is required",
+                    },
+                  })}
+                  className="form-control"
+                />
+                {errors?.homeTeamYellow && (
+                  <FormInputErrorAlert
+                    message={errors?.homeTeamYellow?.message}
+                  />
+                )}
               </div>
 
-              <div className="mb-2">
+              {/* player with yellow cards */}
+
+              <div className="mb-3">
                 <label htmlFor="" className="form-label">
-                  Red Card by homeTeam:
+                  Player with yellow card by home team:
                 </label>
-                <input
-                  type="text"
-                  name="redHomeTeam"
-                  className="form-control"
-                  onChange={handleInputChange}
+
+                <Select
+                  value={homeTeamYellowPlayers}
+                  onChange={(value) => setHomeTeamYellowPlayers(value)}
+                  options={selectedHomeTeamPlayers.map((p) => ({
+                    label: p,
+                    value: p,
+                  }))}
+                  isMulti
                 />
+                {errors?.homeTeamYellowPlayers && (
+                  <FormInputErrorAlert
+                    message={errors?.homeTeamYellowPlayers?.message}
+                  />
+                )}
               </div>
 
-              <div className="mb-2">
+              {/* red cards */}
+
+              <div className="mb-3">
                 <label htmlFor="" className="form-label">
-                  Time red card awarded to homeTeam:
+                  Time for red card by home team:
                 </label>
                 <input
-                  type="time"
-                  name="redTimeHomeTeam"
+                  type="number"
+                  name="homeTeamRed"
+                  {...register("homeTeamRed", {
+                    required: {
+                      value: false,
+                      message: "Field is required",
+                    },
+                  })}
                   className="form-control"
-                  onChange={handleInputChange}
                 />
+
+                {errors?.homeTeamRed && (
+                  <FormInputErrorAlert message={errors?.homeTeamRed?.message} />
+                )}
               </div>
+
+              {/*players with red cards */}
+
+              <div className="mb-3">
+                <label htmlFor="" className="form-label">
+                  Players with red card by home team:
+                </label>
+
+                <Select
+                  value={homeTeamRedPlayers}
+                  onChange={(value) => setHomeTeamRedPlayers(value)}
+                  options={selectedHomeTeamPlayers.map((p) => ({
+                    label: p,
+                    value: p,
+                  }))}
+                  isMulti
+                />
+                {errors?.homeTeamRedPlayers && (
+                  <FormInputErrorAlert
+                    message={errors?.homeTeamRedPlayers?.message}
+                  />
+                )}
+              </div>
+              <button className="btn btn-primary my-2" onClick={handleTime}>
+                Start game time
+              </button>
             </div>
 
-            {/* away team */}
+            {/* away team form */}
 
-            <div className="awayTeamScore">
+            <div className="mb-2 w-50" id="awayTeamForm">
               <div className="mb-2">
                 <label htmlFor="" className="form-label">
-                  Enter institution away team:
+                  Select away team:
                 </label>
-                <input
-                  type="text"
+                <select
                   name="awayTeam"
-                  className="form-control"
-                  onChange={handleInputChange}
-                />
+                  className="form-select"
+                  id=""
+                  {...register("awayTeam", {
+                    required: {
+                      value: true,
+                      message: "Away team is required",
+                    },
+                  })}
+                  disabled={watch("homeTeam") === ""}
+                >
+                  <option value="">Select Away Team</option>
+                  {teams
+                    ?.filter((team) => team?._id !== watch("homeTeam"))
+                    .map((team) => (
+                      <option key={team._id} value={team.team}>
+                        {team.team}
+                      </option>
+                    ))}
+                </select>
+                {errors?.awayTeam && (
+                  <FormInputErrorAlert message={errors?.awayTeam?.message} />
+                )}
               </div>
 
               <div className="mb-2">
                 <label htmlFor="" className="form-label">
-                  Goal by away Team:
+                  Goals scored by away team:
                 </label>
                 <input
                   type="number"
-                  name="goalAwayTeam"
-                  className="form-control"
-                  onChange={handleInputChange}
+                  name="awayTeamGoals"
+                  {...register("awayTeamGoals", {
+                    required: {
+                      value: false,
+                      message: "Field is required",
+                    },
+                  })}
+                  className="form-control mb-2"
                 />
+                {errors?.awayTeamGoals && (
+                  <FormInputErrorAlert
+                    message={errors?.awayTeamGoals?.message}
+                  />
+                )}
               </div>
+
+              {/* time goal scored */}
 
               <div className="mb-2">
                 <label htmlFor="" className="form-label">
-                  Time Goal scored by awayTeam:
+                  Goals scored by away team:
                 </label>
                 <input
-                  type="time"
-                  name="goalTimeAwayTeam"
-                  className="form-control"
-                  onChange={handleInputChange}
+                  type="number"
+                  name="awayTeamGoalsTime"
+                  {...register("awayTeamGoalsTime", {
+                    required: {
+                      value: false,
+                      message: "Field is required",
+                    },
+                  })}
+                  className="form-control mb-2"
                 />
+                {errors?.awayTeamGoals && (
+                  <FormInputErrorAlert
+                    message={errors?.awayTeamGoalsTime?.message}
+                  />
+                )}
               </div>
+
+              {/* away team goal scorers */}
 
               <div className="mb-2">
                 <label htmlFor="" className="form-label">
-                  Yellow Card by awayTeam:
+                  Goal scorer of away team:
                 </label>
-                <input
-                  type="text"
-                  name="yellowAwayTeam"
-                  className="form-control"
-                  onChange={handleInputChange}
+
+                <Select
+                  value={awayTeamGoalScorer}
+                  onChange={(value) => setAwayTeamGoalScorer(value)}
+                  options={selectedAwayTeamPlayers.map((p) => ({
+                    label: p,
+                    value: p,
+                  }))}
+                  isMulti
                 />
+                {errors?.awayTeamGoals && (
+                  <FormInputErrorAlert
+                    message={errors?.awayTeamGoals?.message}
+                  />
+                )}
               </div>
 
-              <div className="mb-2">
+              {/* shots */}
+
+              {/* <div className="mb-3">
                 <label htmlFor="" className="form-label">
-                  Time Yellow card awarded to awayTeam:
+                  Total shots by away team:
                 </label>
                 <input
-                  type="time"
-                  name="yellowTimeAwayTeam"
+                  type="number"
+                  name="awayTeamShots"
+                  {...register("awayTeamShots", {
+                    required: {
+                      value: true,
+                      message: "Field is required",
+                    },
+                  })}
                   className="form-control"
-                  onChange={handleInputChange}
                 />
+                {errors?.awayTeamShots && (
+                  <FormInputErrorAlert
+                    message={errors?.awayTeamShots?.message}
+                  />
+                )}
+              </div> */}
+
+              {/* fouls */}
+
+              {/* <div className="mb-3">
+                <label htmlFor="" className="form-label">
+                  Total fouls by away team:
+                </label>
+                <input
+                  type="number"
+                  name="awayTeamFouls"
+                  {...register("awayTeamFouls", {
+                    required: {
+                      value: true,
+                      message: "Field is required",
+                    },
+                  })}
+                  className="form-control"
+                />
+                {errors?.awayTeamFouls && (
+                  <FormInputErrorAlert
+                    message={errors?.awayTeamFouls?.message}
+                  />
+                )}
+              </div> */}
+
+              {/* yellow cards */}
+
+              <div className="mb-3">
+                <label htmlFor="" className="form-label">
+                  Time for yellow card by away team:
+                </label>
+                <input
+                  type="number"
+                  name="awayTeamYellow"
+                  {...register("awayTeamYellow", {
+                    required: {
+                      value: false,
+                      message: "Field is required",
+                    },
+                  })}
+                  className="form-control"
+                />
+                {errors?.awayTeamYellow && (
+                  <FormInputErrorAlert
+                    message={errors?.awayTeamYellow?.message}
+                  />
+                )}
               </div>
 
-              <div className="mb-2">
+              {/* players with yellow cards */}
+              <div className="mb-3">
                 <label htmlFor="" className="form-label">
-                  Red Card by awayTeam:
+                  Player with yellow cards away team:
                 </label>
-                <input
-                  type="text"
-                  name="redAwayTeam"
-                  className="form-control"
-                  onChange={handleInputChange}
+
+                <Select
+                  value={awayTeamYellowPlayers}
+                  onChange={(value) => setAwayTeamYellowPlayers(value)}
+                  options={selectedAwayTeamPlayers.map((p) => ({
+                    label: p,
+                    value: p,
+                  }))}
+                  isMulti
                 />
+                {errors?.awayTeamYellowPlayers && (
+                  <FormInputErrorAlert
+                    message={errors?.awayTeamYellowPlayers?.message}
+                  />
+                )}
               </div>
 
-              <div className="mb-2">
+              {/* total red cards */}
+
+              <div className="mb-3">
                 <label htmlFor="" className="form-label">
-                  Time red card awarded to awayTeam:
+                  Time for red card by away team:
                 </label>
                 <input
-                  type="time"
-                  name="redTimeAwayTeam"
+                  type="number"
+                  name="awayTeamRed"
+                  {...register("awayTeamRed", {
+                    required: {
+                      value: false,
+                      message: "Field is required",
+                    },
+                  })}
                   className="form-control"
-                  onChange={handleInputChange}
                 />
+                {errors?.awayTeamRed && (
+                  <FormInputErrorAlert message={errors?.awayTeamRed?.message} />
+                )}
               </div>
+
+              {/*players with red cards */}
+
+              <div className="mb-3">
+                <label htmlFor="" className="form-label">
+                  Players with red card for away team:
+                </label>
+
+                <Select
+                  value={awayTeamRedPlayers}
+                  onChange={(value) => setAwayTeamRedPlayers(value)}
+                  options={selectedAwayTeamPlayers.map((p) => ({
+                    label: p,
+                    value: p,
+                  }))}
+                  isMulti
+                />
+                {errors?.awayTeamRedPlayers && (
+                  <FormInputErrorAlert
+                    message={errors?.awayTeamRedPlayers?.message}
+                  />
+                )}
+              </div>
+
+              {/* Button */}
+
+              <div className="d-flex justify-content-center">
+                {/* <button
+                  disabled={postingResult}
+                  className="btn btn-primary my-2"
+                >
+                  {postingResult ? "Loading..." : "Post Results"}
+                </button> */}
+              </div>
+              <button
+                className="btn btn-primary my-2 mx-2"
+               
+              >
+                Update Scores
+              </button>
             </div>
           </form>
-          <div className="d-flex justify-content-center">
-            <button
-              className="btn btn-primary my-2 mx-2"
-              onClick={handleSubmit}
-            >
-              Update Scores
-            </button>
-
-            <button className="btn btn-primary my-2" onClick={handleTime}>
-              Start game time
-            </button>
-          </div>
+          <div className="d-flex justify-content-center"></div>
         </div>
       </div>
     </div>

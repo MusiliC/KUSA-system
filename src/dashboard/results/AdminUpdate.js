@@ -46,9 +46,9 @@ function AdminUpdate() {
 
   return (
     <div className="container-lg">
-      <div className="row">
+      <div className="row justify-content-center">
         <div className="text-center display-6 my-3">Results Update</div>
-        <div className="col-lg-6">
+        <div className="col-lg-6  ">
           <form action="">
             <div className="mb-2">
               <label htmlFor="" className="form-label">

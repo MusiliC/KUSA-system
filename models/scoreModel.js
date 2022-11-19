@@ -2,10 +2,11 @@ const mongoose = require("mongoose");
 
 const scoreSchema = new mongoose.Schema({
   scorer: {
-    type: String,
+    type: Array,
   },
   scorerTeam: {
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Team",
   },
   scorerGoals: {
     type: Number,

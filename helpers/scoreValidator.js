@@ -4,7 +4,7 @@ const Joi = require("joi");
 
 exports.validScores = (score) => {
   const schema = Joi.object().keys({
-    scorer: Joi.string().required(),
+    scorer: Joi.array().required(),
     scorerTeam: Joi.string().required(),
     scorerGoals: Joi.number().required(),
   });

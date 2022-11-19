@@ -5,9 +5,11 @@ const { Score } = require("../models/scoreModel");
 
 async function allScores(req, res) {
   try {
-    const scores = await Score.find({}).sort({
-      scorerGoals: -1,
-    });
+    const scores = await Score.find({})
+      .sort({
+        scorerGoals: -1,
+      })
+      .populate("scorerTeam");
     res.status(200).send(scores);
   } catch (error) {
     res.status(500).send(error.message);

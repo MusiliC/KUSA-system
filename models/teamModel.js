@@ -11,8 +11,8 @@ const teamSchema = new mongoose.Schema({
   players: {
     type: String,
   },
-  image:{
-    type:String
+  image: {
+    type: String,
   },
   wins: {
     type: Number,

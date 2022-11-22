@@ -23,22 +23,24 @@ export default function Fixtures() {
   const [timerOn, setTimerOn] = useState(false);
   const [timePause, setTimePause] = useState(Boolean);
 
-  const [liveData, setLiveData] = useState({
-    homeTeam: "",
-    awayTeam: "",
-    goalHomeTeam: "",
-    goalTimeHomeTeam: "",
-    goalAwayTeam: "",
-    goalTimeAwayTeam: "",
-    yellowHomeTeam: "",
-    yellowTimeHomeTeam: "",
-    yellowAwayTeam: "",
-    yellowTimeAwayTeam: "",
-    redHomeTeam: "",
-    redTimeHomeTeam: "",
-    redAwayTeam: "",
-    redTimeAwayTeam: "",
-  });
+  // const [liveData, setLiveData] = useState({
+  //   homeTeam: "",
+  //   awayTeam: "",
+  //   goalHomeTeam: "",
+  //   goalTimeHomeTeam: "",
+  //   goalAwayTeam: "",
+  //   goalTimeAwayTeam: "",
+  //   yellowHomeTeam: "",
+  //   yellowTimeHomeTeam: "",
+  //   yellowAwayTeam: "",
+  //   yellowTimeAwayTeam: "",
+  //   redHomeTeam: "",
+  //   redTimeHomeTeam: "",
+  //   redAwayTeam: "",
+  //   redTimeAwayTeam: "",
+  // });
+
+  const [liveData, setLiveData] = useState([]);
 
   useEffect(() => {
     let interval = null;
@@ -63,16 +65,22 @@ export default function Fixtures() {
   }, [dispatch, selectedEventDisplay]);
 
   useEffect(() => {
-    socket.on("updated_score", (data) => {
-      setLiveData(data.live);
+    socket.on(
+      "updated_score",
+      (data) => {
+        setLiveData((list) => [...list, data.obj]);
+        console.log(liveData);
 
-      if (!timePause) {
-        setTimerOn(true);
-      } else {
-        setTimerOn(false);
-      }
-    });
+        if (!timePause) {
+          setTimerOn(true);
+        } else {
+          setTimerOn(false);
+        }
+      },
+      [socket, liveData]
+    );
 
+    console.log(liveData);
     socket.on("game_pause", (data) => {
       setTimePause(data.gamePause);
 
@@ -91,12 +99,9 @@ export default function Fixtures() {
     const values = rest[date];
 
     const fixture = await values.find((f) => f.id === id2);
-      
+
     await setSelectedFixture(fixture);
-    console.log(selectedFixture);
   };
-
-
 
   return (
     <div>
@@ -183,32 +188,92 @@ export default function Fixtures() {
 
                     <div id="two">
                       <div id="homeTeamContent" className="fw-bold">
-                        {liveData.homeTeam}
+                        {liveData.map((liveData) => (
+                          <p>{liveData.homeTeam}</p>
+                        ))}
                       </div>
                       <span id="bt"> vs</span>
                       <div id="awayTeamContent" className="fw-bold">
-                        {liveData.awayTeam}
+                        {liveData.map((liveData) => (
+                          <p>{liveData.awayTeam}</p>
+                        ))}
                       </div>
                     </div>
                     <div id="two">
-                      <div id="homeTeamContent">1</div>
+                      <div id="homeTeamContent">
+                        {liveData.map((liveData) => (
+                          <p> {liveData.homeTeamGoals}</p>
+                        ))}
+                      </div>
                       <span id="bt">Goals</span>
-                      <div id="awayTeamContent">1</div>
+                      <div id="awayTeamContent">
+                        {liveData.map((liveData) => (
+                          <p> {liveData.awayTeamGoals}</p>
+                        ))}
+                      </div>
                     </div>
                     <div id="two">
-                      <div id="homeTeamContent">komu 16'</div>
+                      <div id="homeTeamContent">
+                        {liveData.map((liveData) => (
+                          <p>
+                            {liveData.homeTeamGoalScorer}
+                            <span className="me-1"></span>
+                            {liveData.homeTeamGoalsTime}'
+                          </p>
+                        ))}
+                      </div>
                       <span id="bt">Goals scorer</span>
-                      <div id="awayTeamContent">Pato 12'</div>
+                      <div id="awayTeamContent">
+                        {liveData.map((liveData) => (
+                          <p>
+                            {liveData.awayTeamGoalScorer}
+                            <span className="me-1"></span>
+                            {liveData.awayTeamGoalsTime}'
+                          </p>
+                        ))}
+                      </div>
                     </div>
                     <div id="two">
-                      <div id="homeTeamContent">0</div>
-                      <span id="bt">Yelow Cards</span>
-                      <div id="awayTeamContent">0</div>
+                      <div id="homeTeamContent">
+                        {liveData.map((liveData) => (
+                          <p>
+                            {liveData.homeTeamYellowPlayers}
+                            <span className="me-1"></span>
+                            {liveData.homeTeamYellow}'
+                          </p>
+                        ))}
+                      </div>
+                      <span id="bt">Yellow Cards</span>
+                      <div id="awayTeamContent">
+                        {liveData.map((liveData) => (
+                          <p>
+                            {liveData.awayTeamYellowPlayers}
+                            <span className="me-1"></span>
+                            {liveData.awayTeamYellow}'
+                          </p>
+                        ))}
+                      </div>
                     </div>
                     <div id="two">
-                      <div id="homeTeamContent">0</div>
+                      <div id="homeTeamContent">
+                        {liveData.map((liveData) => (
+                          <p>
+                            {liveData.homeTeamRedPlayers}
+                            <span className="me-1"></span>
+                            {liveData.homeTeamRed}'
+                          </p>
+                        ))}
+                      </div>
                       <span id="bt">Red Cards</span>
-                      <div id="awayTeamContent">0</div>
+                      <div id="awayTeamContent">
+                        {liveData.map((liveData) => (
+                          <p>
+                            {liveData.awayTeamRedPlayers}
+                            <span className="me-1"></span>
+                            {liveData.awayTeamRed}'
+                          </p>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 )}
@@ -257,6 +322,7 @@ export default function Fixtures() {
                                       alt="logo"
                                       className="logo me-2"
                                     /> */}
+
                                     {value?.awayTeam?.team}
                                   </td>
                                   <td>

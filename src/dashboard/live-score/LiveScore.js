@@ -7,7 +7,6 @@ import { useForm } from "react-hook-form";
 import Select from "react-select";
 import FormInputErrorAlert from "../../components/commons/FormInputErrorAlert";
 
-
 import io from "socket.io-client";
 const socket = io("http://localhost:3002");
 
@@ -18,13 +17,30 @@ export default function LiveScore() {
   const [timerOn, setTimerOn] = useState(false);
   const [gamePause, setGamePause] = useState(false);
 
+  //selected home event value
+
+  const [homeSelected, setHomeSelected] = useState("");
+
+  const homeTeamEvent = async (event) => {
+    await setHomeSelected(event.target.value);
+  };
+
+
+  //select away event value
+
+  const [awaySelected, setAwaySelected] = useState("");
+
+  const awayTeamEvent = async (event) => {
+    await setAwaySelected(event.target.value);
+  };
+
   const dispatch = useDispatch();
 
   const {
     register,
     handleSubmit,
     watch,
-    reset,
+
     formState: { errors },
   } = useForm();
 
@@ -99,7 +115,6 @@ export default function LiveScore() {
     : [];
 
   const handleGameSubmit = (live) => {
-
     const obj = {
       ...live,
       homeTeamGoalScorer: homeTeamGoalScorer
@@ -229,217 +244,202 @@ export default function LiveScore() {
                 )}
               </div>
 
-              <div className="mb-2">
-                <label htmlFor="" className="form-label">
-                  Goal scored by home team:
+              <div className="mb-2 mt-3">
+                <label htmlFor="" className="form-label h5 my-2">
+                  Select game event for Home Team
                 </label>
-                <input
-                  type="number"
-                  name="homeTeamGoals"
-                  {...register("homeTeamGoals", {
-                    required: {
-                      value: false,
-                      message: "Field is required",
-                    },
-                  })}
-                  className="form-control"
-                />
-                {errors?.homeTeamGoals && (
-                  <FormInputErrorAlert
-                    message={errors?.homeTeamGoals?.message}
-                  />
-                )}
+                <select
+                  className="form-select mt-2"
+                  id="homeTeamEvent"
+                  aria-label="Default select example"
+                  value={homeSelected}
+                  onChange={homeTeamEvent}
+                >
+                  <option defaultValue={"event"}> Home Game events</option>
+                  <option value="homeGoalScored">Goal scored event</option>
+                  <option value="homeYellowCard">Yellow Card event</option>
+                  <option value="homeRedCard">Red Card event</option>
+                </select>
               </div>
 
-              {/* goal scored time */}
+              {homeSelected === "homeGoalScored" ? (
+                <div>
+                  <div className="mb-2">
+                    <label htmlFor="" className="form-label">
+                      Goal scored by home team:
+                    </label>
+                    <input
+                      type="number"
+                      name="homeTeamGoals"
+                      {...register("homeTeamGoals", {
+                        required: {
+                          value: false,
+                          message: "Field is required",
+                        },
+                      })}
+                      className="form-control"
+                    />
+                    {errors?.homeTeamGoals && (
+                      <FormInputErrorAlert
+                        message={errors?.homeTeamGoals?.message}
+                      />
+                    )}
+                  </div>
 
-              <div className="mb-2">
-                <label htmlFor="" className="form-label">
-                  Time Goal scored by home team:
-                </label>
-                <input
-                  type="number"
-                  name="homeTeamGoalsTime"
-                  {...register("homeTeamGoalsTime", {
-                    required: {
-                      value: false,
-                      message: "Field is required",
-                    },
-                  })}
-                  className="form-control"
-                />
-                {errors?.homeTeamGoals && (
-                  <FormInputErrorAlert
-                    message={errors?.homeTeamGoalsTime?.message}
-                  />
-                )}
-              </div>
+                  {/* goal scored time */}
 
-              {/* goal scorers */}
+                  <div className="mb-2">
+                    <label htmlFor="" className="form-label">
+                      Time Goal scored by home team:
+                    </label>
+                    <input
+                      type="number"
+                      name="homeTeamGoalsTime"
+                      {...register("homeTeamGoalsTime", {
+                        required: {
+                          value: false,
+                          message: "Field is required",
+                        },
+                      })}
+                      className="form-control"
+                    />
+                    {errors?.homeTeamGoals && (
+                      <FormInputErrorAlert
+                        message={errors?.homeTeamGoalsTime?.message}
+                      />
+                    )}
+                  </div>
 
-              <div className="mb-2">
-                <label htmlFor="" className="form-label">
-                  Goals scorer of home team:
-                </label>
+                  {/* goal scorers */}
 
-                <Select
-                  name="homeTeamGoalScorer"
-                  value={homeTeamGoalScorer}
-                  onChange={(value) => setHomeTeamGoalScorer(value)}
-                  options={selectedHomeTeamPlayers.map((p) => ({
-                    label: p,
-                    value: p,
-                  }))}
-                  isMulti
-                />
+                  <div className="mb-2">
+                    <label htmlFor="" className="form-label">
+                      Goals scorer of home team:
+                    </label>
 
-                {errors?.homeTeamGoals && (
-                  <FormInputErrorAlert
-                    message={errors?.homeTeamGoals?.message}
-                  />
-                )}
-              </div>
+                    <Select
+                      name="homeTeamGoalScorer"
+                      value={homeTeamGoalScorer}
+                      onChange={(value) => setHomeTeamGoalScorer(value)}
+                      options={selectedHomeTeamPlayers.map((p) => ({
+                        label: p,
+                        value: p,
+                      }))}
+                      isMulti
+                    />
 
-              {/* shots */}
+                    {errors?.homeTeamGoals && (
+                      <FormInputErrorAlert
+                        message={errors?.homeTeamGoals?.message}
+                      />
+                    )}
+                  </div>
+                </div>
+              ) : homeSelected === "homeYellowCard" ? (
+                <div>
+                  {/* yellow cards */}
 
-              {/* <div className="mb-3">
-                <label htmlFor="" className="form-label">
-                  Total shots by home team:
-                </label>
-                <input
-                  type="number"
-                  name="homeTeamShots"
-                  {...register("homeTeamShots", {
-                    required: {
-                      value: true,
-                      message: "Field is required",
-                    },
-                  })}
-                  className="form-control"
-                />
-                {errors?.homeTeamShots && (
-                  <FormInputErrorAlert
-                    message={errors?.homeTeamShots?.message}
-                  />
-                )}
-              </div> */}
+                  <div className="mb-3">
+                    <label htmlFor="" className="form-label">
+                      Time for yellow card by home team:
+                    </label>
+                    <input
+                      type="number"
+                      name="homeTeamYellow"
+                      {...register("homeTeamYellow", {
+                        required: {
+                          value: false,
+                          message: "Field is required",
+                        },
+                      })}
+                      className="form-control"
+                    />
+                    {errors?.homeTeamYellow && (
+                      <FormInputErrorAlert
+                        message={errors?.homeTeamYellow?.message}
+                      />
+                    )}
+                  </div>
 
-              {/* fouls */}
+                  {/* player with yellow cards */}
 
-              {/* <div className="mb-3">
-                <label htmlFor="" className="form-label">
-                  Total fouls by home team:
-                </label>
-                <input
-                  type="number"
-                  name="homeTeamFouls"
-                  {...register("homeTeamFouls", {
-                    required: {
-                      value: true,
-                      message: "Field is required",
-                    },
-                  })}
-                  className="form-control"
-                />
-                {errors?.homeTeamFouls && (
-                  <FormInputErrorAlert
-                    message={errors?.homeTeamFouls?.message}
-                  />
-                )}
-              </div> */}
+                  <div className="mb-3">
+                    <label htmlFor="" className="form-label">
+                      Player with yellow card by home team:
+                    </label>
 
-              {/* yellow cards */}
+                    <Select
+                      value={homeTeamYellowPlayers}
+                      onChange={(value) => setHomeTeamYellowPlayers(value)}
+                      options={selectedHomeTeamPlayers.map((p) => ({
+                        label: p,
+                        value: p,
+                      }))}
+                      isMulti
+                    />
+                    {errors?.homeTeamYellowPlayers && (
+                      <FormInputErrorAlert
+                        message={errors?.homeTeamYellowPlayers?.message}
+                      />
+                    )}
+                  </div>
+                </div>
+              ) : homeSelected === "homeRedCard" ? (
+                <div>
+                  {/* red cards */}
 
-              <div className="mb-3">
-                <label htmlFor="" className="form-label">
-                  Time for yellow card by home team:
-                </label>
-                <input
-                  type="number"
-                  name="homeTeamYellow"
-                  {...register("homeTeamYellow", {
-                    required: {
-                      value: false,
-                      message: "Field is required",
-                    },
-                  })}
-                  className="form-control"
-                />
-                {errors?.homeTeamYellow && (
-                  <FormInputErrorAlert
-                    message={errors?.homeTeamYellow?.message}
-                  />
-                )}
-              </div>
+                  <div className="mb-3">
+                    <label htmlFor="" className="form-label">
+                      Time for red card by home team:
+                    </label>
+                    <input
+                      type="number"
+                      name="homeTeamRed"
+                      {...register("homeTeamRed", {
+                        required: {
+                          value: false,
+                          message: "Field is required",
+                        },
+                      })}
+                      className="form-control"
+                    />
 
-              {/* player with yellow cards */}
+                    {errors?.homeTeamRed && (
+                      <FormInputErrorAlert
+                        message={errors?.homeTeamRed?.message}
+                      />
+                    )}
+                  </div>
 
-              <div className="mb-3">
-                <label htmlFor="" className="form-label">
-                  Player with yellow card by home team:
-                </label>
+                  {/*players with red cards */}
 
-                <Select
-                  value={homeTeamYellowPlayers}
-                  onChange={(value) => setHomeTeamYellowPlayers(value)}
-                  options={selectedHomeTeamPlayers.map((p) => ({
-                    label: p,
-                    value: p,
-                  }))}
-                  isMulti
-                />
-                {errors?.homeTeamYellowPlayers && (
-                  <FormInputErrorAlert
-                    message={errors?.homeTeamYellowPlayers?.message}
-                  />
-                )}
-              </div>
+                  <div className="mb-3">
+                    <label htmlFor="" className="form-label">
+                      Players with red card by home team:
+                    </label>
 
-              {/* red cards */}
+                    <Select
+                      value={homeTeamRedPlayers}
+                      onChange={(value) => setHomeTeamRedPlayers(value)}
+                      options={selectedHomeTeamPlayers.map((p) => ({
+                        label: p,
+                        value: p,
+                      }))}
+                      isMulti
+                    />
+                    {errors?.homeTeamRedPlayers && (
+                      <FormInputErrorAlert
+                        message={errors?.homeTeamRedPlayers?.message}
+                      />
+                    )}
+                  </div>
+                </div>
+              ) : (
+                <div className="h5 text-muted mt-4">
+                  <p>Select a game event above</p>
+                </div>
+              )}
 
-              <div className="mb-3">
-                <label htmlFor="" className="form-label">
-                  Time for red card by home team:
-                </label>
-                <input
-                  type="number"
-                  name="homeTeamRed"
-                  {...register("homeTeamRed", {
-                    required: {
-                      value: false,
-                      message: "Field is required",
-                    },
-                  })}
-                  className="form-control"
-                />
-
-                {errors?.homeTeamRed && (
-                  <FormInputErrorAlert message={errors?.homeTeamRed?.message} />
-                )}
-              </div>
-
-              {/*players with red cards */}
-
-              <div className="mb-3">
-                <label htmlFor="" className="form-label">
-                  Players with red card by home team:
-                </label>
-
-                <Select
-                  value={homeTeamRedPlayers}
-                  onChange={(value) => setHomeTeamRedPlayers(value)}
-                  options={selectedHomeTeamPlayers.map((p) => ({
-                    label: p,
-                    value: p,
-                  }))}
-                  isMulti
-                />
-                {errors?.homeTeamRedPlayers && (
-                  <FormInputErrorAlert
-                    message={errors?.homeTeamRedPlayers?.message}
-                  />
-                )}
-              </div>
               <button className="btn btn-primary my-2" onClick={handleTime}>
                 Start game time
               </button>
@@ -478,228 +478,201 @@ export default function LiveScore() {
                 )}
               </div>
 
-              <div className="mb-2">
-                <label htmlFor="" className="form-label">
-                  Goals scored by away team:
+              <div className="mb-2 mt-3">
+                <label htmlFor="" className="form-label h5 my-2">
+                  Select Game event by Away team:
                 </label>
-                <input
-                  type="number"
-                  name="awayTeamGoals"
-                  {...register("awayTeamGoals", {
-                    required: {
-                      value: false,
-                      message: "Field is required",
-                    },
-                  })}
-                  className="form-control mb-2"
-                />
-                {errors?.awayTeamGoals && (
-                  <FormInputErrorAlert
-                    message={errors?.awayTeamGoals?.message}
-                  />
-                )}
+                <select
+                  className="form-select mt-2"
+                  aria-label="Default select example"
+                  value={awaySelected}
+                  onChange={awayTeamEvent}
+                >
+                  <option defaultValue={"event"}>Away Game Events </option>
+                  <option value="awayGoalScored">Goal scored event</option>
+                  <option value="awayYellowCard">Yellow Card event</option>
+                  <option value="awayRedCard">Red Card event</option>
+                </select>
               </div>
 
-              {/* time goal scored */}
+              {awaySelected === "awayGoalScored" ? (
+                <div>
+                  <div className="mb-2">
+                    <label htmlFor="" className="form-label">
+                      Goals scored by away team:
+                    </label>
+                    <input
+                      type="number"
+                      name="awayTeamGoals"
+                      {...register("awayTeamGoals", {
+                        required: {
+                          value: false,
+                          message: "Field is required",
+                        },
+                      })}
+                      className="form-control mb-2"
+                    />
+                    {errors?.awayTeamGoals && (
+                      <FormInputErrorAlert
+                        message={errors?.awayTeamGoals?.message}
+                      />
+                    )}
+                  </div>
 
-              <div className="mb-2">
-                <label htmlFor="" className="form-label">
-                  Goals scored by away team:
-                </label>
-                <input
-                  type="number"
-                  name="awayTeamGoalsTime"
-                  {...register("awayTeamGoalsTime", {
-                    required: {
-                      value: false,
-                      message: "Field is required",
-                    },
-                  })}
-                  className="form-control mb-2"
-                />
-                {errors?.awayTeamGoals && (
-                  <FormInputErrorAlert
-                    message={errors?.awayTeamGoalsTime?.message}
-                  />
-                )}
-              </div>
+                  {/* time goal scored */}
 
-              {/* away team goal scorers */}
+                  <div className="mb-2">
+                    <label htmlFor="" className="form-label">
+                      Time Goal scored by away team:
+                    </label>
+                    <input
+                      type="number"
+                      name="awayTeamGoalsTime"
+                      {...register("awayTeamGoalsTime", {
+                        required: {
+                          value: false,
+                          message: "Field is required",
+                        },
+                      })}
+                      className="form-control mb-2"
+                    />
+                    {errors?.awayTeamGoals && (
+                      <FormInputErrorAlert
+                        message={errors?.awayTeamGoalsTime?.message}
+                      />
+                    )}
+                  </div>
 
-              <div className="mb-2">
-                <label htmlFor="" className="form-label">
-                  Goal scorer of away team:
-                </label>
+                  {/* away team goal scorers */}
 
-                <Select
-                  value={awayTeamGoalScorer}
-                  onChange={(value) => setAwayTeamGoalScorer(value)}
-                  options={selectedAwayTeamPlayers.map((p) => ({
-                    label: p,
-                    value: p,
-                  }))}
-                  isMulti
-                />
-                {errors?.awayTeamGoals && (
-                  <FormInputErrorAlert
-                    message={errors?.awayTeamGoals?.message}
-                  />
-                )}
-              </div>
+                  <div className="mb-2">
+                    <label htmlFor="" className="form-label">
+                      Goal scorer of away team:
+                    </label>
 
-              {/* shots */}
+                    <Select
+                      value={awayTeamGoalScorer}
+                      onChange={(value) => setAwayTeamGoalScorer(value)}
+                      options={selectedAwayTeamPlayers.map((p) => ({
+                        label: p,
+                        value: p,
+                      }))}
+                      isMulti
+                    />
+                    {errors?.awayTeamGoals && (
+                      <FormInputErrorAlert
+                        message={errors?.awayTeamGoals?.message}
+                      />
+                    )}
+                  </div>
+                </div>
+              ) : awaySelected === "awayYellowCard" ? (
+                <div>
+                  {/* yellow cards */}
 
-              {/* <div className="mb-3">
-                <label htmlFor="" className="form-label">
-                  Total shots by away team:
-                </label>
-                <input
-                  type="number"
-                  name="awayTeamShots"
-                  {...register("awayTeamShots", {
-                    required: {
-                      value: true,
-                      message: "Field is required",
-                    },
-                  })}
-                  className="form-control"
-                />
-                {errors?.awayTeamShots && (
-                  <FormInputErrorAlert
-                    message={errors?.awayTeamShots?.message}
-                  />
-                )}
-              </div> */}
+                  <div className="mb-3">
+                    <label htmlFor="" className="form-label">
+                      Time for yellow card by away team:
+                    </label>
+                    <input
+                      type="number"
+                      name="awayTeamYellow"
+                      {...register("awayTeamYellow", {
+                        required: {
+                          value: false,
+                          message: "Field is required",
+                        },
+                      })}
+                      className="form-control"
+                    />
+                    {errors?.awayTeamYellow && (
+                      <FormInputErrorAlert
+                        message={errors?.awayTeamYellow?.message}
+                      />
+                    )}
+                  </div>
 
-              {/* fouls */}
+                  {/* players with yellow cards */}
+                  <div className="mb-3">
+                    <label htmlFor="" className="form-label">
+                      Player with yellow cards away team:
+                    </label>
 
-              {/* <div className="mb-3">
-                <label htmlFor="" className="form-label">
-                  Total fouls by away team:
-                </label>
-                <input
-                  type="number"
-                  name="awayTeamFouls"
-                  {...register("awayTeamFouls", {
-                    required: {
-                      value: true,
-                      message: "Field is required",
-                    },
-                  })}
-                  className="form-control"
-                />
-                {errors?.awayTeamFouls && (
-                  <FormInputErrorAlert
-                    message={errors?.awayTeamFouls?.message}
-                  />
-                )}
-              </div> */}
+                    <Select
+                      value={awayTeamYellowPlayers}
+                      onChange={(value) => setAwayTeamYellowPlayers(value)}
+                      options={selectedAwayTeamPlayers.map((p) => ({
+                        label: p,
+                        value: p,
+                      }))}
+                      isMulti
+                    />
+                    {errors?.awayTeamYellowPlayers && (
+                      <FormInputErrorAlert
+                        message={errors?.awayTeamYellowPlayers?.message}
+                      />
+                    )}
+                  </div>
+                </div>
+              ) : awaySelected === "awayRedCard" ? (
+                <div>
+                  {/* total red cards */}
 
-              {/* yellow cards */}
+                  <div className="mb-3">
+                    <label htmlFor="" className="form-label">
+                      Time for red card by away team:
+                    </label>
+                    <input
+                      type="number"
+                      name="awayTeamRed"
+                      {...register("awayTeamRed", {
+                        required: {
+                          value: false,
+                          message: "Field is required",
+                        },
+                      })}
+                      className="form-control"
+                    />
+                    {errors?.awayTeamRed && (
+                      <FormInputErrorAlert
+                        message={errors?.awayTeamRed?.message}
+                      />
+                    )}
+                  </div>
 
-              <div className="mb-3">
-                <label htmlFor="" className="form-label">
-                  Time for yellow card by away team:
-                </label>
-                <input
-                  type="number"
-                  name="awayTeamYellow"
-                  {...register("awayTeamYellow", {
-                    required: {
-                      value: false,
-                      message: "Field is required",
-                    },
-                  })}
-                  className="form-control"
-                />
-                {errors?.awayTeamYellow && (
-                  <FormInputErrorAlert
-                    message={errors?.awayTeamYellow?.message}
-                  />
-                )}
-              </div>
+                  {/*players with red cards */}
 
-              {/* players with yellow cards */}
-              <div className="mb-3">
-                <label htmlFor="" className="form-label">
-                  Player with yellow cards away team:
-                </label>
+                  <div className="mb-3">
+                    <label htmlFor="" className="form-label">
+                      Players with red card for away team:
+                    </label>
 
-                <Select
-                  value={awayTeamYellowPlayers}
-                  onChange={(value) => setAwayTeamYellowPlayers(value)}
-                  options={selectedAwayTeamPlayers.map((p) => ({
-                    label: p,
-                    value: p,
-                  }))}
-                  isMulti
-                />
-                {errors?.awayTeamYellowPlayers && (
-                  <FormInputErrorAlert
-                    message={errors?.awayTeamYellowPlayers?.message}
-                  />
-                )}
-              </div>
-
-              {/* total red cards */}
-
-              <div className="mb-3">
-                <label htmlFor="" className="form-label">
-                  Time for red card by away team:
-                </label>
-                <input
-                  type="number"
-                  name="awayTeamRed"
-                  {...register("awayTeamRed", {
-                    required: {
-                      value: false,
-                      message: "Field is required",
-                    },
-                  })}
-                  className="form-control"
-                />
-                {errors?.awayTeamRed && (
-                  <FormInputErrorAlert message={errors?.awayTeamRed?.message} />
-                )}
-              </div>
-
-              {/*players with red cards */}
-
-              <div className="mb-3">
-                <label htmlFor="" className="form-label">
-                  Players with red card for away team:
-                </label>
-
-                <Select
-                  value={awayTeamRedPlayers}
-                  onChange={(value) => setAwayTeamRedPlayers(value)}
-                  options={selectedAwayTeamPlayers.map((p) => ({
-                    label: p,
-                    value: p,
-                  }))}
-                  isMulti
-                />
-                {errors?.awayTeamRedPlayers && (
-                  <FormInputErrorAlert
-                    message={errors?.awayTeamRedPlayers?.message}
-                  />
-                )}
-              </div>
+                    <Select
+                      value={awayTeamRedPlayers}
+                      onChange={(value) => setAwayTeamRedPlayers(value)}
+                      options={selectedAwayTeamPlayers.map((p) => ({
+                        label: p,
+                        value: p,
+                      }))}
+                      isMulti
+                    />
+                    {errors?.awayTeamRedPlayers && (
+                      <FormInputErrorAlert
+                        message={errors?.awayTeamRedPlayers?.message}
+                      />
+                    )}
+                  </div>
+                </div>
+              ) : (
+                <div className="h5 text-muted mt-4">
+                  <p>Select a game event above</p>
+                </div>
+              )}
 
               {/* Button */}
 
-              <div className="d-flex justify-content-center">
-                {/* <button
-                  disabled={postingResult}
-                  className="btn btn-primary my-2"
-                >
-                  {postingResult ? "Loading..." : "Post Results"}
-                </button> */}
-              </div>
-              <button
-                className="btn btn-primary my-2 mx-2"
-               
-              >
+              <div className="d-flex justify-content-center"></div>
+              <button className="btn btn-primary my-2 mx-2">
                 Update Scores
               </button>
             </div>

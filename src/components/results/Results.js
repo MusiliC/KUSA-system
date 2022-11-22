@@ -13,10 +13,12 @@ export default function Results() {
   const dispatch = useDispatch();
 
   const [selectedResult, setSelectedResult] = useState(null);
+  // console.log(selectedResult);
 
   //handling Results
 
   const results = useSelector((state) => state.resultsReducer.results);
+  
 
   //handling top scorer
 
@@ -119,7 +121,10 @@ export default function Results() {
                     )}
                     {topScorer &&
                       topScorer.map((player) => (
-                        <tr className="py-3 fw-bold align-middle" id="result-data">
+                        <tr
+                          className="py-3 fw-bold align-middle"
+                          id="result-data"
+                        >
                           <td>{player.scorer}</td>
                           <td>
                             <img
@@ -204,6 +209,11 @@ export default function Results() {
                 <div id="homeTeamContent">{selectedResult.homeTeamGoals}</div>
                 <span id="bt">Goals</span>
                 <div id="awayTeamContent">{selectedResult.awayTeamGoals}</div>
+              </div>
+              <div id="one">
+                <div id="homeTeamContent">{selectedResult.homeTeamGoalScorer}</div>
+                <span id="bt">Goal Scorers</span>
+                <div id="awayTeamContent">{selectedResult.awayTeamGoalScorer}</div>
               </div>
               <div id="one">
                 <div id="homeTeamContent">{selectedResult.homeTeamShots}</div>

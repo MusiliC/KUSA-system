@@ -68,7 +68,8 @@ export default function Fixtures() {
     socket.on(
       "updated_score",
       (data) => {
-        setLiveData((list) => [...list, data.obj]);
+        setLiveData((list) => list === data.obj ? [ list]: [ data.obj]);
+    
         console.log(liveData);
 
         if (!timePause) {
@@ -216,19 +217,23 @@ export default function Fixtures() {
                       <div id="homeTeamContent">
                         {liveData.map((liveData) => (
                           <p>
-                            {liveData.homeTeamGoalScorer}
-                            <span className="me-1"></span>
-                            {liveData.homeTeamGoalsTime}'
+                            
+                            {liveData.homeTeamGoalScorer.map((player) => (
+                              <li>{player} </li>
+                            ))}
+                          
                           </p>
                         ))}
                       </div>
-                      <span id="bt">Goals scorer</span>
+                      <span id="bt">Goals Scorers</span>
                       <div id="awayTeamContent">
                         {liveData.map((liveData) => (
                           <p>
-                            {liveData.awayTeamGoalScorer}
+                            {liveData.awayTeamGoalScorer.map((player) => (
+                              <li>{player}</li>
+                            ))}
                             <span className="me-1"></span>
-                            {liveData.awayTeamGoalsTime}'
+                            {/* {liveData.awayTeamGoalsTime}' */}
                           </p>
                         ))}
                       </div>
@@ -237,9 +242,11 @@ export default function Fixtures() {
                       <div id="homeTeamContent">
                         {liveData.map((liveData) => (
                           <p>
-                            {liveData.homeTeamYellowPlayers}
+                            {liveData.homeTeamYellowPlayers.map((player) => (
+                              <li>{player}</li>
+                            ))}
                             <span className="me-1"></span>
-                            {liveData.homeTeamYellow}'
+                            {/* {liveData.homeTeamYellow}' */}
                           </p>
                         ))}
                       </div>
@@ -247,9 +254,11 @@ export default function Fixtures() {
                       <div id="awayTeamContent">
                         {liveData.map((liveData) => (
                           <p>
-                            {liveData.awayTeamYellowPlayers}
+                            {liveData.awayTeamYellowPlayers.map((player) => (
+                              <li>{player}</li>
+                            ))}
                             <span className="me-1"></span>
-                            {liveData.awayTeamYellow}'
+                            {/* {liveData.awayTeamYellow}' */}
                           </p>
                         ))}
                       </div>
@@ -258,9 +267,11 @@ export default function Fixtures() {
                       <div id="homeTeamContent">
                         {liveData.map((liveData) => (
                           <p>
-                            {liveData.homeTeamRedPlayers}
+                            {liveData.homeTeamRedPlayers.map((player) => (
+                              <li>{player}</li>
+                            ))}
                             <span className="me-1"></span>
-                            {liveData.homeTeamRed}'
+                            {/* {liveData.homeTeamRed}' */}
                           </p>
                         ))}
                       </div>
@@ -268,9 +279,11 @@ export default function Fixtures() {
                       <div id="awayTeamContent">
                         {liveData.map((liveData) => (
                           <p>
-                            {liveData.awayTeamRedPlayers}
+                            {liveData.awayTeamRedPlayers.map((player) => (
+                              <li>{player}</li>
+                            ))}
                             <span className="me-1"></span>
-                            {liveData.awayTeamRed}'
+                            {/* {liveData.awayTeamRed}' */}
                           </p>
                         ))}
                       </div>

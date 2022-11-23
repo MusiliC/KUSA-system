@@ -54,15 +54,18 @@
 }
 
 #homeTeamContent {
-    width: 40%;
-  
-    text-align: center;
+width: 40%;
+    display: flex;
+    justify-content: center;
 }
 
 #awayTeamContent{
 width: 40%;
-    
-    text-align: center;
+display: flex;
+justify-content: center;
+
+
+ 
     
 }
 

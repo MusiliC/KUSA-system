@@ -14,7 +14,7 @@ export default function RegisterTeam() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const registeredTeams = useSelector((state) => state.teamsReducer.allTeams);
-  //  console.log(registeredTeams);
+   console.log(registeredTeams);
 
   const [institution, setInstitution] = useState({
     team: "",

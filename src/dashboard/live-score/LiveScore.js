@@ -256,7 +256,7 @@ export default function LiveScore() {
                   onChange={homeTeamEvent}
                 >
                   <option defaultValue={"event"}> Home Game events</option>
-                  <option value="homeGoalScored">Goal scored event</option>
+                  <option value="homeGoalScored">Goal scoring event</option>
                   <option value="homeYellowCard">Yellow Card event</option>
                   <option value="homeRedCard">Red Card event</option>
                 </select>
@@ -489,7 +489,7 @@ export default function LiveScore() {
                   onChange={awayTeamEvent}
                 >
                   <option defaultValue={"event"}>Away Game Events </option>
-                  <option value="awayGoalScored">Goal scored event</option>
+                  <option value="awayGoalScored">Goal scoring event</option>
                   <option value="awayYellowCard">Yellow Card event</option>
                   <option value="awayRedCard">Red Card event</option>
                 </select>

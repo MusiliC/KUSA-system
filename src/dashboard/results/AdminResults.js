@@ -13,6 +13,7 @@ export default function AdminResults() {
   //handling Results
 
   const results = useSelector((state) => state.resultsReducer.results);
+  console.log(results);
 
   const handleResultDelete = (id) => {
     dispatch(deleteResult(id));
@@ -81,7 +82,7 @@ export default function AdminResults() {
                   topScorer.map((player) => (
                     <tr>
                       <td>{player.scorer}</td>
-                      <td>{player.scorerTeam.team}</td>
+                      <td>{player.scorerTeam}</td>
                       <td>{player.scorerGoals}</td>
                       <td>
                         <div className="d-flex justify-content-around align-items-center">

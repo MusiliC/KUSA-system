@@ -25,7 +25,6 @@ export default function LiveScore() {
     await setHomeSelected(event.target.value);
   };
 
-
   //select away event value
 
   const [awaySelected, setAwaySelected] = useState("");
@@ -64,7 +63,7 @@ export default function LiveScore() {
   useEffect(() => {
     let interval = null;
 
-    if (timerOn) {
+    if (timerOn ) {
       interval = setInterval(() => {
         setTime((prevTime) => prevTime + 10);
       }, 10);
@@ -137,7 +136,6 @@ export default function LiveScore() {
         : ["none"],
     };
 
-    console.log(obj);
 
     socket.emit("live_score", { obj });
     socket.emit("game_time", { gamePause });
@@ -148,14 +146,16 @@ export default function LiveScore() {
       socket.emit("game_time", { gamePause });
     } else if (!timerOn && time > 0) {
       setGamePause(true);
-      console.log(gamePause);
-      socket.emit("game_time", { gamePause });
+
+      socket.emit("game_time", { gamePause: true });
     }
   };
 
   useEffect(() => {
     dispatch(getTeams());
   }, [dispatch]);
+
+
 
   return (
     <div className="container-lg">
@@ -185,7 +185,10 @@ export default function LiveScore() {
         {timerOn && (
           <button
             className="btn btn-primary mb-2 mx-2"
-            onClick={() => setTimerOn(false) && setGamePause(false)}
+            onClick={() => {
+              setTimerOn(false);
+              setGamePause(true);
+            }}
           >
             Stop
           </button>
@@ -194,20 +197,16 @@ export default function LiveScore() {
         {!timerOn && time !== 0 && (
           <button
             className="btn btn-primary mb-2 mx-2"
-            onClick={() => setTimerOn(true) && setGamePause(true)}
+            onClick={() => {
+              setTimerOn(true);
+              setGamePause(false);
+            }}
           >
             Resume
           </button>
         )}
 
-        {!timerOn && time > 0 && (
-          <button
-            className="btn btn-primary mb-2 mx-2"
-            onClick={() => setTime(0)}
-          >
-            Reset
-          </button>
-        )}
+     
       </div>
 
       <div className="row justify-content-center">
@@ -341,7 +340,7 @@ export default function LiveScore() {
 
                   <div className="mb-3">
                     <label htmlFor="" className="form-label">
-                      Time for yellow card by home team:
+                      Number of yellow cards by home team:
                     </label>
                     <input
                       type="number"
@@ -390,7 +389,7 @@ export default function LiveScore() {
 
                   <div className="mb-3">
                     <label htmlFor="" className="form-label">
-                      Time for red card by home team:
+                      Number of red cards by home team:
                     </label>
                     <input
                       type="number"
@@ -440,7 +439,11 @@ export default function LiveScore() {
                 </div>
               )}
 
-              <button className="btn btn-primary my-2" onClick={handleTime}>
+              <button
+                type="button"
+                className="btn btn-primary my-2"
+                onClick={handleTime}
+              >
                 Start game time
               </button>
             </div>
@@ -572,7 +575,7 @@ export default function LiveScore() {
 
                   <div className="mb-3">
                     <label htmlFor="" className="form-label">
-                      Time for yellow card by away team:
+                      Number of yellow cards by away team:
                     </label>
                     <input
                       type="number"
@@ -620,7 +623,7 @@ export default function LiveScore() {
 
                   <div className="mb-3">
                     <label htmlFor="" className="form-label">
-                      Time for red card by away team:
+                      Number of red cards by away team:
                     </label>
                     <input
                       type="number"

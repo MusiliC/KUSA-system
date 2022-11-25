@@ -23,29 +23,14 @@ export default function Fixtures() {
   const [timerOn, setTimerOn] = useState(false);
   const [timePause, setTimePause] = useState(Boolean);
 
-  // const [liveData, setLiveData] = useState({
-  //   homeTeam: "",
-  //   awayTeam: "",
-  //   goalHomeTeam: "",
-  //   goalTimeHomeTeam: "",
-  //   goalAwayTeam: "",
-  //   goalTimeAwayTeam: "",
-  //   yellowHomeTeam: "",
-  //   yellowTimeHomeTeam: "",
-  //   yellowAwayTeam: "",
-  //   yellowTimeAwayTeam: "",
-  //   redHomeTeam: "",
-  //   redTimeHomeTeam: "",
-  //   redAwayTeam: "",
-  //   redTimeAwayTeam: "",
-  // });
+
 
   const [liveData, setLiveData] = useState([]);
 
   useEffect(() => {
     let interval = null;
 
-    if (timerOn) {
+    if (timerOn  ) {
       interval = setInterval(() => {
         setTime((prevTime) => prevTime + 10);
       }, 10);
@@ -70,7 +55,6 @@ export default function Fixtures() {
       (data) => {
         setLiveData((list) => list === data.obj ? [ list]: [ data.obj]);
     
-        console.log(liveData);
 
         if (!timePause) {
           setTimerOn(true);
@@ -81,14 +65,15 @@ export default function Fixtures() {
       [socket, liveData]
     );
 
-    console.log(liveData);
+
     socket.on("game_pause", (data) => {
+     
       setTimePause(data.gamePause);
 
-      if (!timePause) {
+      if (!data.gamePause) {
         setTimerOn(true);
       } else {
-        console.log(timePause);
+       
         setTimerOn(false);
       }
     });
@@ -203,13 +188,21 @@ export default function Fixtures() {
                     <div id="two">
                       <div id="homeTeamContent">
                         {liveData.map((liveData) => (
-                          <p> {liveData.homeTeamGoals}</p>
+                          <p> {liveData.homeTeamGoals === "" ? (
+                            <p>0</p>
+                          ): 
+                          <p>{liveData.homeTeamGoals}</p>
+                          }</p>
                         ))}
                       </div>
                       <span id="bt">Goals</span>
                       <div id="awayTeamContent">
                         {liveData.map((liveData) => (
-                          <p> {liveData.awayTeamGoals}</p>
+                          <p> {liveData.awayTeamGoals === "" ? (
+                            <p>0</p>
+                          ):
+                          <p>{liveData.awayTeamGoals}</p>
+                          }</p>
                         ))}
                       </div>
                     </div>
@@ -217,11 +210,9 @@ export default function Fixtures() {
                       <div id="homeTeamContent">
                         {liveData.map((liveData) => (
                           <p>
-                            
                             {liveData.homeTeamGoalScorer.map((player) => (
                               <li>{player} </li>
                             ))}
-                          
                           </p>
                         ))}
                       </div>
@@ -241,9 +232,31 @@ export default function Fixtures() {
                     <div id="two">
                       <div id="homeTeamContent">
                         {liveData.map((liveData) => (
+                          <p> {liveData.homeTeamYellow === "" ? (
+                            <p>0</p>
+                          ): (
+                            <p>{liveData.homeTeamYellow}</p>
+                          )}</p>
+                        ))}
+                      </div>
+                      <span id="bt">Total yellow cards</span>
+                      <div id="awayTeamContent">
+                        {liveData.map((liveData) => (
+                          <p> {liveData.awayTeamYellow === "" ? (
+                            <p>0</p>
+                          ): (
+                            <p>{liveData.awayTeamYellow}</p>
+                          )}</p>
+                        ))}
+                      </div>
+                    </div>
+                    <div id="two">
+                      <div id="homeTeamContent">
+                        {liveData.map((liveData) => (
                           <p>
                             {liveData.homeTeamYellowPlayers.map((player) => (
-                              <li>{player}</li>
+                              
+                              <li>{player  }</li>
                             ))}
                             <span className="me-1"></span>
                             {/* {liveData.homeTeamYellow}' */}
@@ -260,6 +273,19 @@ export default function Fixtures() {
                             <span className="me-1"></span>
                             {/* {liveData.awayTeamYellow}' */}
                           </p>
+                        ))}
+                      </div>
+                    </div>
+                    <div id="two">
+                      <div id="homeTeamContent">
+                        {liveData.map((liveData) => (
+                          <p> {liveData.homeTeamRed}</p>
+                        ))}
+                      </div>
+                      <span id="bt">Total red cards</span>
+                      <div id="awayTeamContent">
+                        {liveData.map((liveData) => (
+                          <p> {liveData.awayTeamRed}</p>
                         ))}
                       </div>
                     </div>

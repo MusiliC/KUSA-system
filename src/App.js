@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import Login from "./components/auth/Login";
 import Register from "./components/auth/Register";
+import AuthWrapper from "./components/AuthWrapper";
 import Fixtures from "./components/fixtures/Fixtures";
 import Home from "./components/home/Home";
 import Navigation from "./components/navigation/Navigation";
@@ -27,7 +28,15 @@ function App() {
 
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/results" element={<Results />} />
+
+            <Route
+              path="/results"
+              element={
+                <AuthWrapper>
+                  <Results />
+                </AuthWrapper>
+              }
+            />
             <Route path="/fixtures" element={<Fixtures />} />
             <Route path="/teams" element={<Teams />} />
             <Route path="/login" element={<Login />} />

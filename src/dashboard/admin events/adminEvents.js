@@ -24,8 +24,8 @@ export default function AdminEvents() {
 
           {events &&
             events.map((event) => (
-              <div className="col-9 col-lg-4 col-xl-3 my-2 ">
-                <div className="card mt-2" key={event._id}>
+              <div className="col-9 col-lg-4 col-xl-3 my-2  " key={event._id}>
+                <div className="card mt-2">
                   <img
                     src="/pictures/tartan-track-g1c231e301_1920.jpg"
                     alt=""

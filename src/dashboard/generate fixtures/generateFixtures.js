@@ -46,20 +46,7 @@ export default function GenerateFixtures() {
     <div>
       <div className="container-lg">
         <div className="row justify-content-around">
-          {/* <div className="col-lg-3">
-            <div className="lead text-center my-4 text-bold">
-              Registered teams
-            </div>
-
-            <ol className="list-group group list-group-numbered">
-              {registeredTeams.map((teams) => (
-                <li
-                  className="list-group-item"
-                  key={teams.name}
-                >{`${teams.team}`}</li>
-              ))}
-            </ol>
-          </div> */}
+        
 
           <div className="card col-lg-6 mt-4">
             <div className="card-body">
@@ -136,7 +123,7 @@ export default function GenerateFixtures() {
                         return (
                           <React.Fragment>
                             {values?.map((value, i) => (
-                              <tr>
+                              <tr key={value.time}>
                                 <th>{new Date(date).toLocaleDateString()}</th>
                                 <th>{value?.time}</th>
                                 <th>{value?.awayTeam?.team}</th>

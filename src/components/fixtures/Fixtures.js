@@ -356,20 +356,12 @@ export default function Fixtures() {
                                   </td>
                                   <td>{value?.time}</td>
                                   <td>
-                                    {/* <img
-                                      src={`${imgUrl}/${value?.awayTeam?.image} `}
-                                      alt="logo"
-                                      className="logo me-2"
-                                    /> */}
+                                  
 
                                     {value?.awayTeam?.team}
                                   </td>
                                   <td>
-                                    {/* <img
-                                      src={`${imgUrl}/${value?.homeTeam?.image} `}
-                                      alt="logo"
-                                      className="logo me-2"
-                                    /> */}
+                                 
                                     {value?.homeTeam?.team}
                                   </td>
                                 </tr>

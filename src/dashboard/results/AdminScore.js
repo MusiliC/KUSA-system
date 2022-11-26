@@ -10,6 +10,7 @@ function AdminScore() {
 
   const onePlayer = useSelector((state) => state.playerReducer.player);
   // console.log(onePlayer);
+  
 
   const [player, setPlayer] = useState({
     scorer: "",

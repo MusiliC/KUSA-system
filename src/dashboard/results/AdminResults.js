@@ -13,7 +13,7 @@ export default function AdminResults() {
   //handling Results
 
   const results = useSelector((state) => state.resultsReducer.results);
-  console.log(results);
+ 
 
   const handleResultDelete = (id) => {
     dispatch(deleteResult(id));
@@ -22,7 +22,7 @@ export default function AdminResults() {
   //handling top scorer
 
   const topScorer = useSelector((state) => state.playerReducer.players);
-
+  console.log(topScorer);
 
   const handlePlayerDelete = (id) => {
     dispatch(deleteScorer(id));
@@ -45,8 +45,8 @@ export default function AdminResults() {
           </div>
           <ol className="list-group group list-group-numbered">
             {results &&
-              results.map((teams) => (
-                <li className="list-group-item  text-center">
+              results?.map((teams) => (
+                <li className="list-group-item  text-center" key={teams._id}>
                   {` ${teams?.homeTeam?.team}  ${teams.homeTeamGoals} vs ${teams?.awayTeam?.team} ${teams.awayTeamGoals}`}
                   <div className="d-flex justify-content-around my-2">
                     <i
@@ -80,9 +80,9 @@ export default function AdminResults() {
               <tbody>
                 {topScorer &&
                   topScorer.map((player) => (
-                    <tr>
+                    <tr key={player._id}>
                       <td>{player.scorer}</td>
-                      <td>{player.scorerTeam}</td>
+                      <td>{player.scorerTeam.team}</td>
                       <td>{player.scorerGoals}</td>
                       <td>
                         <div className="d-flex justify-content-around align-items-center">

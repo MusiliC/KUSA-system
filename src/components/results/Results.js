@@ -13,7 +13,7 @@ export default function Results() {
   const dispatch = useDispatch();
 
   const [selectedResult, setSelectedResult] = useState(null);
-  // console.log(selectedResult);
+
 
   //handling Results
 
@@ -23,7 +23,7 @@ export default function Results() {
   //handling top scorer
 
   const topScorer = useSelector((state) => state.playerReducer.players);
-  // console.log(topScorer);
+  
   useEffect(() => {
     dispatch(getResults());
     dispatch(getScorers());
@@ -33,7 +33,7 @@ export default function Results() {
     const result = results.find((f) => f._id === id);
 
     await setSelectedResult(result);
-    console.log(result);
+   
   };
 
   return (
@@ -41,10 +41,7 @@ export default function Results() {
       <section>
         <div className="container-lg pt-3">
           <div className="row justify-content-around">
-            {/* <div className="text-center display-6">
-              <b> Results </b>
-              
-            </div> */}
+          
 
             <div className="col-lg-10 my-4">
               <div className="fs-2 mx-2 ">Results</div>
@@ -60,12 +57,12 @@ export default function Results() {
                   )}
                   {results &&
                     results.map((teams) => (
-                      <tr onClick={() => handleResult(teams._id)}>
+                      <tr onClick={() => handleResult(teams._id)} key={teams._id}>
                         <td
                           className="py-3  d-flex flex-wrap justify-content-between align-items-center "
                           id="result-data"
                         >
-                          {/* {` ${teams?.homeTeam?.team} ${teams.homeTeamGoals} vs  ${teams.awayTeamGoals} ${teams.awayTeam?.team} `} */}
+                        
                           <div className="teamA">
                             <img
                               src={`${imgUrl}/${teams?.homeTeam?.image} `}
@@ -88,10 +85,7 @@ export default function Results() {
                             {` ${teams.awayTeam?.team} `}
                           </div>
                         </td>
-                        {/* <td className="py-3" id="result-data">
-                          <i className="bi bi-geo-alt-fill me-2 "></i> Chuka
-                          University
-                        </td> */}
+                     
                       </tr>
                     ))}
                 </tbody>
@@ -124,6 +118,7 @@ export default function Results() {
                         <tr
                           className="py-3 fw-bold align-middle"
                           id="result-data"
+                          key={player._id}
                         >
                           <td>{player.scorer}</td>
                           <td>
@@ -148,7 +143,7 @@ export default function Results() {
         <footer className="footer mt-auto py-3 ">
           <div className="container">
             <div className="row text-dark justify-content-lg-start align-content-end">
-              {/* <h5 className="ms-5">Links</h5> */}
+             
               <div className="col-lg-2">
                 <ul>
                   <Link to={"/home"} id="footer-links">
@@ -287,9 +282,7 @@ export default function Results() {
             <Button variant="primary" onClick={() => setSelectedResult(null)}>
               Close
             </Button>
-            {/* <Button variant="primary" onClick={() => setSelectedResult(null)}>
-              Save Changes
-            </Button> */}
+           
           </Modal.Footer>
         </Modal>
       )}

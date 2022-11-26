@@ -14,7 +14,7 @@ export default function RegisterTeam() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const registeredTeams = useSelector((state) => state.teamsReducer.allTeams);
-   console.log(registeredTeams);
+   
 
   const [institution, setInstitution] = useState({
     team: "",
@@ -36,7 +36,7 @@ export default function RegisterTeam() {
     formData.append("team", institution.team);
     formData.append("county", institution.county);
     formData.append("players", institution.players);
-    console.log(institution);
+    
     dispatch(registerTeam(formData));
     await setInstitution({
       team: "",

@@ -92,7 +92,7 @@ export default function Home() {
                         Teams that are going to participate and registered for
                         the coming scheduled KUSA games
                       </div>
-                      <Link to="/teams" class="btn btn-primary my-2">
+                      <Link to="/teams" className="btn btn-primary my-2">
                         Teams
                       </Link>
                     </div>
@@ -113,7 +113,7 @@ export default function Home() {
                         Events will begin at playoffs in various regions and
                         later to national levels, either tournaments or leagues.
                       </div>
-                      <Link to="/teams" class="btn btn-primary my-2">
+                      <Link to="/teams" className="btn btn-primary my-2">
                         Events
                       </Link>
                     </div>
@@ -134,7 +134,7 @@ export default function Home() {
                         Fixtures of the participating institutions and when they
                         will be played, alongside the venue of participation.
                       </div>
-                      <Link to="/fixtures" class="btn btn-primary my-2">
+                      <Link to="/fixtures" className="btn btn-primary my-2">
                         Fixtures
                       </Link>
                     </div>

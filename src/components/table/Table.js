@@ -9,7 +9,7 @@ const imgUrl = "http://localhost:5000/static";
 
 function Table() {
   const teams = useSelector((state) => state.teamsReducer.allTeams);
-  console.log(teams);
+
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -49,7 +49,7 @@ function Table() {
                   )}
                   {teams &&
                     teams.map((team, i) => (
-                      <tr id="result-data" className="align-middle">
+                      <tr id="result-data" className="align-middle" key={team._id}>
                         <td className="px-3">{(i = i + 1)}</td>
                         <td className="flex  align-items-center">
                           <img

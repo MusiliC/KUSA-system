@@ -5,12 +5,19 @@ import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas"
 import { getTeams } from "../../redux/actions/teamsAction";
 import "./table.css"
+import { getRegions } from "../../redux/actions/regionalFixturesAction";
 
 
 const imgUrl = "http://localhost:5000/static";
 
 function Table() {
   const teams = useSelector((state) => state.teamsReducer.allTeams);
+   const allRegions = useSelector(
+     (state) => state.regionFixturesReducer.regions
+   );
+
+  //  console.log(allRegions);
+  // console.log(teams);
 
 const handleReport = () => {
   const input = document.getElementById("tables-page")
@@ -27,6 +34,7 @@ const handleReport = () => {
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getTeams());
+    dispatch(getRegions())
   }, [dispatch]);
 
   return (
@@ -43,7 +51,64 @@ const handleReport = () => {
 
           <div className="row justify-content-center">
             <div className=" col-lg-12 mb-5">
-              <table className="table ">
+              {allRegions.map((regions, i1) => (
+                <React.Fragment>
+                  <div className="display-6 my-4">{regions.name}</div>
+
+                  <table className="table">
+                    <thead className="border border-none bg-light table-bordered border-primary">
+                      <tr id="t-head">
+                        <th>Position</th>
+                        <th>Team</th>
+                        <th>Played</th>
+                        <th>Won</th>
+                        <th>Draw</th>
+                        <th>Lost</th>
+                        <th>Points</th>
+                      </tr>
+                    </thead>
+
+                    <tbody>
+                      {regions.teams.map((team, i) => (
+                        <React.Fragment>
+                          {teams?.length === 0 && (
+                            <tr>
+                              <td colSpan={20} className="text-center">
+                                No teams to update table yet
+                              </td>
+                            </tr>
+                          )}
+                          <tr
+                            id="result-data"
+                            className="align-middle"
+                            key={team._id}
+                          >
+                            <td className="px-3">{(i = i + 1)}</td>
+                            <td className="flex  align-items-center">
+                              <img
+                                src={`${imgUrl}/${team?.image} `}
+                                alt="logo"
+                                className="logo me-2"
+                              />
+                              {team.team}
+                            </td>
+                            <td>
+                              <span>{team.wins + team.draws + team.lost}</span>
+                            </td>
+                            <td>{team.wins}</td>
+                            <td>{team.draws}</td>
+                            <td>{team.lost}</td>
+                            <td>
+                              {team.wins * 3 + team.draws * 1 + team.lost * 0}
+                            </td>
+                          </tr>
+                        </React.Fragment>
+                      ))}
+                    </tbody>
+                  </table>
+                </React.Fragment>
+              ))}
+              {/* <table className="table ">
                 <thead className="border border-none bg-light table-bordered border-primary">
                   <tr id="t-head">
                     <th>Position</th>
@@ -91,7 +156,7 @@ const handleReport = () => {
                       </tr>
                     ))}
                 </tbody>
-              </table>
+              </table> */}
             </div>
           </div>
           <div className="row mb-4">

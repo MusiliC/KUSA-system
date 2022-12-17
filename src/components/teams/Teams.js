@@ -1,11 +1,14 @@
 import React, { useEffect } from "react";
 import Table from "react-bootstrap/Table";
+
+import Card from "react-bootstrap/Card";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getTeams } from "../../redux/actions/teamsAction";
 
 import "./teams.css";
 import { getEvents } from "../../redux/actions/eventsAction";
+import { getRegions } from "../../redux/actions/regionalFixturesAction";
 
 const imgUrl = "http://localhost:5000/static";
 
@@ -15,8 +18,13 @@ export default function Teams() {
 
   const events = useSelector((state) => state.eventsReducer.events);
 
+  const allRegions = useSelector(
+    (state) => state.regionFixturesReducer.regions
+  );
+
   useEffect(() => {
     dispatch(getEvents());
+    dispatch(getRegions());
   }, [dispatch]);
 
   useEffect(() => {
@@ -29,11 +37,10 @@ export default function Teams() {
         <div className="big-image">
           <div className="overlay">
             <div className="container-lg">
-            
               <div className="row justify-content-between align-items-start py-3 ">
                 <div className="col-lg-5 " id="eventSide">
                   <h3 className="text-center display-6" id="overlayTitle">
-                    KUSA  Events
+                    KUSA Events
                   </h3>
                   <div className="mainContainer mt-5">
                     {events?.length === 0 && (
@@ -64,6 +71,39 @@ export default function Teams() {
 
                 <div className="col-lg-6  ">
                   <h3 className="text-center display-6 " id="overlayTitle">
+                    Registered Teams
+                  </h3>
+
+                  {allRegions &&
+                    allRegions.map((region) => (
+                      <Card className="my-4" key={region._id}>
+                        <Card.Body>
+                          <Card.Title className="text-center my-2 fw-bold">
+                            {region.name}
+                          </Card.Title>
+
+                          {region.teams.map((team) => (
+                            <ul>
+                              <li key={team.team}>
+                                <Card.Text className="d-flex align-items-center ">
+                                  <div className="mx-3 ">
+                                    <img
+                                      src={`${imgUrl}/${team.image}`}
+                                      alt=""
+                                      // width={40}
+                                      className="logo"
+                                      srcSet=""
+                                    />
+                                  </div>
+                                  {team.team}
+                                </Card.Text>
+                              </li>
+                            </ul>
+                          ))}
+                        </Card.Body>
+                      </Card>
+                    ))}
+                  {/* <h3 className="text-center display-6 " id="overlayTitle">
                     Registered Teams
                   </h3>
 
@@ -108,7 +148,7 @@ export default function Teams() {
                           </tr>
                         ))}
                     </tbody>
-                  </Table>
+                  </Table> */}
                 </div>
               </div>
             </div>
@@ -158,9 +198,6 @@ export default function Teams() {
           </div>
         </footer>
       </section>
-   
     </div>
-
- 
   );
 }

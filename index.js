@@ -14,6 +14,7 @@ app.use(fileUpload());
 require("dotenv").config();
 
 app.use("/user", require("./routes/userRoutes"));
+app.use("/regions", require("./routes/region.routes"));
 app.use("/teams", require("./routes/teamRoutes"));
 app.use("/events", require("./routes/eventRoutes"));
 app.use("/scorer", require("./routes/scoresRoutes"));

@@ -8,7 +8,9 @@ const { User } = require("../models/userModel");
 
 async function getUsers(req, res) {
   try {
-    const users = await User.find({});
+    const users = await User.find({}).sort({
+      isAdmin: -1
+    });
     res.status(200).send(users);
   } catch (error) {
     res.status(500).send(error.message);

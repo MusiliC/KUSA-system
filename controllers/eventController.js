@@ -26,23 +26,7 @@ async function oneEvent(req, res) {
   }
 }
 
-// const upload = multer({storage: Storage})
 
-// var upload = multer({
-//   storage: storage,
-//   fileFilter: (req, file, cb) => {
-//     if (
-//       file.mimetype == "image/png" ||
-//       file.mimetype == "image/jpg" ||
-//       file.mimetype == "image/jpeg"
-//     ) {
-//       cb(null, true);
-//     } else {
-//       cb(null, false);
-//       return cb(new Error("Only .png, .jpg and .jpeg format allowed!"));
-//     }
-//   },
-// }).single('img')
 
 async function registerEvent(req, res) {
   const { error } = validEvent(req.body);

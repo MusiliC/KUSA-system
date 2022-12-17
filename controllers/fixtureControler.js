@@ -6,6 +6,7 @@ const robin = require("roundrobin");
 
 const generateFixtures = async (req, res) => {
   const { eventId } = req.params;
+  // console.log(eventId);
   const event = await Event.findById(eventId);
 
   if (!event) {

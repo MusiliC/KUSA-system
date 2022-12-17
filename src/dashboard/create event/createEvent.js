@@ -7,10 +7,10 @@ import { createEvent, getEvents } from "../../redux/actions/eventsAction";
 export default function CreateEvent() {
   const dispatch = useDispatch();
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const [event, setEvent] = useState({
-    name: "KUSA Play offs Round 1 ",
+    name: "KUSA Play offs Round 1",
     date: "",
     host: "",
   });
@@ -22,7 +22,7 @@ export default function CreateEvent() {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(createEvent(event));
-    navigate("/admin/event")
+    navigate("/admin/event");
   };
 
   useEffect(() => {
@@ -40,7 +40,7 @@ export default function CreateEvent() {
             <form action="">
               <div className="mb-3">
                 <label htmlFor="host" className="form-label">
-                  Choose the event type:
+                  Choose the event for KUSA games:
                 </label>
                 <select
                   name="name"
@@ -80,7 +80,6 @@ export default function CreateEvent() {
                   onChange={handleInputChange}
                 />
               </div>
-          
             </form>
             <div className="d-flex justify-content-center mt-4">
               <Button variant="primary" onClick={handleSubmit}>

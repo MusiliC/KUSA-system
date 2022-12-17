@@ -1,6 +1,8 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { jsPDF } from "jspdf";
+import html2canvas from "html2canvas"
 import { getTeams } from "../../redux/actions/teamsAction";
 import "./table.css"
 
@@ -10,6 +12,17 @@ const imgUrl = "http://localhost:5000/static";
 function Table() {
   const teams = useSelector((state) => state.teamsReducer.allTeams);
 
+const handleReport = () => {
+  const input = document.getElementById("tables-page")
+  html2canvas(input, {logging: true, letterRendering: 1, useCORS: true}).then(canvas => {
+    const imgWidth = 208;
+    const imgHeight = canvas.height * imgWidth / canvas.width;
+    const imgData = canvas.toDataURL("img/png")
+    const pdf  = new jsPDF("p", "mm", "a4")
+    pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight)
+    pdf.save("table.pdf")
+  })
+}
 
   const dispatch = useDispatch();
   useEffect(() => {
@@ -20,11 +33,14 @@ function Table() {
     <>
       <section id="tables-page">
         <div className="tb-bg"></div>
+
         <div className="container-lg">
           <div className=" fs-2 mt-5 " id="league">
             League Table
           </div>
+
           <div className="underline mb-4"></div>
+
           <div className="row justify-content-center">
             <div className=" col-lg-12 mb-5">
               <table className="table ">
@@ -49,7 +65,11 @@ function Table() {
                   )}
                   {teams &&
                     teams.map((team, i) => (
-                      <tr id="result-data" className="align-middle" key={team._id}>
+                      <tr
+                        id="result-data"
+                        className="align-middle"
+                        key={team._id}
+                      >
                         <td className="px-3">{(i = i + 1)}</td>
                         <td className="flex  align-items-center">
                           <img
@@ -83,14 +103,16 @@ function Table() {
               </ul>
             </div>
           </div>
-          {/* <div className="row mb-5">
-            <div className="col-lg-10">
-              <div className="fs-3">Match Reports</div>
-              <div className="underline mb-4"></div>
-            </div>
-          </div> */}
         </div>
       </section>
+      <div className="container d-flex justify-content-center">
+        <button
+          onClick={() => handleReport()}
+          className="btn btn-primary btn-lg mb-5"
+        >
+          Generate Report
+        </button>
+      </div>
       <section id="footer" className="bg-info">
         <footer className="footer mt-auto py-2">
           <div className="container">

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Table from "react-bootstrap/Table";
+import { jsPDF } from "jspdf";
+import html2canvas from "html2canvas";
 import "./results.css";
 import { getResults } from "../../redux/actions/resultsActions";
 import { getScorers } from "../../redux/actions/playerActions";
@@ -36,13 +38,27 @@ export default function Results() {
    
   };
 
+  const handleReport = () => {
+    const input = document.getElementById("AllResults");
+    html2canvas(input, {
+      logging: true,
+      letterRendering: 1,
+      useCORS: true,
+    }).then((canvas) => {
+      const imgWidth = 208;
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      const imgData = canvas.toDataURL("img/png");
+      const pdf = new jsPDF("p", "mm", "a4");
+      pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
+      pdf.save("Results.pdf");
+    });
+  };
+
   return (
     <div className="bg" id="results-bg">
-      <section>
+      <section id="AllResults">
         <div className="container-lg pt-3">
           <div className="row justify-content-around">
-          
-
             <div className="col-lg-10 my-4">
               <div className="fs-2 mx-2 ">Results</div>
               <div className="underline-results mx-2 mb-2"></div>
@@ -57,12 +73,14 @@ export default function Results() {
                   )}
                   {results &&
                     results.map((teams) => (
-                      <tr onClick={() => handleResult(teams._id)} key={teams._id}>
+                      <tr
+                        onClick={() => handleResult(teams._id)}
+                        key={teams._id}
+                      >
                         <td
                           className="py-3  d-flex flex-wrap justify-content-between align-items-center "
                           id="result-data"
                         >
-                        
                           <div className="teamA">
                             <img
                               src={`${imgUrl}/${teams?.homeTeam?.image} `}
@@ -85,7 +103,6 @@ export default function Results() {
                             {` ${teams.awayTeam?.team} `}
                           </div>
                         </td>
-                     
                       </tr>
                     ))}
                 </tbody>
@@ -139,11 +156,18 @@ export default function Results() {
           </div>
         </div>
       </section>
+      <div className="container d-flex justify-content-center">
+        <button
+          onClick={() => handleReport()}
+          className="btn btn-primary btn-lg mb-5"
+        >
+          Generate Report
+        </button>
+      </div>
       <section id="footer" className="bg-info">
         <footer className="footer mt-auto py-3 ">
           <div className="container">
             <div className="row text-dark justify-content-lg-start align-content-end">
-             
               <div className="col-lg-2">
                 <ul>
                   <Link to={"/home"} id="footer-links">
@@ -206,9 +230,13 @@ export default function Results() {
                 <div id="awayTeamContent">{selectedResult.awayTeamGoals}</div>
               </div>
               <div id="one">
-                <div id="homeTeamContent">{selectedResult.homeTeamGoalScorer}</div>
+                <div id="homeTeamContent">
+                  {selectedResult.homeTeamGoalScorer}
+                </div>
                 <span id="bt">Goal Scorers</span>
-                <div id="awayTeamContent">{selectedResult.awayTeamGoalScorer}</div>
+                <div id="awayTeamContent">
+                  {selectedResult.awayTeamGoalScorer}
+                </div>
               </div>
               <div id="one">
                 <div id="homeTeamContent">{selectedResult.homeTeamShots}</div>
@@ -282,7 +310,6 @@ export default function Results() {
             <Button variant="primary" onClick={() => setSelectedResult(null)}>
               Close
             </Button>
-           
           </Modal.Footer>
         </Modal>
       )}

@@ -1,5 +1,7 @@
 import { Link } from "react-router-dom";
 import React, { useEffect, useState } from "react";
+import { jsPDF } from "jspdf";
+import html2canvas from "html2canvas";
 import "./fixtures.css";
 import { useDispatch, useSelector } from "react-redux";
 import { allFixtures } from "../../redux/actions/fixturesAction";
@@ -23,14 +25,12 @@ export default function Fixtures() {
   const [timerOn, setTimerOn] = useState(false);
   const [timePause, setTimePause] = useState(Boolean);
 
-
-
   const [liveData, setLiveData] = useState([]);
 
   useEffect(() => {
     let interval = null;
 
-    if (timerOn  ) {
+    if (timerOn) {
       interval = setInterval(() => {
         setTime((prevTime) => prevTime + 10);
       }, 10);
@@ -53,8 +53,7 @@ export default function Fixtures() {
     socket.on(
       "updated_score",
       (data) => {
-        setLiveData((list) => list === data.obj ? [ list]: [ data.obj]);
-    
+        setLiveData((list) => (list === data.obj ? [list] : [data.obj]));
 
         if (!timePause) {
           setTimerOn(true);
@@ -65,15 +64,12 @@ export default function Fixtures() {
       [socket, liveData]
     );
 
-
     socket.on("game_pause", (data) => {
-     
       setTimePause(data.gamePause);
 
       if (!data.gamePause) {
         setTimerOn(true);
       } else {
-       
         setTimerOn(false);
       }
     });
@@ -87,6 +83,22 @@ export default function Fixtures() {
     const fixture = await values.find((f) => f.id === id2);
 
     await setSelectedFixture(fixture);
+  };
+
+  const handleFixtures = () => {
+    const input = document.getElementById("tableFixtures");
+    html2canvas(input, {
+      logging: true,
+      letterRendering: 1,
+      useCORS: true,
+    }).then((canvas) => {
+      const imgWidth = 208;
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      const imgData = canvas.toDataURL("img/png");
+      const pdf = new jsPDF("p", "mm", "a4");
+      pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
+      pdf.save("Fixtures.pdf");
+    });
   };
 
   return (
@@ -109,7 +121,7 @@ export default function Fixtures() {
                     onChange={(e) => setSelectedEventDisplay(e.target.value)}
                     className="form-select mt-2"
                   >
-                    <option value="">Select Event</option>
+                    <option value="">Select event</option>
 
                     {events?.map((event) => (
                       <option value={event?._id} key={event?._id}>
@@ -188,21 +200,27 @@ export default function Fixtures() {
                     <div id="two">
                       <div id="homeTeamContent">
                         {liveData.map((liveData) => (
-                          <p> {liveData.homeTeamGoals === "" ? (
-                            <p>0</p>
-                          ): 
-                          <p>{liveData.homeTeamGoals}</p>
-                          }</p>
+                          <p>
+                            {" "}
+                            {liveData.homeTeamGoals === "" ? (
+                              <p>0</p>
+                            ) : (
+                              <p>{liveData.homeTeamGoals}</p>
+                            )}
+                          </p>
                         ))}
                       </div>
                       <span id="bt">Goals</span>
                       <div id="awayTeamContent">
                         {liveData.map((liveData) => (
-                          <p> {liveData.awayTeamGoals === "" ? (
-                            <p>0</p>
-                          ):
-                          <p>{liveData.awayTeamGoals}</p>
-                          }</p>
+                          <p>
+                            {" "}
+                            {liveData.awayTeamGoals === "" ? (
+                              <p>0</p>
+                            ) : (
+                              <p>{liveData.awayTeamGoals}</p>
+                            )}
+                          </p>
                         ))}
                       </div>
                     </div>
@@ -232,21 +250,27 @@ export default function Fixtures() {
                     <div id="two">
                       <div id="homeTeamContent">
                         {liveData.map((liveData) => (
-                          <p> {liveData.homeTeamYellow === "" ? (
-                            <p>0</p>
-                          ): (
-                            <p>{liveData.homeTeamYellow}</p>
-                          )}</p>
+                          <p>
+                            {" "}
+                            {liveData.homeTeamYellow === "" ? (
+                              <p>0</p>
+                            ) : (
+                              <p>{liveData.homeTeamYellow}</p>
+                            )}
+                          </p>
                         ))}
                       </div>
                       <span id="bt">Total yellow cards</span>
                       <div id="awayTeamContent">
                         {liveData.map((liveData) => (
-                          <p> {liveData.awayTeamYellow === "" ? (
-                            <p>0</p>
-                          ): (
-                            <p>{liveData.awayTeamYellow}</p>
-                          )}</p>
+                          <p>
+                            {" "}
+                            {liveData.awayTeamYellow === "" ? (
+                              <p>0</p>
+                            ) : (
+                              <p>{liveData.awayTeamYellow}</p>
+                            )}
+                          </p>
                         ))}
                       </div>
                     </div>
@@ -255,8 +279,7 @@ export default function Fixtures() {
                         {liveData.map((liveData) => (
                           <p>
                             {liveData.homeTeamYellowPlayers.map((player) => (
-                              
-                              <li>{player  }</li>
+                              <li>{player}</li>
                             ))}
                             <span className="me-1"></span>
                             {/* {liveData.homeTeamYellow}' */}
@@ -319,65 +342,72 @@ export default function Fixtures() {
 
                 {/* FIXTURES */}
 
-                <table className="table table-hover">
-                  <thead>
-                    <tr>
-                      <th>Date</th>
-                      <th>Time</th>
-                      <th>Home Team</th>
-                      <th>Away Team</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {comingFixtures?.length === 0 && (
+                <div id="tableFixtures">
+                  <div className="text-center lead py-4 " id="fix-heading">
+                    <b> KUSA FIXTURES </b>
+                  </div>
+
+                  <table className="table table-hover">
+                    <thead>
                       <tr>
-                        <td colSpan={20} className="text-center">
-                          No Fixture Found For Given Event
-                        </td>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Home Team</th>
+                        <th>Away Team</th>
                       </tr>
-                    )}
+                    </thead>
+                    <tbody>
+                      {comingFixtures?.length === 0 && (
+                        <tr>
+                          <td colSpan={20} className="text-center">
+                            No Fixture Found For Given event
+                          </td>
+                        </tr>
+                      )}
 
-                    {comingFixtures?.map((singleFixture, i1) => (
-                      <React.Fragment>
-                        {singleFixture?.fixture?.map((fixture, i2) => {
-                          const date = Object.keys(fixture)[0];
-                          const values = fixture[date];
+                      {comingFixtures?.map((singleFixture, i1) => (
+                        <React.Fragment>
+                          {singleFixture?.fixture?.map((fixture, i2) => {
+                            const date = Object.keys(fixture)[0];
+                            const values = fixture[date];
 
-                          return (
-                            <React.Fragment>
-                              {values?.map((value, i) => (
-                                <tr
-                                  onClick={() =>
-                                    handleFixtureClick(fixture?.id, value?.id)
-                                  }
-                                >
-                                  <td className="">
-                                    {new Date(date).toLocaleDateString()}
-                                  </td>
-                                  <td>{value?.time}</td>
-                                  <td>
-                                  
-
-                                    {value?.awayTeam?.team}
-                                  </td>
-                                  <td>
-                                 
-                                    {value?.homeTeam?.team}
-                                  </td>
-                                </tr>
-                              ))}
-                            </React.Fragment>
-                          );
-                        })}
-                      </React.Fragment>
-                    ))}
-                  </tbody>
-                </table>
+                            return (
+                              <React.Fragment>
+                                {values?.map((value, i) => (
+                                  <tr
+                                    onClick={() =>
+                                      handleFixtureClick(fixture?.id, value?.id)
+                                    }
+                                  >
+                                    <td className="">
+                                      {new Date(date).toLocaleDateString()}
+                                    </td>
+                                    <td>{value?.time}</td>
+                                    <td>{value?.awayTeam?.team}</td>
+                                    <td>{value?.homeTeam?.team}</td>
+                                  </tr>
+                                ))}
+                              </React.Fragment>
+                            );
+                          })}
+                        </React.Fragment>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           </div>
         </div>
       </section>
+      <div className="container d-flex justify-content-center">
+        <button
+          onClick={() => handleFixtures()}
+          className="btn btn-primary btn-lg mb-5"
+        >
+          Generate Report
+        </button>
+      </div>
       <section id="footer" className="bg-info">
         <footer className="footer mt-auto py-3 ">
           <div className="container">

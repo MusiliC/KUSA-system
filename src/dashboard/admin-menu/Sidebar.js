@@ -7,7 +7,7 @@ import Navbar from "react-bootstrap/Navbar";
 import RegisterTeam from "../register-team/registerTeam";
 import CreateEvent from "../create event/createEvent";
 import AdminEvents from "../admin events/adminEvents";
-import { Link, Route, Routes,  } from "react-router-dom";
+import { Link, Route, Routes } from "react-router-dom";
 import UpdateResults from "../update results/updateResults";
 import GenerateFixtures from "../generate fixtures/generateFixtures";
 import Users from "../users/users";
@@ -18,12 +18,10 @@ import UpdateTeam from "../register-team/UpdateTeam";
 import UpdateEvent from "../create event/UpdateEvent";
 import LiveScore from "../live-score/LiveScore";
 import Scorer from "../scorer/Scorer";
+import Region from "../admin-regions/Region";
 // import AdminScore from "../results/AdminScore";
 
 export default function Sidebar() {
-
- 
-
   return (
     <>
       <div className="row">
@@ -36,9 +34,14 @@ export default function Sidebar() {
                   <Navbar.Brand as={Link} to="#" className="my-3">
                     KUSA Admin
                   </Navbar.Brand>
+
                   <Nav.Link as={Link} to="/admin/register" className="my-3">
                     <i className="bi bi-people-fill me-2"></i>
                     Register Team
+                  </Nav.Link>
+                  <Nav.Link as={Link} to="/admin/region" className="my-3">
+                    <i className="bi bi-people-fill me-2"></i>
+                    Register Region
                   </Nav.Link>
                   <Nav.Link as={Link} to="/admin/create" className="my-3">
                     <i className="bi bi-calendar-date me-2"></i>
@@ -86,7 +89,9 @@ export default function Sidebar() {
             <Routes>
               <Route path="/resultsUpdate" element={<AdminResults />} />
               <Route path="/create" element={<CreateEvent />} />
+
               <Route path="/register" element={<RegisterTeam />} />
+              <Route path="/region" element={<Region />} />
               <Route path="/register/team/:id" element={<UpdateTeam />} />
               <Route path="/users" element={<Users />} />
               <Route
@@ -100,7 +105,7 @@ export default function Sidebar() {
               <Route path="/fixtures" element={<GenerateFixtures />} />
               <Route path="/liveScore" element={<LiveScore />} />
               <Route path="/results" element={<UpdateResults />} />
-              <Route path="/scorer" element={<Scorer/>} />
+              <Route path="/scorer" element={<Scorer />} />
               <Route path="/event" element={<AdminEvents />} />
               <Route path="/event/eventUpdate/:id" element={<UpdateEvent />} />
             </Routes>

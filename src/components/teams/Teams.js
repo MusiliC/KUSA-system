@@ -33,7 +33,7 @@ export default function Teams() {
               <div className="row justify-content-between align-items-start py-3 ">
                 <div className="col-lg-5 " id="eventSide">
                   <h3 className="text-center display-6" id="overlayTitle">
-                    KUSA Events
+                    KUSA  Events
                   </h3>
                   <div className="mainContainer mt-5">
                     {events?.length === 0 && (
@@ -46,7 +46,7 @@ export default function Teams() {
                     {events.map((event) => (
                       <div className="eachCard" key={event._id}>
                         <h4 className="my-2">
-                          <b> Event:</b> {event.name}
+                          <b> event:</b> {event.name}
                         </h4>
                         <h5 className="my-3">
                           <b> Host: </b>
@@ -77,7 +77,7 @@ export default function Teams() {
                       <tr>
                         <th>#</th>
                         <th>University Name</th>
-                        <th>Location</th>
+                        <th>event</th>
                       </tr>
                     </thead>
                     <tbody>

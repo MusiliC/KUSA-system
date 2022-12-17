@@ -4,6 +4,7 @@ import Table from "react-bootstrap/Table";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
+
 import {
   deleteTeam,
   getTeams,
@@ -14,6 +15,7 @@ export default function RegisterTeam() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const registeredTeams = useSelector((state) => state.teamsReducer.allTeams);
+
    
 
   const [institution, setInstitution] = useState({
@@ -36,13 +38,14 @@ export default function RegisterTeam() {
     formData.append("team", institution.team);
     formData.append("county", institution.county);
     formData.append("players", institution.players);
-    
+
     dispatch(registerTeam(formData));
+
     await setInstitution({
       team: "",
       county: "",
-      image:"",
-      players:""
+      image: "",
+      players: "",
     });
   };
 
@@ -52,7 +55,10 @@ export default function RegisterTeam() {
 
   useEffect(() => {
     dispatch(getTeams());
+     
   }, [dispatch]);
+
+  
 
   return (
     <div className="container-lg">
@@ -94,8 +100,9 @@ export default function RegisterTeam() {
             </div>
             <div className="mb-2">
               <label htmlFor="" className="form-label">
-                Enter county located:
+                County located:
               </label>
+
               <input
                 type="text"
                 name="county"
@@ -129,7 +136,7 @@ export default function RegisterTeam() {
             <thead>
               <tr>
                 <th>University Name</th>
-                <th>Location</th>
+                <th>Region</th>
                 <th>Actions</th>
               </tr>
             </thead>

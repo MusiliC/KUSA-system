@@ -6,9 +6,11 @@ import playerReducer from "./playerReducer";
 import resultsReducer from "./resultsReducer";
 import fixtureReducer from "./fixtureReducers";
 import emailReducer from "./emailReducer";
+import regionFixturesReducer from "./regionFixturesReducer"
 
 export const reducers = combineReducers({
   authReducer,
+  regionFixturesReducer,
   teamsReducer,
   eventsReducer,
   playerReducer,

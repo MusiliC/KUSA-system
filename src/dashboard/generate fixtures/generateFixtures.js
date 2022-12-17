@@ -7,21 +7,37 @@ import {
   deleteFixtures,
   generateFixtures,
 } from "../../redux/actions/fixturesAction";
-
+import {
+  allRegionsFixtures,
+  generateRegionalFixtures,
+  getRegions,
+} from "../../redux/actions/regionalFixturesAction";
 
 export default function GenerateFixtures() {
   const dispatch = useDispatch();
   const events = useSelector((state) => state.eventsReducer.events);
+  const allRegions = useSelector(
+    (state) => state.regionFixturesReducer.regions
+  );
+
   const comingFixtures = useSelector((state) => state.fixtureReducer.fixtures);
-  
+  const regionalFixtures = useSelector(
+    (state) => state.regionFixturesReducer.fixtures
+  );
+  console.log(regionalFixtures);
 
   const [selectedEventDisplay, setSelectedEventDisplay] = useState("");
   const [selectedEventGenerate, setSelectedEventGenerate] = useState("");
+
+  const [selectedRegionGenerate, setSelectedRegionGenerate] = useState("");
+  const [selectedRegionDisplay, setSelectedRegionDisplay] = useState("");
 
   const [generatingFixtures, setGeneratingFixtures] = useState(false);
 
   useEffect(() => {
     dispatch(getEvents());
+    dispatch(getRegions());
+    dispatch(allRegionsFixtures());
   }, [dispatch]);
 
   const handleGenerate = async () => {
@@ -32,32 +48,38 @@ export default function GenerateFixtures() {
     setSelectedEventDisplay(selectedEventGenerate);
   };
 
-    const handleDelete = (id) => {
-    dispatch(deleteFixtures(id))
-  }
+  const handleRegionGenerate = async () => {
+    setGeneratingFixtures(true);
+    setSelectedRegionDisplay("");
+    await dispatch(generateRegionalFixtures(selectedRegionGenerate));
+    setGeneratingFixtures(false);
+    setSelectedRegionDisplay(selectedRegionGenerate);
+  };
 
+  const handleDelete = (id) => {
+    dispatch(deleteFixtures(id));
+  };
 
   useEffect(() => {
     if (selectedEventDisplay) dispatch(allFixtures(selectedEventDisplay));
-  }, [dispatch, selectedEventDisplay]);
-
+    if (selectedRegionDisplay)
+      dispatch(allRegionsFixtures(selectedRegionDisplay));
+  }, [dispatch, selectedEventDisplay, selectedRegionDisplay]);
 
   return (
     <div>
       <div className="container-lg">
         <div className="row justify-content-around">
-        
-
-          <div className="card col-lg-6 mt-4">
-            <div className="card-body">
+          <div className="card col-lg-7 mt-4">
+            {/* <div className="card-body">
               <div className="form-group">
-                <label htmlFor="">Select Event To Generate Fixture</label>
+                <label htmlFor="">Select event To Generate Fixture</label>
                 <select
                   value={selectedEventGenerate}
                   onChange={(e) => setSelectedEventGenerate(e.target.value)}
                   className="form-control mt-2"
                 >
-                  <option value="">Select Event</option>
+                  <option value="">Select event</option>
 
                   {events?.map((event) => (
                     <option value={event?._id} key={event?._id}>
@@ -72,20 +94,55 @@ export default function GenerateFixtures() {
                   {generatingFixtures ? "Loading..." : "Generate Fixtures"}
                 </button>
               </div>
+            </div> */}
+          </div>
+
+          {/* regional fixtures */}
+
+          <div className="card col-lg-7 mt-4">
+            <div className="card-body">
+              <div className="form-group">
+                <label htmlFor="" className="fw-bold">
+                  Select region To Generate Fixture
+                </label>
+                <select
+                  value={selectedRegionGenerate}
+                  onChange={(e) => setSelectedRegionGenerate(e.target.value)}
+                  className="form-control mt-2"
+                >
+                  <option value="">Select region</option>
+
+                  {allRegions?.map((region) => (
+                    <option value={region?._id} key={region?._id}>
+                      {region?.name}
+                    </option>
+                  ))}
+                </select>
+                <button
+                  className="btn btn-primary mt-2"
+                  onClick={handleRegionGenerate}
+                >
+                  {generatingFixtures
+                    ? "Loading..."
+                    : "Generate Region Fixtures"}
+                </button>
+              </div>
             </div>
           </div>
+
+          {/* fixtures */}
           <div className="col-12">
             <div className="text-center lead py-2 fw-bold">Fixtures</div>
 
             <hr className="my-5 mt-4" />
-            <div className="form-group">
-              <label htmlFor="">Select Event To Get Fixture</label>
+            {/* <div className="form-group">
+              <label htmlFor="">Select event To Get Fixtures</label>
               <select
                 value={selectedEventDisplay}
                 onChange={(e) => setSelectedEventDisplay(e.target.value)}
                 className="form-select mt-2"
               >
-                <option value="">Select Event</option>
+                <option value="">Select event</option>
 
                 {events?.map((event) => (
                   <option value={event?._id} key={event?._id}>
@@ -93,10 +150,31 @@ export default function GenerateFixtures() {
                   </option>
                 ))}
               </select>
-            </div>
+            </div> */}
 
-            <div className="my-">
-              <table className="table">
+            {/* region fixtures */}
+
+            {/* <div className="form-group my-3">
+              <label htmlFor="" className="fw-bold">
+                Select region To Get Fixtures
+              </label>
+              <select
+                value={selectedRegionDisplay}
+                onChange={(e) => setSelectedRegionDisplay(e.target.value)}
+                className="form-select mt-2"
+              >
+                <option value="">Select Region</option>
+
+                {allRegions?.map((region) => (
+                  <option value={region?._id} key={region?._id}>
+                    {region?.name}
+                  </option>
+                ))}
+              </select>
+            </div> */}
+
+            <div className="my-2">
+              {/* <table className="table">
                 <thead>
                   <tr>
                     <th>Date</th>
@@ -109,13 +187,52 @@ export default function GenerateFixtures() {
                   {comingFixtures?.length === 0 && (
                     <tr>
                       <td colSpan={20} className="text-center">
-                        No Fixture Found For Given Event
+                        No Fixture Found For Given event
                       </td>
                     </tr>
                   )}
 
                   {comingFixtures?.map((singleFixture, i1) => (
                     <React.Fragment>
+                      {singleFixture?.fixture?.map((fixture, i2) => {
+                        const date = Object.keys(fixture)[0];
+                        const values = fixture[date];
+
+                        return (
+                          <React.Fragment>
+                            {values?.map((value, i) => (
+                              <tr key={value.time}>
+                                <th>{new Date(date).toLocaleDateString()}</th>
+                                <th>{value?.time}</th>
+                                <th>{value?.awayTeam?.team}</th>
+                                <th>{value?.homeTeam?.team}</th>
+                              </tr>
+                            ))}
+                          </React.Fragment>
+                        );
+                      })}
+                    </React.Fragment>
+                  ))}
+                </tbody>
+              </table> */}
+
+              {/* regional fixtures */}
+
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Home Team</th>
+                    <th>Away Team</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {regionalFixtures?.map((singleFixture, i1) => (
+                    <React.Fragment>
+                      <p className="display-6 text-end my-2">
+                        {singleFixture.region.name}
+                      </p>
                       {singleFixture?.fixture?.map((fixture, i2) => {
                         const date = Object.keys(fixture)[0];
                         const values = fixture[date];

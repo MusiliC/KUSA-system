@@ -14,12 +14,7 @@ import Teams from "./components/teams/Teams";
 import Sidebar from "./dashboard/admin-menu/Sidebar";
 import { getUsers } from "./redux/actions/authAction";
 
-
 function App() {
- 
-
-
-
   return (
     <>
       <div className="App">
@@ -29,14 +24,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
 
-            <Route
-              path="/results"
-              element={
-                <AuthWrapper>
-                  <Results />
-                </AuthWrapper>
-              }
-            />
+            <Route path="/results" element={<Results />} />
             <Route path="/fixtures" element={<Fixtures />} />
             <Route path="/teams" element={<Teams />} />
             <Route path="/login" element={<Login />} />

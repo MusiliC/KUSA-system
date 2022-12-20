@@ -7,13 +7,15 @@ import html2canvas from "html2canvas";
 import { geBestTeams, getTeams } from "../../redux/actions/teamsAction";
 import "./table.css";
 import { getRegions } from "../../redux/actions/regionalFixturesAction";
+import { getEvents } from "../../redux/actions/eventsAction";
 
 const imgUrl = "http://localhost:5000/static";
 
 function Table() {
   const teams = useSelector((state) => state.teamsReducer.allTeams);
+    const events = useSelector((state) => state.eventsReducer.events);
   const topTeams = useSelector((state) => state.teamsReducer.topTeams);
-  console.log(topTeams);
+  console.log(events);
   const allRegions = useSelector(
     (state) => state.regionFixturesReducer.regions
   );
@@ -38,10 +40,7 @@ function Table() {
     console.log(`${match[0]} vs ${match[1]}`);
   });
 
-  console.log(finalTeams);
-
-  //  console.log(allRegions);
-  // console.log(teams);
+  
 
   const handleReport = () => {
     const input = document.getElementById("tables-page");
@@ -64,6 +63,7 @@ function Table() {
     dispatch(getTeams());
     dispatch(geBestTeams());
     dispatch(getRegions());
+    dispatch(getEvents())
   }, [dispatch]);
 
   return (
@@ -186,22 +186,40 @@ function Table() {
                     ))}
                 </tbody>
               </table> */}
-              <div className="w-50 ">
-                <div className=" fs-2 mt-5 " id="league">
+              <div className=" ">
+                <div className="text-center fs-2 mt-5 " id="league">
                   Nationals Fixtures
                 </div>
-                <div className="NationalsUnderline mb-5"></div>
-                <Card>
-                  {fixtures.map((match) => (
-                    <Card.Text>
-                      <div className="mx-4 my-2 fs-1">{`${match[0]} vs ${match[1]}`}</div>
-                    </Card.Text>
-                  ))}
-                </Card>
+                <div className="NationalsUnderline mb-5 mx-auto"></div>
+
+                <div className="d-flex justify-content-around align-items-center">
+                  <div className="my-3">
+                    <Card>
+                      <div className="m-3">
+                        {events.map((event) => (
+                          <div className="fs-2">
+                            <p>{event.name}</p>
+                            <p>Date: {event.date}</p>
+                            <p>Host: {event.host}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </Card>
+                  </div>
+                  <div>
+                    <Card>
+                      {fixtures.map((match) => (
+                        <Card.Text>
+                          <div className="mx-4 my-2 fs-1">{`${match[0]} vs ${match[1]}`}</div>
+                        </Card.Text>
+                      ))}
+                    </Card>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-          <div className="row mb-4">
+          <div className="row mb-4 justify-content-center">
             <div className="col-lg-4">
               <ul className="list-group">
                 <li className="list-group-item">Win - 3 points</li>

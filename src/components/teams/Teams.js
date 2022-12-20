@@ -53,7 +53,7 @@ export default function Teams() {
                     {events.map((event) => (
                       <div className="eachCard" key={event._id}>
                         <h4 className="my-2">
-                          <b> event:</b> {event.name}
+                          <b> Event:</b> {event.name}
                         </h4>
                         <h5 className="my-3">
                           <b> Host: </b>

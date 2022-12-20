@@ -9,10 +9,12 @@ const {
   generateOneRegionFixturesController,
   getRegionFixturesController,
   updateRegion,
+  getTopRegionsController,
 } = require("../controllers/regions.controller");
 
 router.post("/", addRegionControler);
 router.get("/", getRegionsController);
+router.get("/two", getTopRegionsController);
 router.get("/fixtures", getRegionFixturesController);
 router.get("/:id", getOneRegionControler);
 router.patch("/:id", updateRegion);

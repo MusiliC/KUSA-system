@@ -32,6 +32,24 @@ async function getTeam(req, res) {
   }
 }
 
+//Get top two Teams
+
+async function getTwoTeams(req, res) {
+  try {
+    const team = await Team.find({})
+      .sort({
+        wins: -1,
+        draws: -1,
+      })
+      .limit(4)
+      .populate("results");
+    res.status(200).send(team);
+  } catch (error) {
+    res.status(500).send(error.message);
+    console.log(error);
+  }
+}
+
 //register team
 
 async function registerTeam(req, res) {
@@ -40,8 +58,6 @@ async function registerTeam(req, res) {
 
   if (!req.files || !req.files.image)
     return res.status(400).send("Image is required");
-
-  
 
   try {
     //check if team exists
@@ -55,7 +71,7 @@ async function registerTeam(req, res) {
       const imageName = randId + image.name;
 
       image.mv("uploads/" + imageName);
-      
+
       const { team, county, players, wins, draws, lost } = req.body;
 
       registeredTeam = new Team({
@@ -184,6 +200,7 @@ async function updateLost(req, res) {
 
 module.exports = {
   registerTeam,
+  getTwoTeams,
   allTeams,
   getTeam,
   deleteTeam,

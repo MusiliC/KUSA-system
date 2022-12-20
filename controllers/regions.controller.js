@@ -8,7 +8,26 @@ const { Team } = require("../models/teamModel");
 //Get regions
 const getRegionsController = async (req, res) => {
   try {
-    const regions = await Region.find({}).populate("teams");
+    const regions = await Region.find({}).populate({
+      path: "teams",
+      options: { sort: { wins: -1, draws: -1, lost: -1 } },
+    });
+    res.status(200).send(regions);
+  } catch (error) {
+    res.status(500).send(error.message);
+    console.log(error);
+  }
+};
+
+//Get top regions
+const getTopRegionsController = async (req, res) => {
+  try {
+    const regions = await Region.find({})
+      .populate({
+        path: "teams",
+        options: { sort: { wins: -1, draws: -1, lost: -1 } },
+      })
+      .limit(2);
     res.status(200).send(regions);
   } catch (error) {
     res.status(500).send(error.message);
@@ -174,6 +193,7 @@ async function updateRegion(req, res) {
 
 module.exports = {
   getRegionsController,
+  getTopRegionsController,
   getOneRegionControler,
   addRegionControler,
   generateOneRegionFixturesController,

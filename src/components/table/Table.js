@@ -1,40 +1,69 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import Card from "react-bootstrap/Card";
 import { jsPDF } from "jspdf";
-import html2canvas from "html2canvas"
-import { getTeams } from "../../redux/actions/teamsAction";
-import "./table.css"
+import html2canvas from "html2canvas";
+import { geBestTeams, getTeams } from "../../redux/actions/teamsAction";
+import "./table.css";
 import { getRegions } from "../../redux/actions/regionalFixturesAction";
-
 
 const imgUrl = "http://localhost:5000/static";
 
 function Table() {
   const teams = useSelector((state) => state.teamsReducer.allTeams);
-   const allRegions = useSelector(
-     (state) => state.regionFixturesReducer.regions
-   );
+  const topTeams = useSelector((state) => state.teamsReducer.topTeams);
+  console.log(topTeams);
+  const allRegions = useSelector(
+    (state) => state.regionFixturesReducer.regions
+  );
+
+  let finalTeams = [];
+
+  topTeams.map((team) => finalTeams.push(team.team));
+
+  const numTeams = topTeams.length;
+
+  for (let i = 0; i < numTeams; i++) {
+    finalTeams.push(`Team${i + 1}`);
+  }
+
+  let fixtures = [];
+  for (let i = 0; i < numTeams / 2; i++) {
+    let match = [finalTeams[i], finalTeams[numTeams - i - 1]];
+    fixtures.push(match);
+  }
+
+  fixtures.forEach((match) => {
+    console.log(`${match[0]} vs ${match[1]}`);
+  });
+
+  console.log(finalTeams);
 
   //  console.log(allRegions);
   // console.log(teams);
 
-const handleReport = () => {
-  const input = document.getElementById("tables-page")
-  html2canvas(input, {logging: true, letterRendering: 1, useCORS: true}).then(canvas => {
-    const imgWidth = 208;
-    const imgHeight = canvas.height * imgWidth / canvas.width;
-    const imgData = canvas.toDataURL("img/png")
-    const pdf  = new jsPDF("p", "mm", "a4")
-    pdf.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight)
-    pdf.save("table.pdf")
-  })
-}
+  const handleReport = () => {
+    const input = document.getElementById("tables-page");
+    html2canvas(input, {
+      logging: true,
+      letterRendering: 1,
+      useCORS: true,
+    }).then((canvas) => {
+      const imgWidth = 208;
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      const imgData = canvas.toDataURL("img/png");
+      const pdf = new jsPDF("p", "mm", "a4");
+      pdf.addImage(imgData, "PNG", 0, 0, imgWidth, imgHeight);
+      pdf.save("table.pdf");
+    });
+  };
 
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getTeams());
-    dispatch(getRegions())
+    dispatch(geBestTeams());
+    dispatch(getRegions());
   }, [dispatch]);
 
   return (
@@ -53,7 +82,7 @@ const handleReport = () => {
             <div className=" col-lg-12 mb-5">
               {allRegions.map((regions, i1) => (
                 <React.Fragment>
-                  <div className="display-6 my-4">{regions.name}</div>
+                  <div className="display-6 my-4">{regions?.name}</div>
 
                   <table className="table">
                     <thead className="border border-none bg-light table-bordered border-primary">
@@ -69,7 +98,7 @@ const handleReport = () => {
                     </thead>
 
                     <tbody>
-                      {regions.teams.map((team, i) => (
+                      {regions?.teams?.map((team, i) => (
                         <React.Fragment>
                           {teams?.length === 0 && (
                             <tr>
@@ -90,7 +119,7 @@ const handleReport = () => {
                                 alt="logo"
                                 className="logo me-2"
                               />
-                              {team.team}
+                              {team?.team}
                             </td>
                             <td>
                               <span>{team.wins + team.draws + team.lost}</span>
@@ -157,6 +186,19 @@ const handleReport = () => {
                     ))}
                 </tbody>
               </table> */}
+              <div className="w-50 ">
+                <div className=" fs-2 mt-5 " id="league">
+                  Nationals Fixtures
+                </div>
+                <div className="NationalsUnderline mb-5"></div>
+                <Card>
+                  {fixtures.map((match) => (
+                    <Card.Text>
+                      <div className="mx-4 my-2 fs-1">{`${match[0]} vs ${match[1]}`}</div>
+                    </Card.Text>
+                  ))}
+                </Card>
+              </div>
             </div>
           </div>
           <div className="row mb-4">

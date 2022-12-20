@@ -44,6 +44,16 @@ const Region = () => {
     dispatch(registerRegion(obj));
   };
 
+  // update regions
+
+  const handleUpdate = (id) => {
+    const regionUpdate = allRegions.find((region) => region._id === id);
+
+    setSelectedRegion(regionUpdate);
+  };
+
+  console.log(selectedRegion);
+
   useEffect(() => {
     dispatch(getTeams());
     dispatch(getRegions());
@@ -146,7 +156,11 @@ const Region = () => {
                       </ul>
                     ))}
 
-                    <Button type="submit" variant="primary">
+                    <Button
+                      type="submit"
+                      variant="primary"
+                      onClick={() => handleUpdate(region._id)}
+                    >
                       Edit Region
                     </Button>
                     <Button type="submit" variant="danger" className="ms-5">

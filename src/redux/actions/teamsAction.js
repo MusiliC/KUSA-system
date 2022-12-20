@@ -32,6 +32,19 @@ export const getTeams = () => async (dispatch) => {
   }
 };
 
+export const geBestTeams = () => async (dispatch) => {
+  try {
+    const response = await api.getTopTeams();
+
+    dispatch({
+      type: actionTypes.TOP_TEAMS,
+      payload: response.data,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const getOneTeam = (id) => async (dispatch) => {
   try {
     const response = await api.oneTeam(id);

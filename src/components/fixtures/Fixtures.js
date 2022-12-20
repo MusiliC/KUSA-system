@@ -9,6 +9,8 @@ import { getEvents } from "../../redux/actions/eventsAction";
 import io from "socket.io-client";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
+import { allRegionsFixtures } from "../../redux/actions/regionalFixturesAction";
+
 const socket = io("http://localhost:3002");
 
 const imgUrl = "http://localhost:5000/static";
@@ -17,6 +19,10 @@ export default function Fixtures() {
   const dispatch = useDispatch();
   const events = useSelector((state) => state.eventsReducer.events);
   const comingFixtures = useSelector((state) => state.fixtureReducer.fixtures);
+
+  const regionalFixtures = useSelector(
+    (state) => state.regionFixturesReducer.fixtures
+  );
 
   const [selectedEventDisplay, setSelectedEventDisplay] = useState("");
   const [selectedFixture, setSelectedFixture] = useState(null);
@@ -43,6 +49,8 @@ export default function Fixtures() {
 
   useEffect(() => {
     dispatch(getEvents());
+
+    dispatch(allRegionsFixtures());
   }, [dispatch]);
 
   useEffect(() => {
@@ -113,7 +121,7 @@ export default function Fixtures() {
             <div className="row justify-content-around mb-5">
               <div className="col-lg-10 ">
                 <div className="form-group mt-2 my-5 mb-2">
-                  <label htmlFor="" className="fs-4">
+                  {/* <label htmlFor="" className="fs-4">
                     Select event to get Fixtures
                   </label>
                   <select
@@ -128,7 +136,7 @@ export default function Fixtures() {
                         {event?.name}
                       </option>
                     ))}
-                  </select>
+                  </select> */}
                 </div>
 
                 {/* LIVE SCORE */}
@@ -347,7 +355,7 @@ export default function Fixtures() {
                     <b> KUSA FIXTURES </b>
                   </div>
 
-                  <table className="table table-hover">
+                  {/* <table className="table table-hover">
                     <thead>
                       <tr>
                         <th>Date</th>
@@ -385,6 +393,45 @@ export default function Fixtures() {
                                     <td>{value?.time}</td>
                                     <td>{value?.awayTeam?.team}</td>
                                     <td>{value?.homeTeam?.team}</td>
+                                  </tr>
+                                ))}
+                              </React.Fragment>
+                            );
+                          })}
+                        </React.Fragment>
+                      ))}
+                    </tbody>
+                  </table> */}
+
+                  <table className="table">
+                    <thead>
+                      <tr>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Home Team</th>
+                        <th>Away Team</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {regionalFixtures?.map((singleFixture, i1) => (
+                        <React.Fragment>
+                          <p className="display-6 text-end my-2">
+                            {singleFixture.region.name}
+                          </p>
+                          {singleFixture?.fixture?.map((fixture, i2) => {
+                            const date = Object.keys(fixture)[0];
+                            const values = fixture[date];
+
+                            return (
+                              <React.Fragment>
+                                {values?.map((value, i) => (
+                                  <tr key={value.time}>
+                                    <th>
+                                      {new Date(date).toLocaleDateString()}
+                                    </th>
+                                    <th>{value?.time}</th>
+                                    <th>{value?.awayTeam?.team}</th>
+                                    <th>{value?.homeTeam?.team}</th>
                                   </tr>
                                 ))}
                               </React.Fragment>

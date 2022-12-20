@@ -7,12 +7,17 @@ import Select from "react-select";
 
 import { useForm } from "react-hook-form";
 import FormInputErrorAlert from "../../components/commons/FormInputErrorAlert";
+import { getRegions } from "../../redux/actions/regionalFixturesAction";
 
 export default function UpdateResults() {
   const teams = useSelector((state) => state.teamsReducer.allTeams);
+  const allRegions = useSelector(
+    (state) => state.regionFixturesReducer.regions
+  );
 
   // State
   const [postingResult, setPostingResult] = useState(false);
+  const [selectedRegion, setSelectedRegion] = useState("");
 
   // react select data handling
 
@@ -57,8 +62,6 @@ export default function UpdateResults() {
         : ["none"],
     };
 
-    
-
     setPostingResult(true);
     await dispatch(postResults(obj));
 
@@ -67,6 +70,8 @@ export default function UpdateResults() {
   };
 
   //react select result change
+
+const selectedRegionTeams = watch("")
 
   //homeTeam
 
@@ -92,18 +97,37 @@ export default function UpdateResults() {
     ? selectedAwayTeamObj?.players.split(",")
     : [];
 
-
- 
-
-
   useEffect(() => {
     dispatch(getTeams());
+    dispatch(getRegions());
   }, [dispatch]);
 
   return (
     <div>
       <div className="container-lg">
         <div className="text-center display-6 my-3">Post Results</div>
+        <div className="mb-2 w-50 mx-auto mb-5">
+          <label htmlFor="" className="form-label">
+            Select region:
+          </label>
+          <select
+            // value={selectedRegionGenerate}
+            // onChange={(e) => setSelectedRegionGenerate(e.target.value)}
+            className="form-select mt-2"
+          >
+            <option value="">Select region</option>
+
+            {allRegions?.map((region) => (
+              <option
+                value={region?._id}
+                key={region?._id}
+                onChange={(e) => setSelectedRegion(e.target.value)}
+              >
+                {region?.name}
+              </option>
+            ))}
+          </select>
+        </div>
         <div className="row justify-content-center">
           <div className="col-lg-7">
             <form
@@ -115,6 +139,7 @@ export default function UpdateResults() {
                   <label htmlFor="" className="form-label">
                     Select home team:
                   </label>
+
                   <select
                     name="homeTeam"
                     className="form-select"
@@ -561,7 +586,6 @@ export default function UpdateResults() {
               </div>
             </form>
           </div>
-          
         </div>
       </div>
     </div>

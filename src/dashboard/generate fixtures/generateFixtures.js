@@ -24,7 +24,7 @@ export default function GenerateFixtures() {
   const regionalFixtures = useSelector(
     (state) => state.regionFixturesReducer.fixtures
   );
-  console.log(regionalFixtures);
+
 
   const [selectedEventDisplay, setSelectedEventDisplay] = useState("");
   const [selectedEventGenerate, setSelectedEventGenerate] = useState("");
@@ -231,7 +231,7 @@ export default function GenerateFixtures() {
                   {regionalFixtures?.map((singleFixture, i1) => (
                     <React.Fragment>
                       <p className="display-6 text-end my-2">
-                        {singleFixture.region.name}
+                        {singleFixture.region?.name}
                       </p>
                       {singleFixture?.fixture?.map((fixture, i2) => {
                         const date = Object.keys(fixture)[0];

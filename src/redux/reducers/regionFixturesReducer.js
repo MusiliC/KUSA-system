@@ -5,7 +5,7 @@ const initialState = {
   fixtures: [],
   oneFixture: {},
   regions: [],
-  oneRegion:{}
+  oneRegion: {},
 };
 
 const fixtureReducer = (state = initialState, action) => {

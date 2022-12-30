@@ -71,8 +71,9 @@ export default function UpdateResults() {
 
   //react select result change
 
-const selectedRegionTeams = watch("")
+//   const selectedRegionTeam = allRegions.find((t) => t._id === selectedRegion);
 
+// console.log(selectedRegionTeam.teams);
   //homeTeam
 
   const selectedHomeTeam = watch("homeTeam");
@@ -106,23 +107,21 @@ const selectedRegionTeams = watch("")
     <div>
       <div className="container-lg">
         <div className="text-center display-6 my-3">Post Results</div>
+       
         <div className="mb-2 w-50 mx-auto mb-5">
           <label htmlFor="" className="form-label">
             Select region:
           </label>
           <select
-            // value={selectedRegionGenerate}
-            // onChange={(e) => setSelectedRegionGenerate(e.target.value)}
+            name="selectedRegion"
+            value={selectedRegion}
+            onChange={(e) => setSelectedRegion(e.target.value)}
             className="form-select mt-2"
           >
             <option value="">Select region</option>
 
             {allRegions?.map((region) => (
-              <option
-                value={region?._id}
-                key={region?._id}
-                onChange={(e) => setSelectedRegion(e.target.value)}
-              >
+              <option value={region?._id} key={region?._id}>
                 {region?.name}
               </option>
             ))}
@@ -152,6 +151,7 @@ const selectedRegionTeams = watch("")
                     })}
                   >
                     <option value="">Select Home Team</option>
+
                     {teams.map((team) => (
                       <option key={team._id} value={team._id}>
                         {team.team}

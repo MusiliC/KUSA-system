@@ -60,7 +60,7 @@ body{
 }
 
 .big-image{
-height: 130vh;
+height: 200vh;
 width: 100vw;
 position: relative;
 background-size: cover;
@@ -119,6 +119,6 @@ background-image: url("../../../public/pictures/fix.jpg");
         }
 
         .big-image{
-            height: 250vh;
+            height: 3000vh;
         }
 }

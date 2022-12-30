@@ -7,6 +7,7 @@ import { getTeams } from "../../redux/actions/teamsAction";
 import {
   getRegions,
   registerRegion,
+  updateRegion,
 } from "../../redux/actions/regionalFixturesAction";
 import Table from "react-bootstrap/Table";
 import Card from "react-bootstrap/Card";
@@ -18,11 +19,12 @@ const Region = () => {
   );
 
   const [teams, setTeams] = useState([]);
+  const [regionId, setRegionId] = useState("");
   const [selectedRegion, setSelectedRegion] = useState({});
 
   const dispatch = useDispatch();
 
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, setValue } = useForm();
 
   //   const [region, setRegion] = useState({
   //     name: "",
@@ -46,13 +48,25 @@ const Region = () => {
 
   // update regions
 
-  const handleUpdate = (id) => {
-    const regionUpdate = allRegions.find((region) => region._id === id);
-
-    setSelectedRegion(regionUpdate);
+  const handleUpdate = (id, data) => {
+    // const regionUpdate = allRegions.find((region) => region._id === id);
+    // setSelectedRegion(regionUpdate);
+    dispatch(updateRegion(id, data));
   };
 
   console.log(selectedRegion);
+
+  useEffect(() => {
+    if (selectedRegion?._id) {
+      console.log(selectedRegion);
+      setValue("name", selectedRegion.name);
+      setValue("description", selectedRegion.description);
+      setValue(
+        "teams",
+        selectedRegion.teams.map((team) => team.team)
+      );
+    }
+  }, [selectedRegion]);
 
   useEffect(() => {
     dispatch(getTeams());
@@ -67,7 +81,14 @@ const Region = () => {
         </div>
         <div className="row justify-content-around">
           <div className="col-lg-4 mt-5 ">
-            <form action="" onSubmit={handleSubmit(handleRegionSubmit)}>
+            <form
+              action=""
+              onSubmit={
+                selectedRegion?._id
+                  ? handleSubmit(handleUpdate)
+                  : handleSubmit(handleRegionSubmit)
+              }
+            >
               <div className="mb-2">
                 <label htmlFor="" className="form-label">
                   Enter Region:
@@ -131,9 +152,15 @@ const Region = () => {
                 />
               </div>
               <div className="d-flex justify-content-center my-3">
-                <Button type="submit" variant="primary">
-                  Register Region
-                </Button>
+                {selectedRegion?._id ? (
+                  <Button type="submit" variant="primary">
+                    Update Region
+                  </Button>
+                ) : (
+                  <Button type="submit" variant="primary">
+                    Register Region
+                  </Button>
+                )}
               </div>
             </form>
           </div>
@@ -159,13 +186,13 @@ const Region = () => {
                     <Button
                       type="submit"
                       variant="primary"
-                      onClick={() => handleUpdate(region._id)}
+                      onClick={() => setSelectedRegion(region._id)}
                     >
                       Edit Region
                     </Button>
-                    <Button type="submit" variant="danger" className="ms-5">
+                    {/* <Button type="submit" variant="danger" className="ms-5">
                       Delete Region
-                    </Button>
+                    </Button> */}
                   </Card.Body>
                 </Card>
               ))}

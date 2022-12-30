@@ -13,9 +13,9 @@ const imgUrl = "http://localhost:5000/static";
 
 function Table() {
   const teams = useSelector((state) => state.teamsReducer.allTeams);
-    const events = useSelector((state) => state.eventsReducer.events);
+  const events = useSelector((state) => state.eventsReducer.events);
   const topTeams = useSelector((state) => state.teamsReducer.topTeams);
-  console.log(events);
+
   const allRegions = useSelector(
     (state) => state.regionFixturesReducer.regions
   );
@@ -40,7 +40,9 @@ function Table() {
     console.log(`${match[0]} vs ${match[1]}`);
   });
 
-  
+
+
+
 
   const handleReport = () => {
     const input = document.getElementById("tables-page");
@@ -63,7 +65,7 @@ function Table() {
     dispatch(getTeams());
     dispatch(geBestTeams());
     dispatch(getRegions());
-    dispatch(getEvents())
+    dispatch(getEvents());
   }, [dispatch]);
 
   return (
@@ -207,6 +209,7 @@ function Table() {
                     </Card>
                   </div>
                   <div>
+                 
                     <Card>
                       {fixtures.map((match) => (
                         <Card.Text>

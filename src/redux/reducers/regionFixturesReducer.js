@@ -5,6 +5,7 @@ const initialState = {
   fixtures: [],
   oneFixture: {},
   regions: [],
+  regionTopTeams: [],
   oneRegion: {},
 };
 
@@ -37,6 +38,12 @@ const fixtureReducer = (state = initialState, action) => {
       return {
         ...state,
         fixtures: [action.payload],
+      };
+
+    case actionTypes.REGIONAL_TOP_TEAMS:
+      return {
+        ...state,
+        regionTopTeams: action.payload,
       };
 
     case actionTypes.UPDATE_REGION:

@@ -64,6 +64,19 @@ export const generateRegionalFixtures = (regionId) => async (dispatch) => {
   }
 };
 
+export const RegionsBestTeams = () => async (dispatch) => {
+  try {
+    const response = await api.getTopTeamsRegions();
+
+    dispatch({
+      type: actionTypes.REGIONAL_TOP_TEAMS,
+      payload: response.data,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 export const allRegionsFixtures =
   (region = null) =>
   async (dispatch) => {

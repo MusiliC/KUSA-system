@@ -6,7 +6,10 @@ import { jsPDF } from "jspdf";
 import html2canvas from "html2canvas";
 import { geBestTeams, getTeams } from "../../redux/actions/teamsAction";
 import "./table.css";
-import { getRegions } from "../../redux/actions/regionalFixturesAction";
+import {
+  RegionsBestTeams,
+  getRegions,
+} from "../../redux/actions/regionalFixturesAction";
 import { getEvents } from "../../redux/actions/eventsAction";
 
 const imgUrl = "http://localhost:5000/static";
@@ -15,34 +18,39 @@ function Table() {
   const teams = useSelector((state) => state.teamsReducer.allTeams);
   const events = useSelector((state) => state.eventsReducer.events);
   const topTeams = useSelector((state) => state.teamsReducer.topTeams);
+  const RegionTeams = useSelector(
+    (state) => state.regionFixturesReducer.regionTopTeams
+  );
+
+  let teamB = [];
+
+  RegionTeams.map((region) =>
+    region.teams.map((oneTeam) => teamB.push(oneTeam.team))
+  );
 
   const allRegions = useSelector(
     (state) => state.regionFixturesReducer.regions
   );
 
-  let finalTeams = [];
+  // let finalTeams = [];
 
-  topTeams.map((team) => finalTeams.push(team.team));
+  // topTeams.map((team) => finalTeams.push(team.team));
 
   const numTeams = topTeams.length;
 
   for (let i = 0; i < numTeams; i++) {
-    finalTeams.push(`Team${i + 1}`);
+    teamB.push(`Team${i + 1}`);
   }
 
   let fixtures = [];
   for (let i = 0; i < numTeams / 2; i++) {
-    let match = [finalTeams[i], finalTeams[numTeams - i - 1]];
+    let match = [teamB[i], teamB[numTeams - i - 1]];
     fixtures.push(match);
   }
 
   fixtures.forEach((match) => {
-    console.log(`${match[0]} vs ${match[1]}`);
+    // console.log(`${match[0]} vs ${match[1]}`);
   });
-
-
-
-
 
   const handleReport = () => {
     const input = document.getElementById("tables-page");
@@ -66,6 +74,7 @@ function Table() {
     dispatch(geBestTeams());
     dispatch(getRegions());
     dispatch(getEvents());
+    dispatch(RegionsBestTeams());
   }, [dispatch]);
 
   return (
@@ -209,7 +218,6 @@ function Table() {
                     </Card>
                   </div>
                   <div>
-                 
                     <Card>
                       {fixtures.map((match) => (
                         <Card.Text>
@@ -230,6 +238,8 @@ function Table() {
                 <li className="list-group-item">Lost - 0 points</li>
               </ul>
             </div>
+
+        
           </div>
         </div>
       </section>

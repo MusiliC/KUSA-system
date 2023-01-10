@@ -11,6 +11,7 @@ import {
   getRegions,
 } from "../../redux/actions/regionalFixturesAction";
 import { getEvents } from "../../redux/actions/eventsAction";
+import { Header } from "../commons/Header";
 
 const imgUrl = "http://localhost:5000/static";
 
@@ -80,14 +81,15 @@ function Table() {
   return (
     <>
       <section id="tables-page">
+        <Header>LEAGUE TABLES</Header>
         <div className="tb-bg"></div>
 
         <div className="container-lg">
-          <div className=" fs-2 mt-5 " id="league">
+          {/* <div className=" fs-2 mt-5 " id="league">
             League Table
           </div>
 
-          <div className="underline mb-4"></div>
+          <div className="underline mb-4"></div> */}
 
           <div className="row justify-content-center">
             <div className=" col-lg-12 mb-5">
@@ -238,8 +240,6 @@ function Table() {
                 <li className="list-group-item">Lost - 0 points</li>
               </ul>
             </div>
-
-        
           </div>
         </div>
       </section>

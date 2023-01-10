@@ -7,7 +7,7 @@
 }
 
 #result-data{
-    font-weight: 500;
+    font-weight: 400;
 }
 
 .score-data{
@@ -15,8 +15,8 @@
     width: 150px;
     display: flex;
     justify-content: center;
-    padding-top: 6px;
-    padding-bottom: 6px;
+    padding-top: 4px;
+    padding-bottom: 4px;
     padding-left: 10px;
     padding-right: 10px;
     border-radius: 2px ;

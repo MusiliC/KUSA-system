@@ -12,6 +12,10 @@ code {
     monospace;
 }
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 .underline{
   height: 3px;
   width: 180px;
@@ -34,9 +38,9 @@ code {
 
 
 .logo{
-  width: 55px;
-  height: 55px;
-  object-fit: cover;
+  width: 45px;
+  height: 45px;
+  object-fit: contain;
   border-radius: 50px;
   border: 1px solid rgb(212, 211, 211);
 }

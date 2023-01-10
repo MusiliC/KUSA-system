@@ -8,6 +8,7 @@ import { getResults } from "../../redux/actions/resultsActions";
 import { getScorers } from "../../redux/actions/playerActions";
 import { Link } from "react-router-dom";
 import { Button, Modal } from "react-bootstrap";
+import { Header } from "../commons/Header";
 
 const imgUrl = "http://localhost:5000/static";
 
@@ -16,16 +17,14 @@ export default function Results() {
 
   const [selectedResult, setSelectedResult] = useState(null);
 
-
   //handling Results
 
   const results = useSelector((state) => state.resultsReducer.results);
-  
 
   //handling top scorer
 
   const topScorer = useSelector((state) => state.playerReducer.players);
-  
+
   useEffect(() => {
     dispatch(getResults());
     dispatch(getScorers());
@@ -35,7 +34,6 @@ export default function Results() {
     const result = results.find((f) => f._id === id);
 
     await setSelectedResult(result);
-   
   };
 
   const handleReport = () => {
@@ -57,11 +55,14 @@ export default function Results() {
   return (
     <div className="bg" id="results-bg">
       <section id="AllResults">
+        <div className="">
+          <Header>RESULTS</Header>
+        </div>
         <div className="container-lg pt-3">
           <div className="row justify-content-around">
-            <div className="col-lg-10 my-4">
-              <div className="fs-2 mx-2 ">Results</div>
-              <div className="underline-results mx-2 mb-2"></div>
+            <div className="col-lg-10 mb-4">
+              {/* <div className="fs-2 mx-2 ">Results</div> */}
+
               <Table border-none hover>
                 <tbody>
                   {results?.length === 0 && (
@@ -78,7 +79,7 @@ export default function Results() {
                         key={teams._id}
                       >
                         <td
-                          className="py-3  d-flex flex-wrap justify-content-between align-items-center "
+                          className="py-2 my-2  d-flex flex-wrap justify-content-between align-items-center "
                           id="result-data"
                         >
                           <div className="teamA">

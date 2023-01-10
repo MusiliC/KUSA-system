@@ -10,6 +10,7 @@ import io from "socket.io-client";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import { allRegionsFixtures } from "../../redux/actions/regionalFixturesAction";
+import { Header } from "../commons/Header";
 
 const socket = io("http://localhost:3002");
 
@@ -112,12 +113,10 @@ export default function Fixtures() {
   return (
     <div>
       <section id="fixture-page">
+        <Header>KUSA FIXTURES</Header>
         <div className="bg" id="fixture-bg">
           <div className="container-lg">
-            <div className="text-center display-6 py-4 " id="fix-heading">
-              <b> KUSA Fixtures </b>
-            </div>
-
+           
             <div className="row justify-content-around mb-5">
               <div className="col-lg-10 ">
                 <div className="form-group mt-2 my-5 mb-2">

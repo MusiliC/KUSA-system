@@ -218,21 +218,21 @@ export default function GenerateFixtures() {
 
               {/* regional fixtures */}
 
-              <table className="table">
-                <thead>
-                  <tr>
-                    <th>Date</th>
-                    <th>Time</th>
-                    <th>Home Team</th>
-                    <th>Away Team</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {regionalFixtures?.map((singleFixture, i1) => (
-                    <React.Fragment>
-                      <p className="display-6 text-end my-2">
-                        {singleFixture.region?.name}
-                      </p>
+              {regionalFixtures?.map((singleFixture, i1) => (
+                <React.Fragment>
+                  <p className="display-6 text-center my-3">
+                    {singleFixture.region?.name}
+                  </p>
+                  <table className="table">
+                    <thead>
+                      <tr>
+                        <th>Date</th>
+                        <th>Time</th>
+                        <th>Home Team</th>
+                        <th>Away Team</th>
+                      </tr>
+                    </thead>
+                    <tbody>
                       {singleFixture?.fixture?.map((fixture, i2) => {
                         const date = Object.keys(fixture)[0];
                         const values = fixture[date];
@@ -250,10 +250,11 @@ export default function GenerateFixtures() {
                           </React.Fragment>
                         );
                       })}
-                    </React.Fragment>
-                  ))}
-                </tbody>
-              </table>
+                    </tbody>
+                  </table>
+                </React.Fragment>
+              ))}
+
               <div className="text-center">
                 {/* <button type="button" className="btn btn-primary btn-lg my-3" onClick={() => handleDelete(value._id)}>
                   Delete Fixtures

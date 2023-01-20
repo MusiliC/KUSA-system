@@ -98,6 +98,8 @@ export default function UpdateResults() {
     ? selectedAwayTeamObj?.players.split(",")
     : [];
 
+    console.log(selectedRegion);
+
   useEffect(() => {
     dispatch(getTeams());
     dispatch(getRegions());
@@ -108,7 +110,7 @@ export default function UpdateResults() {
       <div className="container-lg">
         <div className="text-center display-6 my-3">Post Results</div>
        
-        <div className="mb-2 w-50 mx-auto mb-5">
+        <div className=" w-50 mx-auto mb-5">
           <label htmlFor="" className="form-label">
             Select region:
           </label>

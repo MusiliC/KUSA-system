@@ -1,9 +1,6 @@
 /* #fixture-bg {
-    background-image: url("/public/pictures/stad.jpg");
-    height: 140vh;
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
+  background-color: rgb(250, 250, 250);
+  padding: 40px 0px;
     
 } */
 
@@ -12,6 +9,8 @@
 }
 
 /*  */
+
+
 
 #liveScore{    
   

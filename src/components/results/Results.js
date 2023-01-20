@@ -79,7 +79,7 @@ export default function Results() {
                         key={teams._id}
                       >
                         <td
-                          className="py-2 my-2  d-flex flex-wrap justify-content-between align-items-center "
+                          className="py-2   d-flex flex-wrap justify-content-between align-items-center "
                           id="result-data"
                         >
                           <div className="teamA">

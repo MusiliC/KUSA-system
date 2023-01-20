@@ -25,8 +25,8 @@ function Table() {
 
   let teamB = [];
 
-  RegionTeams.map((region) =>
-    region.teams.map((oneTeam) => teamB.push(oneTeam.team))
+  RegionTeams?.map((region) =>
+    region.teams?.map((oneTeam) => teamB.push(oneTeam.team))
   );
 
   const allRegions = useSelector(
@@ -93,7 +93,7 @@ function Table() {
 
           <div className="row justify-content-center">
             <div className=" col-lg-12 mb-5">
-              {allRegions.map((regions, i1) => (
+              {allRegions?.map((regions, i1) => (
                 <React.Fragment>
                   <div className="display-6 my-4">{regions?.name}</div>
 
@@ -209,7 +209,7 @@ function Table() {
                   <div className="my-3">
                     <Card>
                       <div className="m-3">
-                        {events.map((event) => (
+                        {events?.map((event) => (
                           <div className="fs-2">
                             <p>{event.name}</p>
                             <p>Date: {event.date}</p>
@@ -221,7 +221,7 @@ function Table() {
                   </div>
                   <div>
                     <Card>
-                      {fixtures.map((match) => (
+                      {fixtures?.map((match) => (
                         <Card.Text>
                           <div className="mx-4 my-2 fs-1">{`${match[0]} vs ${match[1]}`}</div>
                         </Card.Text>

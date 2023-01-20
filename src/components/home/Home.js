@@ -28,10 +28,10 @@ export default function Home() {
   return (
     <>
       <section id="home" className="">
-        <div className="bg" id="home-bg">
+        <div className="py-5" id="home-bg">
           <div className="container-lg py-3 ">
-            <div className="row justify-content-around">
-              <div className="col-lg-4">
+            <div className="row justify-content-between align-items-center ">
+              <div className="col-lg-4 ">
                 <div className="display-3 " id="title">
                   <img
                     src="/pictures/kusaLogo.png"
@@ -40,20 +40,23 @@ export default function Home() {
                     id="kusaLogo"
                   />
                 </div>
-                <div className="lead ms-4" id="title">
-                  Games...
-                </div>
+                <div className="lead ms-4" id="title"></div>
                 <div className="display-5 ms-4 mt-4 mb-5" id="subtitle">
-                  <span className="kusaa">K</span>enya <br />
-                  <span className="kusaa">U</span>niversities <br />
-                  <span className="kusaa">S</span>port's
-                  <br /> <span className="kusaa">A</span>ssociation
+                  <span className="kusaa">K</span>enya
+                  <span className="kusaa ms-2">U</span>niversities <br />
+                  <span className="kusaa ">S</span>port's
+                  <span className="kusaa ms-2">A</span>ssociation
+                </div>
+
+                <div className="fs-5 ms-4" id="">
+                  The body responsible for organizing and managing university
+                  sports, It's mandated to run university sports in Kenya.
                 </div>
               </div>
               <div className="col-lg-7 py-4">
                 <img
                   src="/pictures/ballFive.jpg"
-                  className="img-fluid"
+                  className="img-fluid mx-auto"
                   alt=""
                   id="ballFive"
                 />

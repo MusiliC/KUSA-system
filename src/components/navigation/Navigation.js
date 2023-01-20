@@ -24,7 +24,7 @@ export default function Navigation() {
 
   return (
     <div className="text-center border border-gray-50 ">
-      <Navbar bg="info" variant="light" expand="lg" className="py-4">
+      <Navbar bg="info" variant="light" expand="lg" className="py-3">
         <Container>
           <Navbar.Brand href="/" className="me-5">
             KUSA

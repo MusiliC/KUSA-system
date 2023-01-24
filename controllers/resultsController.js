@@ -34,6 +34,7 @@ async function postResults(req, res) {
 
   try {
     const {
+      matchDate,
       homeTeam,
       awayTeam,
       homeTeamGoals,
@@ -55,6 +56,7 @@ async function postResults(req, res) {
     } = req.body;
 
     let newResult = new Result({
+      matchDate,
       homeTeam,
       awayTeam,
       homeTeamGoals,

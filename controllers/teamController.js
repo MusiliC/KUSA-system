@@ -10,7 +10,7 @@ async function allTeams(req, res) {
       .sort({
         wins: -1,
         draws: -1,
-        lost: -1,
+        lost: 1,
       })
       .populate("results");
     res.status(200).send(teams);

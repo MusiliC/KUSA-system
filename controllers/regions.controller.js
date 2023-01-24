@@ -22,12 +22,11 @@ const getRegionsController = async (req, res) => {
 //Get top regions
 const getTopRegionsController = async (req, res) => {
   try {
-    const regions = await Region.find({})
-      .populate({
-        path: "teams",
-        options: { sort: { wins: -1, draws: -1, lost: -1 } },
-      })
-      .limit(2);
+    const regions = await Region.find({}).populate({
+      path: "teams",
+      options: { limit: 2, sort: { wins: -1, draws: -1, lost: -1 } },
+    });
+
     res.status(200).send(regions);
   } catch (error) {
     res.status(500).send(error.message);

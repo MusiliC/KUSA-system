@@ -1,6 +1,9 @@
 const mongoose = require("mongoose");
 
 const resultsSchema = new mongoose.Schema({
+  matchDate: {
+    type: String,
+  },
   homeTeam: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Team",

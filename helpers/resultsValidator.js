@@ -4,6 +4,7 @@ const Joi = require("joi");
 
 exports.validResults = (results) => {
   const schema = Joi.object().keys({
+    matchDate: Joi.date().required(),
     homeTeam: Joi.string().required(),
     awayTeam: Joi.string().required(),
     homeTeamGoals: Joi.number().required(),

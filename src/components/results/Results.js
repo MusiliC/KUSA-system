@@ -20,6 +20,7 @@ export default function Results() {
   //handling Results
 
   const results = useSelector((state) => state.resultsReducer.results);
+  console.log(results);
 
   //handling top scorer
 
@@ -79,23 +80,27 @@ export default function Results() {
                         key={teams._id}
                       >
                         <td
-                          className="py-2   d-flex flex-wrap justify-content-between align-items-center "
+                          className="py-3  d-flex flex-wrap justify-content-between align-items-center "
                           id="result-data"
                         >
-                          <div className="teamA">
+                          <div className="date fs-5">
+                            <p id="result-data">{` ${teams?.matchDate} `}</p>
+                          </div>
+                          <div className="teamA d-flex align-items-center">
+                            {`${teams?.homeTeam?.team} `}
                             <img
                               src={`${imgUrl}/${teams?.homeTeam?.image} `}
                               alt="logo"
-                              className="logo me-2"
+                              className="logo mx-2"
                             />
-
-                            {`${teams?.homeTeam?.team} `}
                           </div>
-                          <span className="score-data mx-2 me-4">
-                            {` ${teams.homeTeamGoals} `} -
-                            {` ${teams.awayTeamGoals}`}
-                          </span>
-                          <div className="teamA">
+                          <div>
+                            <span className="score-data mx-2 me-4">
+                              {` ${teams.homeTeamGoals} `} -
+                              {` ${teams.awayTeamGoals}`}
+                            </span>
+                          </div>
+                          <div className="teamA d-flex align-items-center">
                             <img
                               src={`${imgUrl}/${teams?.awayTeam?.image} `}
                               alt="logo"

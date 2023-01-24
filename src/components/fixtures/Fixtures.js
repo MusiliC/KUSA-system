@@ -406,7 +406,7 @@ export default function Fixtures() {
                       <p className="display-6 text-center my-3">
                         {singleFixture.region.name}
                       </p>
-                      <table className="table">
+                      <table className="table" id="regionFixtures">
                         <thead>
                           <tr>
                             <th className="text-primary">Date</th>
